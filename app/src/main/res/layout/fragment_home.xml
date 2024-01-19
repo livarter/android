@@ -1,78 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.HomeFragment"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    tools:context=".main.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
-            <HorizontalScrollView
-                android:id="@+id/horizontal_scroll"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                >
+                android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/main_banner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/_02_home_mainbanner"/>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager2_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="330dp" />
 
-            </HorizontalScrollView>
+                <Button
+                    android:id="@+id/pageNum"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#59FFFFFF"
+                    android:padding="0dp"
+                    android:text="3  /  3"
+                    android:textColor="@color/dark_grey" />
+            </FrameLayout>
+
             <ImageView
                 android:id="@+id/category_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_02_home_category_btn"
-                />
+                android:src="@drawable/_02_home_category_btn" />
+
             <ImageView
                 android:id="@+id/category_kind"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/_02_home_category_kind"
                 android:adjustViewBounds="true"
-                />
+                android:src="@drawable/_02_home_category_kind" />
+
             <ImageView
                 android:id="@+id/best_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_02_home_best_btn"/>
+                android:src="@drawable/_02_home_best_btn" />
+
             <ImageView
                 android:id="@+id/best_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/_02_home_best_list"
-                android:adjustViewBounds="true"/>
+                android:adjustViewBounds="true"
+                android:src="@drawable/_02_home_best_list" />
+
             <ImageView
                 android:id="@+id/brand_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_02_home_brand_btn"
-                />
+                android:src="@drawable/_02_home_brand_btn" />
+
             <ImageView
                 android:id="@+id/brand_kind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_02_home_brand_kind"
-                />
+                android:src="@drawable/_02_home_brand_kind" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
