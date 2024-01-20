@@ -71,6 +71,7 @@ class HomeFragment : Fragment() {
                 super.onPageSelected(position)
                 // 페이지가 선택될 때마다 페이지 번호 업데이트
                 binding.pageNum.text = "${position + 1}  /  3"
+                currentPage = position
             }
         })
 
