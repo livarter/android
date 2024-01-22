@@ -1,16 +1,13 @@
 package net.developia.livartc.adapter
 
-import android.content.ClipData.Item
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import net.developia.livartc.R
 import net.developia.livartc.databinding.ItemBestBinding
 import net.developia.livartc.main.HomeFragment
 import net.developia.livartc.model.Product
@@ -21,7 +18,7 @@ import net.developia.livartc.model.Product
  * Date: 2024-01-22
  * Time: 오후 12:54
  */
-class BestProductAdapter(private val bestList : ArrayList<Product>, val context: HomeFragment)
+class BestProductAdapter(private val bestList : Product?, val context: HomeFragment)
     : RecyclerView.Adapter<BestProductAdapter.BestProductViewHolder>() {
     inner class BestProductViewHolder(binding: ItemBestBinding) : RecyclerView.ViewHolder(binding.root) {
         val nameView = binding.bestProductName
@@ -36,13 +33,13 @@ class BestProductAdapter(private val bestList : ArrayList<Product>, val context:
     }
 
     override fun onBindViewHolder(holder: BestProductViewHolder, position: Int) {
-        val bestData = bestList[position]
+        val bestData = bestList!![position]
 
         holder.nameView.text = bestData.name
-        holder.priceView.text = bestData.price.toString()
+        holder.priceView.text = "￦ ${bestData.price}"
         Glide.with(context)
             .asBitmap()
-            .load(bestData.productImg)
+            .load(bestData.productImage)
             .into(object : CustomTarget<Bitmap>(2000, 2000) {
                 override fun onResourceReady(
                     resource: Bitmap,
@@ -59,7 +56,7 @@ class BestProductAdapter(private val bestList : ArrayList<Product>, val context:
 
     override fun getItemCount(): Int {
         // 리사이클러뷰 아이템 개수는 할일 리스트 크기
-        return bestList.size
+        return bestList!!.size
     }
 
 
