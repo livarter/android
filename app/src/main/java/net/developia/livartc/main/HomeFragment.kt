@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import net.developia.livartc.MainActivity
@@ -23,10 +22,15 @@ import net.developia.livartc.main.banner.BannerFragment02
 import net.developia.livartc.main.banner.BannerFragment03
 import net.developia.livartc.model.Product
 
+import net.developia.livartc.retrofit.MyApplication
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     private var currentPage = 0
-    private lateinit var bestList: ArrayList<Product>
+    private var bestList: Product? = null
     lateinit var mainActivity: MainActivity
     lateinit var bestAdapter: BestProductAdapter
 
@@ -77,39 +81,22 @@ class HomeFragment : Fragment() {
     }
 
     private fun getAllBestProduct() {
-        Thread {
-            bestList = arrayListOf<Product>()
-            bestList.add(
-                Product(
-                    "베스트상품1",
-                    10000,
-                    "https://image.newdaily.co.kr/site/data/img/2019/03/06/2019030600071_1.jpg"
-                )
-            )
-            bestList.add(
-                Product(
-                    "베스트상품2",
-                    15000,
-                    "https://cdn-pro-web-219-123.cdn-nhncommerce.com/decolitr0605_godomall_com/data/goods/23/05/20/6153/register_main_027.jpg"
-                )
-            )
-            bestList.add(
-                Product(
-                    "베스트상품3",
-                    20000,
-                    "https://www.jangin.com/data/product/b_file_1564962731jgwk7bws9h.jpg"
-                )
-            )
-            bestList.add(
-                Product(
-                    "베스트상품4",
-                    17000,
-                    "https://m.warehouse-lab.com/web/product/medium/202112/e0ae4c482932f3fd0323632643718687.jpg"
-                )
-            )
-            setBestRecyclerView()
-        }.start()
 
+        Thread {
+            val networkService = (context?.applicationContext as MyApplication).networkService
+            var getBestCall = networkService.getProduct()
+            getBestCall.enqueue(object : Callback<Product> {
+                override fun onResponse(call: Call<Product>, response: Response<Product>) {
+                    bestList = response.body()
+                    Log.d("hschoi", "$bestList")
+                    setBestRecyclerView()
+                }
+
+                override fun onFailure(call: Call<Product>, t: Throwable) {
+                    Log.d("hschoi", "스프링 연결 실패!!!!")
+                }
+            })
+        }.start()
     }
 
     private fun setBestRecyclerView() {
