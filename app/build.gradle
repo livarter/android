@@ -16,6 +16,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        loadProperties("api.properties").each {
+            buildConfigField("String", it.key, it.value)
+        }
     }
 
     buildTypes {
@@ -37,7 +40,9 @@ android {
     }
     buildFeatures {
         dataBinding true
+        buildConfig = true
     }
+
 }
 
 dependencies {
@@ -69,4 +74,10 @@ dependencies {
 
     //bootpay
     implementation 'io.github.bootpay:android:+'
+}
+
+static def loadProperties(String file) {
+    Properties properties = new Properties()
+    properties.load(new FileInputStream(file))
+    return properties
 }
