@@ -1,5 +1,6 @@
 package net.developia.livartc.retrofit
 
+import net.developia.livartc.model.Product
 import net.developia.livartc.model.User
 import retrofit2.Call
 import retrofit2.http.Body
@@ -16,4 +17,7 @@ interface INetworkService {
 
     @GET("walking/user/delete")
     fun doDeleteUser(@Query("email") email:String?): Call<Int>
+
+    @GET("api/v1/product/list")
+    fun getProduct(): Call<Product>
 }
