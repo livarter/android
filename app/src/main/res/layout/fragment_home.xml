@@ -202,10 +202,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="600dp"
                 app:layout_constraintBottom_toTopOf="@+id/btn_add"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_todo"/>
+                tools:listitem="@layout/item_best"/>
 
 
 
