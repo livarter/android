@@ -13,6 +13,7 @@ import kr.co.bootpay.android.models.BootExtra
 import kr.co.bootpay.android.models.BootItem
 import kr.co.bootpay.android.models.BootUser
 import kr.co.bootpay.android.models.Payload
+import net.developia.livartc.BuildConfig
 import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentBillsBinding
 import net.developia.livartc.db.AppDatabase
@@ -27,7 +28,7 @@ import net.developia.livartc.db.CartEntity
  */
 class BillsFragment : Fragment() {
     lateinit var binding: FragmentBillsBinding
-    private val application_id = "65a76d5500c78a001c73e796"
+    private val application_id = BuildConfig.bootpay_api_key
     private lateinit var cartList : ArrayList<CartEntity>
     private lateinit var db :AppDatabase
     private lateinit var cartDao: CartDao
