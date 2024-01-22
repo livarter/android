@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground">
+    android:background="?attr/selectableItemBackground"
+    android:layout_margin="5dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -13,20 +14,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/background_color">
+            android:background="@color/background_color"
+            >
 
             <ImageView
                 android:id="@+id/wearImageView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/best_sample"
                 android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -38,8 +40,9 @@
                 android:id="@+id/best_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="글라트 소파"
                 android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_marginLeft="3dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wearImageView"/>
@@ -47,7 +50,7 @@
                 android:id="@+id/best_product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="9900원"
+                android:layout_marginLeft="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/best_product_name"/>
