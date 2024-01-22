@@ -12,12 +12,27 @@ import net.developia.livartc.purchase.BillsFragment
  */
 class PurchaseActivity : AppCompatActivity() {
     lateinit var binding: ActivityPurchaseBinding
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        binding = ActivityPurchaseBinding.inflate(layoutInflater)
+//        val view = binding.root
+//        setContentView(view)
+//
+//        supportFragmentManager.beginTransaction().replace(R.id.purchase_container, BillsFragment()).commit()
+//    }
+
+    // PurchaseActivity에서 BillsFragment로 totalPrice를 전달
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPurchaseBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        supportFragmentManager.beginTransaction().replace(R.id.purchase_container, BillsFragment()).commit()
+        val totalPrice = intent.getIntExtra("totalPrice", 0)
+        val bundle = Bundle().apply { putInt("totalPrice", totalPrice) }
+        val billsFragment = BillsFragment().apply { arguments = bundle }
+
+        supportFragmentManager.beginTransaction().replace(R.id.purchase_container, billsFragment).commit()
     }
+
 }
