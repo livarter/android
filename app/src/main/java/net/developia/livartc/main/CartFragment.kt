@@ -54,7 +54,7 @@ class CartFragment : Fragment() {
 
         binding.purchaseBtn.setOnClickListener {
             if(cartList.size == 0) {
-                Toast.makeText(requireContext(), "장바구니에 상품이 없습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "장바구니가 비어있습니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
                 val intent = Intent(activity, PurchaseActivity::class.java)
@@ -91,12 +91,19 @@ class CartFragment : Fragment() {
 
     private fun setRecyclerView() {
         requireActivity().runOnUiThread {
-            cartAdapter = CartRecyclerViewAdapter(cartList)
+            cartAdapter = CartRecyclerViewAdapter(cartList) { cartEntity ->
+                deleteCart(cartEntity) // 아이템 삭제
+            }
             binding.cartRecyclerView.adapter = cartAdapter
             binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
     }
-
+    private fun deleteCart(cartEntity: CartEntity) {
+        Thread {
+            cartDao.delete(cartEntity) // DB에서 아이템 삭제
+            getAllCartList() // 장바구니 목록 갱신
+        }.start()
+    }
 
     override fun onResume() {
         super.onResume()
