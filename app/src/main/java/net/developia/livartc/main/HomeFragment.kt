@@ -20,7 +20,7 @@ import net.developia.livartc.databinding.FragmentHomeBinding
 import net.developia.livartc.main.banner.BannerFragment01
 import net.developia.livartc.main.banner.BannerFragment02
 import net.developia.livartc.main.banner.BannerFragment03
-import net.developia.livartc.model.Product
+import net.developia.livartc.model.BestProduct
 
 import net.developia.livartc.retrofit.MyApplication
 import retrofit2.Call
@@ -30,7 +30,7 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     private var currentPage = 0
-    private var bestList: Product? = null
+    private var bestList: BestProduct? = null
     lateinit var mainActivity: MainActivity
     lateinit var bestAdapter: BestProductAdapter
 
@@ -85,14 +85,14 @@ class HomeFragment : Fragment() {
         Thread {
             val networkService = (context?.applicationContext as MyApplication).networkService
             var getBestCall = networkService.getProduct()
-            getBestCall.enqueue(object : Callback<Product> {
-                override fun onResponse(call: Call<Product>, response: Response<Product>) {
+            getBestCall.enqueue(object : Callback<BestProduct> {
+                override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
                     bestList = response.body()
                     Log.d("hschoi", "$bestList")
                     setBestRecyclerView()
                 }
 
-                override fun onFailure(call: Call<Product>, t: Throwable) {
+                override fun onFailure(call: Call<BestProduct>, t: Throwable) {
                     Log.d("hschoi", "스프링 연결 실패!!!!")
                 }
             })

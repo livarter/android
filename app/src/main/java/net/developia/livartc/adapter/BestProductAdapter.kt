@@ -10,7 +10,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import net.developia.livartc.databinding.ItemBestBinding
 import net.developia.livartc.main.HomeFragment
-import net.developia.livartc.model.Product
+import net.developia.livartc.model.BestProduct
 
 /**
  * LIVARTC
@@ -18,7 +18,7 @@ import net.developia.livartc.model.Product
  * Date: 2024-01-22
  * Time: 오후 12:54
  */
-class BestProductAdapter(private val bestList : Product?, val context: HomeFragment)
+class BestProductAdapter(private val bestList : BestProduct?, val context: HomeFragment)
     : RecyclerView.Adapter<BestProductAdapter.BestProductViewHolder>() {
     inner class BestProductViewHolder(binding: ItemBestBinding) : RecyclerView.ViewHolder(binding.root) {
         val nameView = binding.bestProductName
