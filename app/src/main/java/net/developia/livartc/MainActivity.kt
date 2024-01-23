@@ -1,6 +1,7 @@
 package net.developia.livartc
 
 import android.content.Intent
+import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import net.developia.livartc.databinding.ActivityMainBinding
@@ -34,9 +35,16 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, HomeFragment()).commit()
                     true
                 }
-                R.id.fragment_world -> {
+                R.id.fragment_collections -> {
                     binding.mainTitle.text = "Collections"
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, CollectionsFragment()).commit()
+                    true
+                }
+                R.id.fragment_search -> {
+                    binding.mainTitle.text = "Search"
+                    val intent = Intent(this, ProductActivity::class.java)
+                    intent.putExtra("title", "Search")
+                    startActivity(intent)
                     true
                 }
                 R.id.fragment_cart -> {
