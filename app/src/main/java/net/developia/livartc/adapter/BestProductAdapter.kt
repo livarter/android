@@ -56,7 +56,7 @@ class BestProductAdapter(private val bestList : BestProduct?, val context: HomeF
 
     override fun getItemCount(): Int {
         // 리사이클러뷰 아이템 개수는 할일 리스트 크기
-        return bestList!!.size
+        return bestList?.size?:0
     }
 
 

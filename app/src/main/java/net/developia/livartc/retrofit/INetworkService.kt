@@ -2,6 +2,7 @@ package net.developia.livartc.retrofit
 
 import net.developia.livartc.model.BestProduct
 import net.developia.livartc.model.User
+import net.developia.livartc.product.Reply
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,4 +24,8 @@ interface INetworkService {
     //베스트 상품 리스트
     @GET("api/v1/product/list")
     fun getProduct(): Call<BestProduct>
+
+    //리뷰 리스트
+    @GET("api/v1/product/reply")
+    fun getReview(): Call<Reply>
 }

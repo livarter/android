@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/circular_image_view"
+            android:id="@+id/profile_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -28,7 +28,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/profile_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -40,14 +40,15 @@
         app:layout_constraintTop_toTopOf="@id/profile_card" />
 
     <TextView
+        android:id="@+id/reply_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2024.01.20"
         android:textSize="14sp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/profile_id"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
@@ -57,6 +58,7 @@
         android:layout_height="1dp"
         android:background="@color/medium_grey"/>
     <ImageView
+        android:id="@+id/review_image"
         android:layout_width="match_parent"
         android:adjustViewBounds="true"
         android:layout_height="wrap_content"
@@ -69,8 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="16sp"
-        android:text="이 가구를 사고나서 집 분위기가 확 사네요!!\n너무 맘에들어요~ 역시 리바트입니다!!"
+        android:text="이 가구를 사고나서 집 분위기가 확 사네요!!\n너무 맘에들어요~ 역시 리바트 컬렉션입니다!!"
         />
-
-
 </LinearLayout>
