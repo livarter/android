@@ -38,12 +38,6 @@ class HomeFragment : Fragment() {
         setPage()
         true
     }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mainActivity = context as MainActivity
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,9 +48,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getAllBestProduct()
-        makeBanner()
 
+        //움직이는 메인 배너 만들기
+        makeBanner()
+        //베스트 상품 버튼 누르면 인기순 조회페이지 이동
+        binding.bestBtn.setOnClickListener {
+            (activity as MainActivity).startProductActivity("베스트 상품")
+        }
+        //베스트 상품 4개 조회
+        getAllBestProduct()
+        //카테고리 버튼 눌렀을때 카테고리 Fragment 이동
         binding.categoryBtn.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.main_container, CategoryFragment())
@@ -64,15 +65,14 @@ class HomeFragment : Fragment() {
                 commit()
             }
         }
-
-        val bundle = Bundle()
-        bundle.putString("title", "베스트상품")
-
-        binding.bestBtn.setOnClickListener {
-            (activity as MainActivity).startProductActivity("베스트 상품")
-        }
     }
 
+
+    //메인 배너 관련
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
     override fun onPause() {
         super.onPause()
         stopBannerAutoScroll()
@@ -86,32 +86,6 @@ class HomeFragment : Fragment() {
     private fun stopBannerAutoScroll() {
         isAutoScrolling = false
         handler.removeCallbacksAndMessages(null)
-    }
-
-    private fun getAllBestProduct() {
-        Thread {
-            val networkService = (context?.applicationContext as MyApplication).networkService
-            var getBestCall = networkService.getProduct()
-            getBestCall.enqueue(object : Callback<BestProduct> {
-                override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
-                    bestList = response.body()
-                    Log.d("hschoi", "$bestList")
-                    setBestRecyclerView()
-                }
-
-                override fun onFailure(call: Call<BestProduct>, t: Throwable) {
-                    Log.d("hschoi", "스프링 연결 실패!!!!")
-                }
-            })
-        }.start()
-    }
-
-    private fun setBestRecyclerView() {
-        mainActivity.runOnUiThread {
-            bestAdapter = BestProductAdapter(bestList, this@HomeFragment)
-            binding.recyclerView.adapter = bestAdapter
-            binding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
-        }
     }
 
     private fun makeBanner() {
@@ -154,4 +128,34 @@ class HomeFragment : Fragment() {
         binding.viewPager2Container.setCurrentItem(currentPage, true)
         currentPage += 1
     }
+
+
+
+    //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
+    private fun getAllBestProduct() {
+        Thread {
+            val networkService = (context?.applicationContext as MyApplication).networkService
+            var getBestCall = networkService.getProduct()
+            getBestCall.enqueue(object : Callback<BestProduct> {
+                override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
+                    bestList = response.body()
+                    Log.d("hschoi", "$bestList")
+                    setBestRecyclerView()
+                }
+
+                override fun onFailure(call: Call<BestProduct>, t: Throwable) {
+                    Log.d("hschoi", "스프링 연결 실패!!!!")
+                }
+            })
+        }.start()
+    }
+
+    private fun setBestRecyclerView() {
+        mainActivity.runOnUiThread {
+            bestAdapter = BestProductAdapter(bestList, this@HomeFragment)
+            binding.recyclerView.adapter = bestAdapter
+            binding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
+        }
+    }
+
 }
