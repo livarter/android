@@ -1,28 +1,193 @@
 package net.developia.livartc.purchase
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import kr.co.bootpay.android.Bootpay
+import kr.co.bootpay.android.events.BootpayEventListener
+import kr.co.bootpay.android.models.BootExtra
+import kr.co.bootpay.android.models.BootItem
+import kr.co.bootpay.android.models.BootUser
+import kr.co.bootpay.android.models.Payload
+import net.developia.livartc.BuildConfig
 import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentBillsBinding
+import net.developia.livartc.db.AppDatabase
+import net.developia.livartc.db.CartDao
+import net.developia.livartc.db.CartEntity
 
-
+/**
+ * LIVARTC
+ * Created by 변형준
+ * Date: 1/19/24
+ * Time: 17:21
+ */
 class BillsFragment : Fragment() {
     lateinit var binding: FragmentBillsBinding
+    private val application_id = BuildConfig.bootpay_api_key
+    private lateinit var cartList : ArrayList<CartEntity>
+    private lateinit var db :AppDatabase
+    private lateinit var cartDao: CartDao
+
+    private var totalPrice = 0
+    private var address = ""
+    private var zipCode = ""
+    private var name = ""
+    private var phoneNumber = ""
+    private var email = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding  = FragmentBillsBinding.inflate(inflater, container, false)
+        binding = FragmentBillsBinding.inflate(inflater, container, false)
+        totalPrice = arguments?.getInt("totalPrice")!!
+        Log.d("BillsFragment", "totalPrice: $totalPrice")
+
+        db = AppDatabase.getInstance(requireContext())!!
+        cartDao = db.getCartDao()
+        getAllCartList()
+
+        val purchaseButton: Button = binding.buttonPurchase // binding 객체를 통해 버튼을 찾습니다.
+        purchaseButton.setOnClickListener { view -> // 버튼 클릭 시의 동작을 설정합니다.
+            PaymentTest(view, totalPrice)
+        }
+
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setTotalPrice(totalPrice)
+    }
 
+    private fun setTotalPrice(totalPrice: Int) {
+        requireActivity().runOnUiThread {
+            binding.originPrice.text = "₩$totalPrice"
+            binding.totalPrice.text = "₩$totalPrice" // 총 결제 금액을 화면에 표시
+        }
+    }
+
+    private fun getAllCartList() {
+        Thread {
+            cartList = ArrayList(cartDao.getAll())
+        }.start()
+    }
+
+    fun PaymentTest(v: View?, totalPrice: Int?) {
+        val extra = BootExtra()
+            .setCardQuota("0,2,3")
+        val items: MutableList<BootItem> = ArrayList()
+
+        val editTextDeliveryAddress = view?.findViewById<EditText>(R.id.editTextDeliveryAddress)
+        address = editTextDeliveryAddress?.text.toString()
+
+        val editTextZipCode = view?.findViewById<EditText>(R.id.editTextZipCode)
+        zipCode = editTextZipCode?.text.toString()
+
+        val editTextName = view?.findViewById<EditText>(R.id.editTextName)
+        name = editTextName?.text.toString()
+
+        val editTextPhoneNumber = view?.findViewById<EditText>(R.id.editTextPhoneNumber)
+        phoneNumber = editTextPhoneNumber?.text.toString()
+
+        val editTextEmail = view?.findViewById<EditText>(R.id.editTextEmail)
+        email = editTextEmail?.text.toString()
+
+        cartList.forEach { cart ->
+            val item = BootItem().setName(cart.name ?: "")
+                .setId(cart.product_id?.toString() ?: "")
+                .setQty(cart.product_cnt ?: 0)
+                .setPrice((cart.price ?: 0).toDouble())
+            items.add(item)
+        }
+
+        val payload = Payload()
+
+        payload.setApplicationId(application_id)
+            .setOrderName("상품명")
+            .setOrderId("1234")
+            .setPrice(totalPrice?.toDouble() ?: 0.0)
+            .setUser(getBootUser())
+            .setExtra(extra)
+            .items = items
+
+        val map: MutableMap<String, Any> = HashMap()
+        map["1"] = "abcdef"
+        map["2"] = "abcdef55"
+        map["3"] = 1234
+        payload.metadata = map
+
+        Bootpay.init(childFragmentManager, requireContext())
+            .setPayload(payload)
+            .setEventListener(object : BootpayEventListener {
+                override fun onCancel(data: String) {
+                    Log.d("bootpay", "cancel: $data")
+                }
+
+                override fun onError(data: String) {
+                    Log.d("bootpay", "error: $data")
+                }
+
+                override fun onClose() {
+                    Bootpay.removePaymentWindow()
+                }
+
+                override fun onIssued(data: String) {
+                    Log.d("bootpay", "issued: $data")
+                }
+
+                override fun onConfirm(data: String): Boolean {
+                    Log.d("bootpay", "confirm: $data")
+                    return true
+                }
+
+                override fun onDone(data: String) {
+                    Log.d("done", data)
+
+                    // 스프링 db 연동 / 구매내역 저장
+
+
+                    // 결제가 완료되면 카트를 비웁니다.
+                    Thread {
+                        cartDao.deleteAll()
+                    }.start()
+
+                    // 결제가 완료되면 BillsResultFragment로 전환합니다.
+                    val billsResultFragment = BillsResultFragment()
+
+                    val bundle = Bundle()
+                    bundle.putString("data", data)
+
+                    billsResultFragment.arguments = bundle // Bundle을 BillsResultFragment의 arguments에 설정합니다.
+
+                    val fragmentTransaction = requireFragmentManager().beginTransaction()
+                    fragmentTransaction.replace(R.id.purchase_container, billsResultFragment)
+                    fragmentTransaction.commit()
+                }
+
+            }).requestPayment()
+    }
+
+
+    // 구매자 정보
+    fun getBootUser(): BootUser? {
+        val userId = "123411aaaaaaaaaaaabd4ss121"  // 구매자 아이디
+        val user = BootUser()   // MemberDto
+        user.id = userId // 구매자 아이디
+        user.area = address // 주소
+//        user.gender = 1 //1: 남자, 0: 여자
+        user.email = email // 주문서 받을 주소
+        user.phone = phoneNumber // 전화번호
+//        user.birth = "1988-06-10" // 생년월일
+        user.username = name  // 주문자 이름
+        return user
     }
 
 }
