@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import kr.co.bootpay.android.Bootpay
 import kr.co.bootpay.android.events.BootpayEventListener
 import kr.co.bootpay.android.models.BootExtra
@@ -34,6 +35,11 @@ class BillsFragment : Fragment() {
     private lateinit var cartDao: CartDao
 
     private var totalPrice = 0
+    private var address = ""
+    private var zipCode = ""
+    private var name = ""
+    private var phoneNumber = ""
+    private var email = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +64,6 @@ class BillsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setTotalPrice(totalPrice)
     }
 
@@ -79,6 +84,21 @@ class BillsFragment : Fragment() {
         val extra = BootExtra()
             .setCardQuota("0,2,3")
         val items: MutableList<BootItem> = ArrayList()
+
+        val editTextDeliveryAddress = view?.findViewById<EditText>(R.id.editTextDeliveryAddress)
+        address = editTextDeliveryAddress?.text.toString()
+
+        val editTextZipCode = view?.findViewById<EditText>(R.id.editTextZipCode)
+        zipCode = editTextZipCode?.text.toString()
+
+        val editTextName = view?.findViewById<EditText>(R.id.editTextName)
+        name = editTextName?.text.toString()
+
+        val editTextPhoneNumber = view?.findViewById<EditText>(R.id.editTextPhoneNumber)
+        phoneNumber = editTextPhoneNumber?.text.toString()
+
+        val editTextEmail = view?.findViewById<EditText>(R.id.editTextEmail)
+        email = editTextEmail?.text.toString()
 
         cartList.forEach { cart ->
             val item = BootItem().setName(cart.name ?: "")
@@ -139,8 +159,6 @@ class BillsFragment : Fragment() {
                         cartDao.deleteAll()
                     }.start()
 
-
-
                     // 결제가 완료되면 BillsResultFragment로 전환합니다.
                     val billsResultFragment = BillsResultFragment()
 
@@ -158,18 +176,17 @@ class BillsFragment : Fragment() {
     }
 
 
-
     // 구매자 정보
     fun getBootUser(): BootUser? {
         val userId = "123411aaaaaaaaaaaabd4ss121"  // 구매자 아이디
         val user = BootUser()   // MemberDto
         user.id = userId // 구매자 아이디
-        user.area = "서울" // 주소
-        user.gender = 1 //1: 남자, 0: 여자
-        user.email = "test1234@gmail.com" // 주문서 받을 주소
-        user.phone = "010-1234-4567" // 전화번호
-        user.birth = "1988-06-10" // 생년월일
-        user.username = "홍길동"  // 주문자 이름
+        user.area = address // 주소
+//        user.gender = 1 //1: 남자, 0: 여자
+        user.email = email // 주문서 받을 주소
+        user.phone = phoneNumber // 전화번호
+//        user.birth = "1988-06-10" // 생년월일
+        user.username = name  // 주문자 이름
         return user
     }
 

@@ -13,14 +13,21 @@ import net.developia.livartc.db.CartEntity
  * Time: 22:54
  */
 
-class CartRecyclerViewAdapter(private val cartList : ArrayList<CartEntity>) : RecyclerView.Adapter<CartRecyclerViewAdapter.MyViewHolder>() {
+class CartRecyclerViewAdapter(private val cartList : ArrayList<CartEntity>,
+                              private val onDelete: (CartEntity) -> Unit)
+    : RecyclerView.Adapter<CartRecyclerViewAdapter.MyViewHolder>() {
     inner class MyViewHolder(binding : ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root) {
             val cart_product_name = binding.cartProductName
             val cart_product_price = binding.cartProductPrice
             val cart_product_cnt = binding.cartProductCnt
             val cart_product_image = binding.cartProductImage
-
+            val cartProductDelete = binding.cartProductDelete
+            init {
+                cartProductDelete.setOnClickListener {
+                    onDelete(cartList[adapterPosition]) // 삭제 콜백 호출
+                }
+            }
             val root = binding.root
     }
 

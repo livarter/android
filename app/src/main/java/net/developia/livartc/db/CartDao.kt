@@ -28,4 +28,8 @@ interface CartDao {
 
     @Query("DELETE FROM CartEntity")
     fun deleteAll()
+
+    @Query("SELECT * FROM CartEntity WHERE product_id = :product_id")
+    fun getCartEntity(product_id: Int): CartEntity?
+
 }

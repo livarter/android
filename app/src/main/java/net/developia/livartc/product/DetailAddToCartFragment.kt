@@ -13,6 +13,7 @@ import net.developia.livartc.databinding.FragmentDetailAddToCartBinding
 import net.developia.livartc.databinding.FragmentDetailBinding
 import net.developia.livartc.db.AppDatabase
 import net.developia.livartc.db.CartDao
+import net.developia.livartc.db.CartEntity
 
 /**
  * LIVARTC
@@ -32,7 +33,7 @@ class DetailAddToCartFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         binding = FragmentDetailAddToCartBinding.inflate(inflater, container, false)
 
         db = AppDatabase.getInstance(requireContext())!!
@@ -66,23 +67,33 @@ class DetailAddToCartFragment : BottomSheetDialogFragment() {
         var name = arguments?.getString("name")
         var price = arguments?.getInt("price")
         var image = arguments?.getString("image")
+        var product_cnt = arguments?.getInt("product_cnt") ?: 1
 
         Thread {
-            cartDao.insert(
-                net.developia.livartc.db.CartEntity(
-                    1,
-                    product_id,
-                    name,
-                    price,
-                    product_cnt,
-                    image
+            val existingCartEntity = cartDao.getCartEntity(product_id ?: 0)
+
+            if (existingCartEntity != null) {
+                // 장바구니에 이미 있는 상품일 경우, 수량을 증가시킵니다.
+                existingCartEntity.product_cnt = existingCartEntity.product_cnt?.plus(product_cnt)
+                cartDao.update(existingCartEntity)
+            } else {
+                // 장바구니에 없는 상품일 경우, 새로운 CartEntity를 삽입합니다.
+                cartDao.insert(
+                    CartEntity(
+                        1,
+                        product_id,
+                        name,
+                        price,
+                        product_cnt,
+                        image
+                    )
                 )
-            )
+            }
+
             requireActivity().runOnUiThread {
                 Toast.makeText(requireContext(), "장바구니에 추가되었습니다.", Toast.LENGTH_SHORT).show()
                 requireActivity().finish()
             }
-
         }.start()
     }
 
