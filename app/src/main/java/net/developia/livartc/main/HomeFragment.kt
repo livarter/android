@@ -1,5 +1,6 @@
 package net.developia.livartc.main
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,21 +9,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import net.developia.livartc.MainActivity
 import net.developia.livartc.R
+import net.developia.livartc.adapter.BestProductAdapter
 import net.developia.livartc.adapter.HomeBannerAdapter
 import net.developia.livartc.databinding.FragmentHomeBinding
 import net.developia.livartc.main.banner.BannerFragment01
 import net.developia.livartc.main.banner.BannerFragment02
 import net.developia.livartc.main.banner.BannerFragment03
+import net.developia.livartc.model.BestProduct
+
+import net.developia.livartc.retrofit.MyApplication
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     private var currentPage = 0
-
-    val handler = Handler(Looper.getMainLooper()){
+    private var bestList: BestProduct? = null
+    private lateinit var mainActivity: MainActivity
+    private lateinit var bestAdapter: BestProductAdapter
+    private var isAutoScrolling = false
+    val handler = Handler(Looper.getMainLooper()) {
         setPage()
         true
     }
@@ -30,32 +42,50 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //배너 뷰페이저2 세팅하는 함수
+
+        //움직이는 메인 배너 만들기
         makeBanner()
-
-
-        //category버튼 누르면 CategoryFragment로 변경
+        //베스트 상품 버튼 누르면 인기순 조회페이지 이동
+        binding.bestBtn.setOnClickListener {
+            (activity as MainActivity).startProductActivity("베스트 상품")
+        }
+        //베스트 상품 4개 조회
+        getAllBestProduct()
+        //카테고리 버튼 눌렀을때 카테고리 Fragment 이동
         binding.categoryBtn.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.main_container, CategoryFragment())
-                //addToBackStack(null)메서드는, 프레그먼트를 replace했을때, 뒤로가기를 가능하게 하는 함수
                 addToBackStack(null)
                 commit()
             }
         }
-        val bundle = Bundle()
-        bundle.putString("title", "베스트상품")
-        //베스트 조회 눌렀을 때 ProductActivity 생성(베스트순으로 필터링된 조회창으로 이동)
-        binding.bestBtn.setOnClickListener {
-            (activity as MainActivity).startProductActivity("베스트 상품")
-        }
+    }
+
+
+    //메인 배너 관련
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
+    override fun onPause() {
+        super.onPause()
+        stopBannerAutoScroll()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopBannerAutoScroll()
+    }
+
+    private fun stopBannerAutoScroll() {
+        isAutoScrolling = false
+        handler.removeCallbacksAndMessages(null)
     }
 
     private fun makeBanner() {
@@ -66,10 +96,9 @@ class HomeFragment : Fragment() {
 
         val viewPager: ViewPager2 = binding.viewPager2Container
 
-        viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                // 페이지가 선택될 때마다 페이지 번호 업데이트
                 binding.pageNum.text = "${position + 1}  /  3"
                 currentPage = position
             }
@@ -78,31 +107,55 @@ class HomeFragment : Fragment() {
         binding.viewPager2Container.adapter = bannerAdapter
         binding.viewPager2Container.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         val child = binding.viewPager2Container.getChildAt(0)
-        //스크롤 넘길 때, 효과 나타 나지 않도록
         (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
 
-        val thread = Thread(PagerRunnable())
-        thread.start()
+        isAutoScrolling = true
+        handler.postDelayed(PagerRunnable(), 2500)
     }
 
-    private fun setPage() {
-        if(currentPage == 3) currentPage = 0
-        binding.viewPager2Container.setCurrentItem(currentPage, true)
-        currentPage+=1
-    }
-
-    inner class PagerRunnable:Runnable{
+    inner class PagerRunnable : Runnable {
         override fun run() {
-            while(true){
-                try {
-                    Thread.sleep(2500)
-                    handler.sendEmptyMessage(0)
-                } catch (e : InterruptedException){
-                    Log.d("interupt", "interupt발생")
-                }
+            if (!isAutoScrolling) {
+                return
             }
+            setPage()
+            handler.postDelayed(this, 2500)
         }
     }
 
+    private fun setPage() {
+        if (currentPage == 3) currentPage = 0
+        binding.viewPager2Container.setCurrentItem(currentPage, true)
+        currentPage += 1
+    }
+
+
+
+    //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
+    private fun getAllBestProduct() {
+        Thread {
+            val networkService = (context?.applicationContext as MyApplication).networkService
+            var getBestCall = networkService.getProduct()
+            getBestCall.enqueue(object : Callback<BestProduct> {
+                override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
+                    bestList = response.body()
+                    Log.d("hschoi", "$bestList")
+                    setBestRecyclerView()
+                }
+
+                override fun onFailure(call: Call<BestProduct>, t: Throwable) {
+                    Log.d("hschoi", "스프링 연결 실패!!!!")
+                }
+            })
+        }.start()
+    }
+
+    private fun setBestRecyclerView() {
+        mainActivity.runOnUiThread {
+            bestAdapter = BestProductAdapter(bestList, this@HomeFragment)
+            binding.recyclerView.adapter = bestAdapter
+            binding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
+        }
+    }
 
 }

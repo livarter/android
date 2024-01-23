@@ -171,6 +171,7 @@
                         android:text="수납"
                         android:layout_weight="1"
                         android:layout_gravity="center"/>
+
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -178,7 +179,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/best_text"
                     android:layout_width="wrap_content"
@@ -198,48 +200,15 @@
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_next" />
             </LinearLayout>
-
-
-
-
-            <ImageView
-                android:id="@+id/best_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:src="@drawable/_02_home_best_list" />
-
-            <LinearLayout
-                android:id="@+id/brand_btn"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <TextView
-                    android:id="@+id/brand_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="브랜드"
-                    android:textSize="21sp"
-                    android:fontFamily="sans-serif-black"
-                    android:layout_marginStart="27dp"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <ImageView
-                    android:id="@+id/brand_move"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_next" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/brand_kind"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_02_home_brand_kind" />
+                app:layout_constraintBottom_toTopOf="@+id/btn_add"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_best"
+                android:layout_marginLeft="21dp"
+                android:layout_marginRight="21dp"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
