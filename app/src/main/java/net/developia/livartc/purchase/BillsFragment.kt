@@ -209,13 +209,12 @@ class BillsFragment : Fragment() {
                                 response: Response<ResponseBody>
                             ) {
                                 Log.d("done", "insertPurchaseHistory: ${response.body()}")
+                                cartDao.deleteAll()
                             }
-
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 Log.d("done", "insertPurchaseHistory: $t")
                             }
                         })
-                        cartDao.deleteAll()
                     }.start()
 
                     // 결제가 완료되면 BillsResultFragment로 전환합니다.
