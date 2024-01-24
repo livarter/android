@@ -1,5 +1,8 @@
 package net.developia.livartc.retrofit
 
+import com.hyundai.loginapptest.domain.LoginReqDto
+import com.hyundai.loginapptest.domain.LoginResDto
+import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.model.BestProduct
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.User
@@ -24,6 +27,13 @@ interface INetworkService {
     //베스트 상품 리스트
     @GET("api/v1/product/list")
     fun getProduct(): Call<BestProduct>
+
+    // 회원
+    @POST("/api/v1/auth/login")
+    fun kakaoLogin(@Body loginResDto: LoginReqDto): Call<LoginResDto>
+
+    @GET("/api/v1/member")
+    fun getMemberInfo(): Call<MemberResDto>
 
 
     @GET("api/v1/products")
