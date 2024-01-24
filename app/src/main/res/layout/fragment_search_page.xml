@@ -19,6 +19,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guidelineTitle" />
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelinesearchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineSearchDetails"
         android:layout_width="wrap_content"
@@ -34,11 +42,12 @@
         app:layout_constraintGuide_percent="0.3" />
 
     <include
+        android:id="@+id/search_searchbar"
         layout="@layout/fragment_search_searchbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/guidelineTitle"
-        app:layout_constraintBottom_toTopOf="@id/guidelineSearchDetails"/>
+        app:layout_constraintBottom_toTopOf="@id/guidelinesearchView"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineProducts"
@@ -47,66 +56,46 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <include
-        layout="@layout/fragment_search_sortingdropdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineSearchDetails"
-        app:layout_constraintBottom_toTopOf="@id/guidelineSortList"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="@id/guidelinesearchView"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <include
-        android:id="@+id/product_image1"
-        layout="@layout/fragment_search_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guidelineProducts"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guidelineSortList" />
 
-    <include
-        android:id="@+id/product_image2"
-        layout="@layout/fragment_search_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineProducts"
-        app:layout_constraintTop_toBottomOf="@id/guidelineSortList" />
+        <LinearLayout
+            android:id="@+id/scrollLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <include
-        android:id="@+id/product_image3"
-        layout="@layout/fragment_search_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guidelineProducts"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/product_image1" />
+            <include
+                android:id="@+id/search_brandhashtag"
+                layout="@layout/fragment_search_brandhashtag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineSearchDetails"
+                app:layout_constraintTop_toTopOf="@id/guidelinesearchView" />
 
-    <include
-        android:id="@+id/product_image4"
-        layout="@layout/fragment_search_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineProducts"
-        app:layout_constraintTop_toBottomOf="@id/product_image2" />
+            <include
+                layout="@layout/fragment_search_sortingdropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/guidelineSortList"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guidelineSearchDetails" />
 
-    <include
-        android:id="@+id/product_image5"
-        layout="@layout/fragment_search_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guidelineProducts"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/product_image3" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/productRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guidelineSortList" />
 
-    <include
-        android:id="@+id/product_image6"
-        layout="@layout/fragment_search_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineProducts"
-        app:layout_constraintTop_toBottomOf="@id/product_image4" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
