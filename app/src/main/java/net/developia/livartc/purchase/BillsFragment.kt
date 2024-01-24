@@ -26,6 +26,9 @@ import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import kotlin.random.Random
 
 /**
  * LIVARTC
@@ -39,7 +42,6 @@ class BillsFragment : Fragment() {
     private lateinit var cartList : ArrayList<CartEntity>
     private lateinit var db :AppDatabase
     private lateinit var cartDao: CartDao
-
     private var totalPrice = 0
     private var address = ""
     private var zipCode = ""
@@ -93,18 +95,55 @@ class BillsFragment : Fragment() {
 
         val editTextDeliveryAddress = view?.findViewById<EditText>(R.id.editTextDeliveryAddress)
         address = editTextDeliveryAddress?.text.toString()
-
         val editTextZipCode = view?.findViewById<EditText>(R.id.editTextZipCode)
         zipCode = editTextZipCode?.text.toString()
-
         val editTextName = view?.findViewById<EditText>(R.id.editTextName)
         name = editTextName?.text.toString()
-
         val editTextPhoneNumber = view?.findViewById<EditText>(R.id.editTextPhoneNumber)
         phoneNumber = editTextPhoneNumber?.text.toString()
-
         val editTextEmail = view?.findViewById<EditText>(R.id.editTextEmail)
         email = editTextEmail?.text.toString()
+
+//        if (address == "") {
+//            editTextDeliveryAddress?.error = "배송지를 입력해주세요."
+//            editTextDeliveryAddress?.requestFocus()
+//            return
+//        }
+//        if (zipCode == "") {
+//            editTextZipCode?.error = "우편번호를 입력해주세요."
+//            editTextZipCode?.requestFocus()
+//            return
+//        }
+//        if (name == "") {
+//            editTextName?.error = "이름을 입력해주세요."
+//            editTextName?.requestFocus()
+//            return
+//        }
+//        if (phoneNumber == "") {
+//            editTextPhoneNumber?.error = "전화번호를 입력해주세요."
+//            editTextPhoneNumber?.requestFocus()
+//            return
+//        }
+//        if (email == "") {
+//            editTextEmail?.error = "이메일을 입력해주세요."
+//            editTextEmail?.requestFocus()
+//            return
+//        }
+        if(address == null) {
+            address = "서울특별시 성동구 자동차시장1길 64 청년취업사관학교 성동캠퍼스"
+        }
+        if(zipCode == null) {
+            zipCode = "06159"
+        }
+        if(name == null) {
+            name = "홍길동"
+        }
+        if(phoneNumber == null) {
+            phoneNumber = "01012345678"
+        }
+        if(email == null) {
+            email = "dd@ma.com"
+        }
 
         cartList.forEach { cart ->
             val item = BootItem().setName(cart.name ?: "")
@@ -126,9 +165,13 @@ class BillsFragment : Fragment() {
             "" // items가 비어있는 경우 공백 반환
         }
 
+        val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+        val randomNum = Random.nextInt(100000, 999999)
+        val orderId = "$date$randomNum"
+
         payload.setApplicationId(application_id)
             .setOrderName(orderName)
-            .setOrderId("1234")
+            .setOrderId(orderId)
             .setPrice(totalPrice?.toDouble() ?: 0.0)
             .setUser(getBootUser())
             .setExtra(extra)
@@ -141,9 +184,7 @@ class BillsFragment : Fragment() {
         map["zipcode"] = zipCode
         map["receiver_name"] = name
         map["receiver_phone"] = phoneNumber
-
         val itemsStringList = items.map { bootItemToString(it) }
-
         map["items"] = itemsStringList
         for (item in items) {
             Log.d("done", item.toString())
@@ -156,27 +197,21 @@ class BillsFragment : Fragment() {
                 override fun onCancel(data: String) {
                     Log.d("bootpay", "cancel: $data")
                 }
-
                 override fun onError(data: String) {
                     Log.d("bootpay", "error: $data")
                 }
-
                 override fun onClose() {
                     Bootpay.removePaymentWindow()
                 }
-
                 override fun onIssued(data: String) {
                     Log.d("bootpay", "issued: $data")
                 }
-
                 override fun onConfirm(data: String): Boolean {
                     Log.d("bootpay", "confirm: $data")
                     return true
                 }
-
                 override fun onDone(data: String) {
                     Log.d("done", data)
-
 
                     // 스프링 db 연동 / 구매내역 저장
                     val jsonObject = JSONObject(data)
@@ -185,7 +220,7 @@ class BillsFragment : Fragment() {
 
                     val purchaseReqDto = PurchaseReqDto(
                         memberId = metaObject.getString("member_id").toInt(),
-                        receiptId = dataObject.getString("receipt_id"),
+                        receiptId = dataObject.getString("order_id"),
                         createdAt = dataObject.getString("purchased_at"),
                         address = metaObject.getString("address"),
                         zipcode = metaObject.getString("zipcode"),
@@ -208,9 +243,9 @@ class BillsFragment : Fragment() {
                             response: Response<ResponseBody>
                         ) {
                             Log.d("done", "insertPurchaseHistory: ${response.body()}")
-                            Thread {
-                                cartDao.deleteAll()
-                            }.start()
+//                            Thread {
+//                                cartDao.deleteAll()
+//                            }.start()
                         }
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             Log.d("done", "insertPurchaseHistory: $t")

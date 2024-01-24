@@ -23,7 +23,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         setBottomNavigationView()
         // 앱 초기 실행 시 홈화면으로 설정
-        if (savedInstanceState == null)  binding.bottomNavigationView.selectedItemId = R.id.fragment_home
+        if (savedInstanceState == null) {
+            val startFragment = intent.getStringExtra("startFragment")
+            when (startFragment) {
+                "HomeFragment" -> binding.bottomNavigationView.selectedItemId = R.id.fragment_home
+                "MyPageFragment" -> binding.bottomNavigationView.selectedItemId = R.id.fragment_mypage
+                else -> binding.bottomNavigationView.selectedItemId = R.id.fragment_home
+            }
+        }
     }
 
     private fun setBottomNavigationView() {
