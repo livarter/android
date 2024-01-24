@@ -1,5 +1,6 @@
 package net.developia.livartc.retrofit
 
+import net.developia.livartc.login.TokenInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,8 +20,10 @@ object RetrofitInstance {
         }
 
         val client = OkHttpClient.Builder()
+            .addInterceptor(TokenInterceptor())
             .addInterceptor(logging)
             .build()
+
 
         Retrofit.Builder()
             .baseUrl("http://192.168.101.91:8080/")
