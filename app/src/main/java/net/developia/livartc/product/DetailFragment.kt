@@ -1,25 +1,19 @@
 package net.developia.livartc.product
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import net.developia.livartc.MainActivity
 import net.developia.livartc.ProductActivity
-import net.developia.livartc.R
-import net.developia.livartc.adapter.BestProductAdapter
 import net.developia.livartc.adapter.ReviewAdapter
 import net.developia.livartc.databinding.FragmentDetailBinding
-import net.developia.livartc.model.BestProduct
-import net.developia.livartc.retrofit.MyApplication
+import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,9 +44,6 @@ class DetailFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         productActivity = context as ProductActivity
-        binding.writeBtn.setOnClickListener {
-            activity
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,21 +53,17 @@ class DetailFragment : Fragment() {
 
     //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
     private fun getAllReview() {
-        Thread {
-            val networkService = (context?.applicationContext as MyApplication).networkService
-            var getReplyCall = networkService.getReview()
-            getReplyCall.enqueue(object : Callback<Reply> {
-                override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-                    reviewList = response.body()
-                    Log.d("hschoi", "?????$reviewList")
-                    setReviewRecyclerView()
-                }
+        RetrofitInstance.api.getReview().enqueue(object : Callback<Reply> {
+            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
+                reviewList = response.body()
+                Log.d("hschoi", "?????$reviewList")
+                setReviewRecyclerView()
+            }
 
-                override fun onFailure(call: Call<Reply>, t: Throwable) {
-                    Log.d("hschoi", "리뷰 스프링 연결 실패!!!!")
-                }
-            })
-        }.start()
+            override fun onFailure(call: Call<Reply>, t: Throwable) {
+                Log.d("hschoi", "리뷰 스프링 연결 실패!!!!")
+            }
+        })
     }
 
     private fun setReviewRecyclerView() {

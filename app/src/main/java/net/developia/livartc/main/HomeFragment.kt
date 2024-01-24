@@ -23,6 +23,7 @@ import net.developia.livartc.main.banner.BannerFragment03
 import net.developia.livartc.model.BestProduct
 
 import net.developia.livartc.retrofit.MyApplication
+import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -133,21 +134,17 @@ class HomeFragment : Fragment() {
 
     //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
     private fun getAllBestProduct() {
-        Thread {
-            val networkService = (context?.applicationContext as MyApplication).networkService
-            var getBestCall = networkService.getProduct()
-            getBestCall.enqueue(object : Callback<BestProduct> {
-                override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
-                    bestList = response.body()
-                    Log.d("hschoi", "$bestList")
-                    setBestRecyclerView()
-                }
+        RetrofitInstance.api.getProduct().enqueue(object : Callback<BestProduct> {
+            override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
+                bestList = response.body()
+                Log.d("hschoi", "$bestList")
+                setBestRecyclerView()
+            }
 
-                override fun onFailure(call: Call<BestProduct>, t: Throwable) {
-                    Log.d("hschoi", "스프링 연결 실패!!!!")
-                }
-            })
-        }.start()
+            override fun onFailure(call: Call<BestProduct>, t: Throwable) {
+                Log.d("hschoi", "스프링 연결 실패!!!!")
+            }
+        })
     }
 
     private fun setBestRecyclerView() {
