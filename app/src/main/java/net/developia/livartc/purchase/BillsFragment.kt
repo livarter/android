@@ -202,20 +202,20 @@ class BillsFragment : Fragment() {
                     )
 
                     // 결제가 완료되면 카트를 비웁니다.
-                    Thread {
-                        RetrofitInstance.api.insertPurchaseHistory(purchaseReqDto).enqueue(object : retrofit2.Callback<ResponseBody> {
-                            override fun onResponse(
-                                call: Call<ResponseBody>,
-                                response: Response<ResponseBody>
-                            ) {
-                                Log.d("done", "insertPurchaseHistory: ${response.body()}")
+                    RetrofitInstance.api.insertPurchaseHistory(purchaseReqDto).enqueue(object : retrofit2.Callback<ResponseBody> {
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            Log.d("done", "insertPurchaseHistory: ${response.body()}")
+                            Thread {
                                 cartDao.deleteAll()
-                            }
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Log.d("done", "insertPurchaseHistory: $t")
-                            }
-                        })
-                    }.start()
+                            }.start()
+                        }
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Log.d("done", "insertPurchaseHistory: $t")
+                        }
+                    })
 
                     // 결제가 완료되면 BillsResultFragment로 전환합니다.
                     val billsResultFragment = BillsResultFragment()
