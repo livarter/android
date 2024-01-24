@@ -1,6 +1,7 @@
 package net.developia.livartc.product
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import net.developia.livartc.MainActivity
@@ -48,6 +50,9 @@ class DetailFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         productActivity = context as ProductActivity
+        binding.writeBtn.setOnClickListener {
+            activity
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,6 +81,7 @@ class DetailFragment : Fragment() {
 
     private fun setReviewRecyclerView() {
         productActivity.runOnUiThread {
+            reviewList?.let { if (it.size > 0) binding.noReview.isVisible = false }
             replyAdapter = ReviewAdapter(reviewList, this@DetailFragment)
             binding.reviewRecyclerView.adapter = replyAdapter
             binding.reviewRecyclerView.layoutManager = LinearLayoutManager(requireContext())

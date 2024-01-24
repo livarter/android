@@ -9,16 +9,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/back_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="13dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_move"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:text="Detail"
-            android:textSize="27sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:text="에스테틱 호텔침대 프레임 (8종)"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -86,6 +86,8 @@
                     android:id="@+id/product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="sans-serif-black"
                     android:text="892,000"
@@ -96,6 +98,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="3dp"
                     android:text="원~"
                     app:layout_constraintBottom_toBottomOf="@+id/product_price"
@@ -113,29 +117,41 @@
                     android:id="@+id/product_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="4dp"
                     android:text="에스테틱! 감성을 채우는 인테리어 침대\n최고의선택!\n최고의가격!\n최고의가격!\n최고의가격!"
                     android:textSize="17sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title_btm" />
+                    app:layout_constraintTop_toBottomOf="@id/title_btm"
+                    />
+
                 <View
                     android:id="@+id/desc_btm"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
+                    android:layout_marginTop="20dp"
                     android:background="@color/light_grey"
                     app:layout_constraintTop_toBottomOf="@id/product_desc"
                     />
+
                 <TextView
                     android:id="@+id/review_title"
-                    android:layout_marginTop="13dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="9dp"
-                    android:text="상품리뷰"
+                    android:layout_marginTop="13dp"
                     android:fontFamily="sans-serif"
-                    android:textStyle="bold"
+                    android:text="상품리뷰"
                     android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@id/desc_btm"/>
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/desc_btm" />
+                <Button
+                    android:id="@+id/write_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="리뷰작성"
+                    app:layout_constraintTop_toBottomOf="@+id/desc_btm"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <View
                     android:id="@+id/review_title_btm"

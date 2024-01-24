@@ -1,22 +1,12 @@
 package net.developia.livartc.adapter
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import net.developia.livartc.databinding.ItemBestBinding
 import net.developia.livartc.databinding.ItemReviewBinding
-import net.developia.livartc.main.HomeFragment
-import net.developia.livartc.model.BestProduct
 import net.developia.livartc.product.DetailFragment
 import net.developia.livartc.product.Reply
 import java.text.SimpleDateFormat
-import java.util.Date
 
 /**
  * LIVARTC
@@ -43,13 +33,12 @@ class ReviewAdapter(private val replyList : Reply?, val context: DetailFragment)
         val replyData = replyList!![position]
 
         holder.profileId.text = "livarter${position+1}"
-        holder.replyContent.text = replyData.replyComment
+        holder.replyContent.text = replyData.replyComment.replace("\\n", "\n")
         holder.replyDate.text = holder.format.format(replyData.createdAt)
     }
 
     override fun getItemCount(): Int {
         // 리사이클러뷰 아이템 개수는 할일 리스트 크기
-        Log.d("hschoi", (replyList?.size?:0).toString())
         return replyList?.size?:0
     }
 
