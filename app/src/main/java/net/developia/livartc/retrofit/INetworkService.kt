@@ -3,7 +3,6 @@ package net.developia.livartc.retrofit
 import net.developia.livartc.model.BestProduct
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseReqDto
-import net.developia.livartc.model.User
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
