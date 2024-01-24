@@ -1,7 +1,6 @@
 package net.developia.livartc
 
 import android.content.Intent
-import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import net.developia.livartc.databinding.ActivityMainBinding
@@ -30,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private fun setBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
             when(item.itemId) {
+
                 R.id.fragment_home -> {
                     binding.mainTitle.text = "LIVΛRTC"
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, HomeFragment()).commit()
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, ProductActivity::class.java)
                     intent.putExtra("title", "Search")
                     startActivity(intent)
-                    true
+                    false
                 }
                 R.id.fragment_cart -> {
                     binding.mainTitle.text = "MyCart"
