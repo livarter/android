@@ -2,8 +2,9 @@ package net.developia.livartc.retrofit
 
 import net.developia.livartc.model.BestProduct
 import net.developia.livartc.model.Product
-import net.developia.livartc.model.User
-import net.developia.livartc.product.Reply
+import net.developia.livartc.model.PurchaseReqDto
+import net.developia.livartc.model.Reply
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -12,12 +13,22 @@ import retrofit2.http.Query
 
 interface INetworkService {
 
-
-    //상품 리스트
+    /**
+     * LIVARTC
+     * Created by 최현서
+     * Date: 1/21/24
+     * Time: 13:00
+     */
+    //베스트 상품 리스트
     @GET("api/v1/product/list")
     fun getProduct(): Call<BestProduct>
 
-
+    /**
+     * LIVARTC
+     * Created by 오수영
+     * Date: 1/19/24
+     * Time: 17:21
+     */
     @GET("api/v1/products")
     fun searchProducts(
         @Query("category", encoded = true) category: String,
@@ -30,8 +41,24 @@ interface INetworkService {
     ): Call<List<Product>>
 
 
+    /**
+     * LIVARTC
+     * Created by 변형준
+     * Date: 1/19/24
+     * Time: 17:21
+     */
+    @POST("api/v1/purchase/insert")
+    fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto): Call<ResponseBody>
 
+
+    /**
+     * LIVARTC
+     * Created by 최현서
+     * Date: 1/24/24
+     * Time: 16:00
+     */
     //리뷰 리스트
     @GET("api/v1/product/reply")
     fun getReview(): Call<Reply>
+
 }
