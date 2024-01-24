@@ -104,46 +104,32 @@ class BillsFragment : Fragment() {
         val editTextEmail = view?.findViewById<EditText>(R.id.editTextEmail)
         email = editTextEmail?.text.toString()
 
-//        if (address == "") {
-//            editTextDeliveryAddress?.error = "배송지를 입력해주세요."
-//            editTextDeliveryAddress?.requestFocus()
-//            return
-//        }
-//        if (zipCode == "") {
-//            editTextZipCode?.error = "우편번호를 입력해주세요."
-//            editTextZipCode?.requestFocus()
-//            return
-//        }
-//        if (name == "") {
-//            editTextName?.error = "이름을 입력해주세요."
-//            editTextName?.requestFocus()
-//            return
-//        }
-//        if (phoneNumber == "") {
-//            editTextPhoneNumber?.error = "전화번호를 입력해주세요."
-//            editTextPhoneNumber?.requestFocus()
-//            return
-//        }
-//        if (email == "") {
-//            editTextEmail?.error = "이메일을 입력해주세요."
-//            editTextEmail?.requestFocus()
-//            return
-//        }
-        if(address == null) {
-            address = "서울특별시 성동구 자동차시장1길 64 청년취업사관학교 성동캠퍼스"
+        if (address == "") {
+            editTextDeliveryAddress?.error = "배송지를 입력해주세요."
+            editTextDeliveryAddress?.requestFocus()
+            return
         }
-        if(zipCode == null) {
-            zipCode = "06159"
+        if (zipCode == "") {
+            editTextZipCode?.error = "우편번호를 입력해주세요."
+            editTextZipCode?.requestFocus()
+            return
         }
-        if(name == null) {
-            name = "홍길동"
+        if (name == "") {
+            editTextName?.error = "이름을 입력해주세요."
+            editTextName?.requestFocus()
+            return
         }
-        if(phoneNumber == null) {
-            phoneNumber = "01012345678"
+        if (phoneNumber == "") {
+            editTextPhoneNumber?.error = "전화번호를 입력해주세요."
+            editTextPhoneNumber?.requestFocus()
+            return
         }
-        if(email == null) {
-            email = "dd@ma.com"
+        if (email == "") {
+            editTextEmail?.error = "이메일을 입력해주세요."
+            editTextEmail?.requestFocus()
+            return
         }
+
 
         cartList.forEach { cart ->
             val item = BootItem().setName(cart.name ?: "")
@@ -243,9 +229,9 @@ class BillsFragment : Fragment() {
                             response: Response<ResponseBody>
                         ) {
                             Log.d("done", "insertPurchaseHistory: ${response.body()}")
-//                            Thread {
-//                                cartDao.deleteAll()
-//                            }.start()
+                            Thread {
+                                cartDao.deleteAll()
+                            }.start()
                         }
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             Log.d("done", "insertPurchaseHistory: $t")
