@@ -46,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(ContentValues.TAG, "카카오 계정으로 로그인 실패", error)
             } else if (token != null) {
                 Log.d(ContentValues.TAG, "카카오 계정으로 로그인 성공 access token ${token.accessToken}")
+                startActivity(intent)
                 // 백단에 API 요청
                 var jwtToken = loginWithKakao(this, token.accessToken)
 
@@ -75,7 +76,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
-            startActivity(intent)
         }
     }
 
@@ -91,9 +91,12 @@ class LoginActivity : AppCompatActivity() {
             memberResDto.enqueue(object : Callback<LoginResDto> {
                 override fun onResponse(call: Call<LoginResDto>, response: Response<LoginResDto>) {
                     var loginResDto = response.body()!!
-                    Log.d("로그인 API 테스트 성공", loginResDto.toString())
-                    Log.d("자체 JWT 토큰 발급 성공", loginResDto.accessToken)
-                    jwtToken = loginResDto.accessToken
+
+                    if (loginResDto != null) {
+                        Log.d("로그인 API 테스트 성공", loginResDto.toString())
+                        Log.d("자체 JWT 토큰 발급 성공", loginResDto.accessToken)
+                        jwtToken = loginResDto.accessToken
+                    }
                 }
                 override fun onFailure(call: Call<LoginResDto>, t: Throwable) {
                     Log.d("로그인 API 테스트 실패", t.toString())
