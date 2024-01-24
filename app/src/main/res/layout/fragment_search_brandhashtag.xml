@@ -14,21 +14,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- 예시 태그들, 실제로는 동적으로 추가될 수 있음 -->
-        <TextView
-            android:id="@+id/brandText"
-            android:layout_width="wrap_content"
+        <!-- 브랜드 목록을 표시할 RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/brandsRecyclerView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Arbre"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="15dp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/hashTagText"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"/>
+
+
+        <!-- HashTag 목록을 표시할 RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hashTagRecyclerView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="#모던"
-            android:layout_marginTop="15dp"/>
+            android:orientation="horizontal"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
