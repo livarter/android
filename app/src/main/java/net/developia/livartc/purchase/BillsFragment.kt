@@ -20,6 +20,12 @@ import net.developia.livartc.databinding.FragmentBillsBinding
 import net.developia.livartc.db.AppDatabase
 import net.developia.livartc.db.CartDao
 import net.developia.livartc.db.CartEntity
+import net.developia.livartc.model.PurchaseReqDto
+import net.developia.livartc.retrofit.RetrofitInstance
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
 
 /**
  * LIVARTC
@@ -109,19 +115,39 @@ class BillsFragment : Fragment() {
         }
 
         val payload = Payload()
+        val orderName = if (items.isNotEmpty()) {
+            val firstItemName = items[0].name
+            if (items.size > 1) {
+                "$firstItemName 외 ${items.size - 1}건"
+            } else {
+                firstItemName
+            }
+        } else {
+            "" // items가 비어있는 경우 공백 반환
+        }
 
         payload.setApplicationId(application_id)
-            .setOrderName("상품명")
+            .setOrderName(orderName)
             .setOrderId("1234")
             .setPrice(totalPrice?.toDouble() ?: 0.0)
             .setUser(getBootUser())
             .setExtra(extra)
             .items = items
 
+        //백에서 필요한 개인 정보 모두 넣기
         val map: MutableMap<String, Any> = HashMap()
-        map["1"] = "abcdef"
-        map["2"] = "abcdef55"
-        map["3"] = 1234
+        map["member_id"] = "1"
+        map["address"] = address
+        map["zipcode"] = zipCode
+        map["receiver_name"] = name
+        map["receiver_phone"] = phoneNumber
+
+        val itemsStringList = items.map { bootItemToString(it) }
+
+        map["items"] = itemsStringList
+        for (item in items) {
+            Log.d("done", item.toString())
+        }
         payload.metadata = map
 
         Bootpay.init(childFragmentManager, requireContext())
@@ -151,11 +177,44 @@ class BillsFragment : Fragment() {
                 override fun onDone(data: String) {
                     Log.d("done", data)
 
-                    // 스프링 db 연동 / 구매내역 저장
 
+                    // 스프링 db 연동 / 구매내역 저장
+                    val jsonObject = JSONObject(data)
+                    val dataObject = jsonObject.getJSONObject("data")
+                    val metaObject = dataObject.getJSONObject("metadata")
+
+                    val purchaseReqDto = PurchaseReqDto(
+                        memberId = metaObject.getString("member_id").toInt(),
+                        receiptId = dataObject.getString("receipt_id"),
+                        createdAt = dataObject.getString("purchased_at"),
+                        address = metaObject.getString("address"),
+                        zipcode = metaObject.getString("zipcode"),
+                        receiverName = metaObject.getString("receiver_name"),
+                        receiverPhone = metaObject.getString("receiver_phone"),
+                        purchaseDetailStatus = dataObject.getString("status").toInt(),
+                        items = items.map { item ->
+                            PurchaseReqDto.Item(
+                                id = item.id.toInt(),
+                                qty = item.qty,
+                                price = item.price.toLong()
+                            )
+                        }
+                    )
 
                     // 결제가 완료되면 카트를 비웁니다.
                     Thread {
+                        RetrofitInstance.api.insertPurchaseHistory(purchaseReqDto).enqueue(object : retrofit2.Callback<ResponseBody> {
+                            override fun onResponse(
+                                call: Call<ResponseBody>,
+                                response: Response<ResponseBody>
+                            ) {
+                                Log.d("done", "insertPurchaseHistory: ${response.body()}")
+                            }
+
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                Log.d("done", "insertPurchaseHistory: $t")
+                            }
+                        })
                         cartDao.deleteAll()
                     }.start()
 
@@ -175,6 +234,9 @@ class BillsFragment : Fragment() {
             }).requestPayment()
     }
 
+    fun bootItemToString(item: BootItem): String {
+        return "Name: ${item.name}, ID: ${item.id}, Quantity: ${item.qty}, Price: ${item.price}"
+    }
 
     // 구매자 정보
     fun getBootUser(): BootUser? {
