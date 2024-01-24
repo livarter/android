@@ -1,6 +1,6 @@
 package net.developia.livartc.model
 
-class Reply : ArrayList<ReplyItem>(){
+class Reply : ArrayList<Reply.ReplyItem>(){
     data class ReplyItem(
         val createdAt: Long,
         val id: Int,
