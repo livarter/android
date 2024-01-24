@@ -133,20 +133,26 @@ class HomeFragment : Fragment() {
 
 
     //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
-    private fun getAllBestProduct() {
-        RetrofitInstance.api.getProduct().enqueue(object : Callback<BestProduct> {
-            override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
-                bestList = response.body()
-                Log.d("hschoi", "$bestList")
-                setBestRecyclerView()
-            }
 
-            override fun onFailure(call: Call<BestProduct>, t: Throwable) {
-                Log.d("hschoi", "스프링 연결 실패!!!!")
-            }
-        })
-    }
+        private fun getAllBestProduct() {
 
+            Thread {
+                RetrofitInstance.api.getProduct().enqueue(object : retrofit2.Callback<BestProduct> {
+                    override fun onResponse(
+                        call: Call<BestProduct>,
+                        response: Response<BestProduct>
+                    ) {
+                        bestList = response.body()
+                        Log.d("hschoi", "$bestList")
+                        setBestRecyclerView()
+                    }
+
+                    override fun onFailure(call: Call<BestProduct>, t: Throwable) {
+                        Log.d("hschoi", "스프링 연결 실패!!!!")
+                    }
+                })
+            }.start()
+        }
     private fun setBestRecyclerView() {
         mainActivity.runOnUiThread {
             bestAdapter = BestProductAdapter(bestList, this@HomeFragment)

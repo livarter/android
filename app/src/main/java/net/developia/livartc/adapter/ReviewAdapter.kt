@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import net.developia.livartc.databinding.ItemReviewBinding
+import net.developia.livartc.model.Reply
 import net.developia.livartc.product.DetailFragment
-import net.developia.livartc.product.Reply
 import java.text.SimpleDateFormat
 
 /**
