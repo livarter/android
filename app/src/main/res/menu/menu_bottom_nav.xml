@@ -5,10 +5,15 @@
         android:title="홈"
         android:icon="@drawable/ic_home"/>
     <item
-        android:id="@+id/fragment_world"
+        android:id="@+id/fragment_collections"
         android:title="컬렉션"
 
         android:icon="@drawable/ic_collections"/>
+    <item
+        android:id="@+id/fragment_search"
+        android:title="검색"
+
+        android:icon="@drawable/ic_search"/>
     <item
         android:id="@+id/fragment_cart"
         android:title="장바구니"
