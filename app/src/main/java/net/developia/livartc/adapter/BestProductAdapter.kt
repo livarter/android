@@ -11,6 +11,7 @@ import com.bumptech.glide.request.transition.Transition
 import net.developia.livartc.databinding.ItemBestBinding
 import net.developia.livartc.main.HomeFragment
 import net.developia.livartc.model.BestProduct
+import net.developia.livartc.model.Product
 
 /**
  * LIVARTC
@@ -18,7 +19,7 @@ import net.developia.livartc.model.BestProduct
  * Date: 2024-01-22
  * Time: 오후 12:54
  */
-class BestProductAdapter(private val bestList : BestProduct?, val context: HomeFragment)
+class BestProductAdapter(private val bestList : List<Product>?, val context: HomeFragment)
     : RecyclerView.Adapter<BestProductAdapter.BestProductViewHolder>() {
     inner class BestProductViewHolder(binding: ItemBestBinding) : RecyclerView.ViewHolder(binding.root) {
         val nameView = binding.bestProductName
@@ -35,8 +36,8 @@ class BestProductAdapter(private val bestList : BestProduct?, val context: HomeF
     override fun onBindViewHolder(holder: BestProductViewHolder, position: Int) {
         val bestData = bestList!![position]
 
-        holder.nameView.text = bestData.name
-        holder.priceView.text = "￦ ${bestData.price}"
+        holder.nameView.text = bestData.productName
+        holder.priceView.text = "￦ ${bestData.productPrice}"
         Glide.with(context)
             .asBitmap()
             .load(bestData.productImage)

@@ -21,8 +21,8 @@ import net.developia.livartc.main.banner.BannerFragment01
 import net.developia.livartc.main.banner.BannerFragment02
 import net.developia.livartc.main.banner.BannerFragment03
 import net.developia.livartc.model.BestProduct
+import net.developia.livartc.model.Product
 
-import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,7 +31,7 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     private var currentPage = 0
-    private var bestList: BestProduct? = null
+    private var bestList: List<Product>? = null
     private lateinit var mainActivity: MainActivity
     private lateinit var bestAdapter: BestProductAdapter
     private var isAutoScrolling = false
@@ -135,23 +135,21 @@ class HomeFragment : Fragment() {
     //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
 
         private fun getAllBestProduct() {
-
-            Thread {
-                RetrofitInstance.api.getProduct().enqueue(object : retrofit2.Callback<BestProduct> {
+            RetrofitInstance.api.searchProducts("", "", "", "", 6, 4, 1)
+                    .enqueue(object : Callback<List<Product>> {
                     override fun onResponse(
-                        call: Call<BestProduct>,
-                        response: Response<BestProduct>
+                        call: Call<List<Product>>,
+                        response: Response<List<Product>>
                     ) {
                         bestList = response.body()
                         Log.d("hschoi", "$bestList")
                         setBestRecyclerView()
                     }
 
-                    override fun onFailure(call: Call<BestProduct>, t: Throwable) {
+                    override fun onFailure(call: Call<List<Product>>, t: Throwable) {
                         Log.d("hschoi", "스프링 연결 실패!!!!")
                     }
                 })
-            }.start()
         }
     private fun setBestRecyclerView() {
         mainActivity.runOnUiThread {
