@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sorting_options">
+        <item>최신순</item>
+        <item>이름순</item>
+        <item>낮은가격순</item>
+        <item>높은가격순</item>
+        <item>판매량순</item>
+        <item>조회수순</item>
+    </string-array>
+</resources>
