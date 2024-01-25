@@ -38,7 +38,6 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false)
         db = AppDatabase.getInstance(requireContext())!!
         cartDao = db.getCartDao()
@@ -63,14 +62,12 @@ class CartFragment : Fragment() {
     private fun getAllCartList() {
         Thread {
             cartList = ArrayList(cartDao.getAll())
-            totalPrice = 0
+            totalPrice = 0L
             for (cart in cartList) {
                 val price = cart.price ?: 0
                 val productCnt = cart.product_cnt ?: 0
-                totalPrice += (price * productCnt.toLong()).toInt()
+                totalPrice += price * productCnt.toLong()
             }
-            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
-            val formattedPrice = numberFormat.format(totalPrice)
             requireActivity().runOnUiThread {
                 if (cartList.isEmpty()) {
                     // 장바구니가 비어 있는 경우
@@ -80,17 +77,22 @@ class CartFragment : Fragment() {
                     // 장바구니에 상품이 있는 경우
                     binding.emptyCartView.visibility = View.GONE
                     binding.cartView.visibility = View.VISIBLE
-                    setTotalPrice(formattedPrice)
+                    setTotalPrice(totalPrice)
                     setRecyclerView()
                 }
             }
         }.start()
     }
 
-    private fun setTotalPrice(totalPrice: String) {
+    private fun setTotalPrice(totalPrice: Long) {
         requireActivity().runOnUiThread {
-            binding.originPrice.text = "$totalPrice 원"
-            binding.totalPrice.text = "$totalPrice 원" // 총 결제 금액을 화면에 표시
+            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+            val formattedPrice = numberFormat.format(totalPrice)
+            binding.originPrice.text = "$formattedPrice 원"
+            // 배송비는 0원으로 설정
+
+            // 할인 금액
+            binding.totalPrice.text = "$formattedPrice 원" // 총 결제 금액을 화면에 표시
         }
     }
 
