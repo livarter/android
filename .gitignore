@@ -320,6 +320,6 @@ obj/
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,androidstudio,intellij,macos,windows
 
 .properties
-.idea/appInsightsSettings.xml
-.idea/deploymentTargetDropDown.xml
 api.properties
+.idea/deploymentTargetDropDown.xml
+app/src/main/res/values/config.xml

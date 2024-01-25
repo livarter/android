@@ -12,7 +12,6 @@
     <item
         android:id="@+id/fragment_search"
         android:title="검색"
-
         android:icon="@drawable/ic_search"/>
     <item
         android:id="@+id/fragment_cart"

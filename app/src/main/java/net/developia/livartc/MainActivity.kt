@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private fun setBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
             when(item.itemId) {
+
                 R.id.fragment_home -> {
                     binding.mainTitle.text = "LIVΛRTC"
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, HomeFragment()).commit()

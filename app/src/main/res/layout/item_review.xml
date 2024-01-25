@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cat" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/profile_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="sans-serif-black"
+        android:text="livater07"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_card"
+        app:layout_constraintStart_toEndOf="@id/profile_card"
+        app:layout_constraintTop_toTopOf="@id/profile_card" />
+
+    <TextView
+        android:id="@+id/reply_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2024.01.20"
+        android:textSize="14sp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_id"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/review_image"
+        android:layout_width="match_parent"
+        android:adjustViewBounds="true"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/best_sample"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/review_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="50dp"
+        android:textSize="16sp"
+        android:text="이 가구를 사고나서 집 분위기가 확 사네요!!\n너무 맘에들어요~ 역시 리바트 컬렉션입니다!!"
+        />
+</LinearLayout>

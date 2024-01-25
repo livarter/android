@@ -3,7 +3,6 @@ package net.developia.livartc.retrofit
 import com.hyundai.loginapptest.domain.LoginReqDto
 import com.hyundai.loginapptest.domain.LoginResDto
 import com.hyundai.loginapptest.domain.MemberResDto
-import net.developia.livartc.model.BestProduct
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseReqDto
 import okhttp3.ResponseBody
@@ -14,16 +13,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface INetworkService {
-
-    /**
-     * LIVARTC
-     * Created by 최현서
-     * Date: 1/19/24
-     * Time: 17:21
-     */
-    //베스트 상품 리스트
-    @GET("api/v1/product/list")
-    fun getProduct(): Call<BestProduct>
 
      /**
      * LIVARTC
@@ -65,5 +54,6 @@ interface INetworkService {
      */
     @POST("api/v1/purchase/insert")
     fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto): Call<ResponseBody>
+
 
 }
