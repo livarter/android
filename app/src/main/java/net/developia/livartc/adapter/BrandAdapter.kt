@@ -14,8 +14,12 @@ import net.developia.livartc.R
  * Time: 4:33 PM
  */
 
-class BrandAdapter(private val brands: List<String>) :
+class BrandAdapter(
+    private val brands: List<String>,
+    private val onClick: (String) -> Unit) :
     RecyclerView.Adapter<BrandAdapter.BrandViewHolder>() {
+
+    private var selectedPosition = RecyclerView.NO_POSITION
 
     class BrandViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val brandText: TextView = view.findViewById(R.id.brandText)
@@ -27,7 +31,15 @@ class BrandAdapter(private val brands: List<String>) :
     }
 
     override fun onBindViewHolder(holder: BrandViewHolder, position: Int) {
-        holder.brandText.text = brands[position]
+        val brand = brands[position]
+        holder.brandText.text = brand
+        holder.itemView.isSelected = position == selectedPosition
+
+        holder.itemView.setOnClickListener {
+            selectedPosition = position
+            notifyDataSetChanged()
+            onClick(brand)
+        }
     }
 
     override fun getItemCount() = brands.size
