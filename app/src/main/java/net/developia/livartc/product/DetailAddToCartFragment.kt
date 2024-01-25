@@ -67,7 +67,6 @@ class DetailAddToCartFragment : BottomSheetDialogFragment() {
         var name = arguments?.getString("name")
         var price = arguments?.getInt("price")
         var image = arguments?.getString("image")
-        var product_cnt = arguments?.getInt("product_cnt") ?: 1
 
         Thread {
             val existingCartEntity = cartDao.getCartEntity(product_id ?: 0)
