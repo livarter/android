@@ -1,5 +1,6 @@
 package net.developia.livartc
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +39,11 @@ class ProductActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().replace(R.id.product_container, filteredProductFragment).commit()
                 true
             }
+        }
+        fun startReviewWriteActivity() {
+            val intent = Intent(this, ReplyWriteActivity::class.java)
+//            intent.putExtra("userid", userid)
+            startActivity(intent)
         }
     }
 }

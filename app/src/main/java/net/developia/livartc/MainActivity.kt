@@ -29,15 +29,23 @@ class MainActivity : AppCompatActivity() {
     private fun setBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
             when(item.itemId) {
+
                 R.id.fragment_home -> {
                     binding.mainTitle.text = "LIVΛRTC"
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, HomeFragment()).commit()
                     true
                 }
-                R.id.fragment_world -> {
+                R.id.fragment_collections -> {
                     binding.mainTitle.text = "Collections"
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, CollectionsFragment()).commit()
                     true
+                }
+                R.id.fragment_search -> {
+                    binding.mainTitle.text = "Search"
+                    val intent = Intent(this, ProductActivity::class.java)
+                    intent.putExtra("title", "Search")
+                    startActivity(intent)
+                    false
                 }
                 R.id.fragment_cart -> {
                     binding.mainTitle.text = "MyCart"

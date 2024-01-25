@@ -20,17 +20,23 @@ import net.developia.livartc.databinding.FragmentHomeBinding
 import net.developia.livartc.main.banner.BannerFragment01
 import net.developia.livartc.main.banner.BannerFragment02
 import net.developia.livartc.main.banner.BannerFragment03
-import net.developia.livartc.model.BestProduct
+import net.developia.livartc.model.Product
 
-import net.developia.livartc.retrofit.MyApplication
+import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * LIVARTC
+ * Created by 최현서
+ * Date: 2024-01-22
+ * Time: 오후 3:00
+ */
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     private var currentPage = 0
-    private var bestList: BestProduct? = null
+    lateinit var bestList: List<Product>
     private lateinit var mainActivity: MainActivity
     private lateinit var bestAdapter: BestProductAdapter
     private var isAutoScrolling = false
@@ -49,15 +55,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //움직이는 메인 배너 만들기
+        // 움직이는 메인 배너 만들기
         makeBanner()
-        //베스트 상품 버튼 누르면 인기순 조회페이지 이동
+
+        // 베스트 상품 버튼 누르면 인기순 조회페이지 이동
         binding.bestBtn.setOnClickListener {
             (activity as MainActivity).startProductActivity("베스트 상품")
         }
-        //베스트 상품 4개 조회
+
+        // 베스트 상품 4개 조회
         getAllBestProduct()
-        //카테고리 버튼 눌렀을때 카테고리 Fragment 이동
+
+        // 카테고리 버튼 눌렀을 때 카테고리 Fragment 이동
         binding.categoryBtn.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.main_container, CategoryFragment())
@@ -67,20 +76,30 @@ class HomeFragment : Fragment() {
         }
     }
 
-
-    //메인 배너 관련
+    // 메인 배너 관련
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
     }
+
+    override fun onResume() {
+        super.onResume()
+        startBannerAutoScroll()
+    }
+
     override fun onPause() {
         super.onPause()
         stopBannerAutoScroll()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         stopBannerAutoScroll()
+    }
+
+    private fun startBannerAutoScroll() {
+        isAutoScrolling = true
+        handler.postDelayed(PagerRunnable(), 2500)
     }
 
     private fun stopBannerAutoScroll() {
@@ -108,9 +127,6 @@ class HomeFragment : Fragment() {
         binding.viewPager2Container.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         val child = binding.viewPager2Container.getChildAt(0)
         (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
-
-        isAutoScrolling = true
-        handler.postDelayed(PagerRunnable(), 2500)
     }
 
     inner class PagerRunnable : Runnable {
@@ -124,30 +140,32 @@ class HomeFragment : Fragment() {
     }
 
     private fun setPage() {
-        if (currentPage == 3) currentPage = 0
+        if (currentPage == 2) currentPage = 0
+        else currentPage += 1
         binding.viewPager2Container.setCurrentItem(currentPage, true)
-        currentPage += 1
     }
 
-
-
-    //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
+    // 베스트 상품 조회 관련 (Retrofit 연동 후 recycler view 뿌림)
     private fun getAllBestProduct() {
-        Thread {
-            val networkService = (context?.applicationContext as MyApplication).networkService
-            var getBestCall = networkService.getProduct()
-            getBestCall.enqueue(object : Callback<BestProduct> {
-                override fun onResponse(call: Call<BestProduct>, response: Response<BestProduct>) {
-                    bestList = response.body()
-                    Log.d("hschoi", "$bestList")
-                    setBestRecyclerView()
+        RetrofitInstance.api.searchProducts("", "", "", "", 6, 4, 1)
+            .enqueue(object : Callback<List<Product>> {
+                override fun onResponse(
+                    call: Call<List<Product>>,
+                    response: Response<List<Product>>
+                ) {
+                    if (response.isSuccessful) {
+                        bestList = response.body() ?: emptyList()
+                        setBestRecyclerView()
+                        Log.d("Best List 조회", "검색 결과: $bestList")
+                    } else {
+                        Log.e("Best List 조회", "응답 실패: ${response.errorBody()}")
+                    }
                 }
 
-                override fun onFailure(call: Call<BestProduct>, t: Throwable) {
-                    Log.d("hschoi", "스프링 연결 실패!!!!")
+                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                    Log.d("Best List 조회", "API 호출 실패: $t")
                 }
             })
-        }.start()
     }
 
     private fun setBestRecyclerView() {
@@ -157,5 +175,4 @@ class HomeFragment : Fragment() {
             binding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
         }
     }
-
 }
