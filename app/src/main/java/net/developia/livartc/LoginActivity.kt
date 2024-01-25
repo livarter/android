@@ -48,13 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(ContentValues.TAG, "카카오 계정으로 로그인 성공 access token ${token.accessToken}")
                 startActivity(intent)
                 // 백단에 API 요청
-                var jwtToken = loginWithKakao(this, token.accessToken)
-
-                TokenManager.saveToken(this, jwtToken)
-                var resToken = TokenManager.getToken(MyApplication.instance)
-                if (resToken != null) {
-                    Log.d("shared pref 저장", resToken)
-                }
+                loginWithKakao(this, token.accessToken)
             }
         }
 
@@ -71,6 +65,8 @@ class LoginActivity : AppCompatActivity() {
                     } else if (token != null) {
                         Log.d(ContentValues.TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
                         startActivity(intent)
+                        // 백단에 API 요청
+                        loginWithKakao(this, token.accessToken)
                     }
                 }
             } else {
@@ -96,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("로그인 API 테스트 성공", loginResDto.toString())
                         Log.d("자체 JWT 토큰 발급 성공", loginResDto.accessToken)
                         jwtToken = loginResDto.accessToken
+                        TokenManager.saveToken(MyApplication.instance, jwtToken)
                     }
                 }
                 override fun onFailure(call: Call<LoginResDto>, t: Throwable) {
