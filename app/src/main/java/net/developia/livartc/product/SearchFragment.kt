@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import net.developia.livartc.R
+import net.developia.livartc.adapter.BrandAdapter
+import net.developia.livartc.adapter.HashTagAdapter
 import net.developia.livartc.adapter.ProductAdapter
 import net.developia.livartc.databinding.FragmentSearchPageBinding
 import net.developia.livartc.databinding.FragmentSearchSearchbarBinding
@@ -21,6 +24,7 @@ import retrofit2.Response
 class SearchFragment : Fragment() {
     lateinit var binding: FragmentSearchPageBinding
     lateinit var searchBarBinding: FragmentSearchSearchbarBinding
+    private var selectedBrand: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,21 +42,23 @@ class SearchFragment : Fragment() {
         searchBarBinding.searchViews.isSubmitButtonEnabled = true
         searchBarBinding.searchViews.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    searchProducts(it)
-                }
+                searchProducts(query ?:"",selectedBrand)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 // 필요한 경우 이곳에서 검색어 변경에 대한 처리를 구현
+                // 추후에 새로운 검색어 검색시 선택된 브랜드와 해시태그 초기화 필요
                 return true
             }
         })
     }
 
-    private fun searchProducts(searchQuery: String) {
-        RetrofitInstance.api.searchProducts("", "", "", searchQuery, 1, 10, 1)
+    private fun searchProducts(searchQuery: String, selectedBrand: String?) {
+
+        val query = searchQuery.ifBlank { null }
+
+        RetrofitInstance.api.searchProducts("", selectedBrand ?: "","", query ?:"", 1, 10, 1)
             .enqueue(object : Callback<List<Product>> {
                 override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
                     if (response.isSuccessful) {
@@ -75,75 +81,50 @@ class SearchFragment : Fragment() {
     private fun displaySearchResults(products: List<Product>) {
         val recyclerView = binding.productRecyclerView
         recyclerView.layoutManager = GridLayoutManager(context, 2) // 2열 그리드 레이아웃 설정
-        recyclerView.adapter = ProductAdapter(products)
+        recyclerView.adapter = ProductAdapter(products) { product ->
+            showProductDetail(product)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 테스트 데이터 사용
-        val testProducts = listOf(
-            Product(
-                productId = 1,
-                productName = "마메 라운지체어 (2색)",
-                productPrice = 8339000,
-                productDescription = null,
-                productImage = "https://static.hyundailivart.co.kr/upload_mall/goods/P200164153/GM43194682_img.jpg/dims/resize/x250/cropcenter/250x250/autorotate/on/optimize",
-                brandName = "Fogia",
-                hashtags = "특징2, 특징3, 특징5",
-                allHashtags = "특징1, 특징2, 특징3, 특징4, 특징5"
-            ),
-            Product(
-                productId = 2,
-                productName = "리라 오토만 (3종)",
-                productPrice = 3592000,
-                productDescription = null,
-                productImage= "https://static.hyundailivart.co.kr/upload_mall/goods/P200164152/GM43194674_img.jpg/dims/resize/x250/cropcenter/250x250/autorotate/on/optimize",
-                brandName = "Fogia",
-                hashtags = "특징2, 특징3, 특징5",
-                allHashtags = "특징1, 특징2, 특징3, 특징4, 특징5"
-            ),
-            Product(
-                productId = 1,
-                productName = "마메 라운지체어 (2색)",
-                productPrice = 8339000,
-                productDescription = null,
-                productImage = "https://static.hyundailivart.co.kr/upload_mall/goods/P200164153/GM43194682_img.jpg/dims/resize/x250/cropcenter/250x250/autorotate/on/optimize",
-                brandName = "Fogia",
-                hashtags = "특징2, 특징3, 특징5",
-                allHashtags = "특징1, 특징2, 특징3, 특징4, 특징5"
-            ),
-            Product(
-                productId = 2,
-                productName = "리라 오토만 (3종)",
-                productPrice = 3592000,
-                productDescription = null,
-                productImage= "https://static.hyundailivart.co.kr/upload_mall/goods/P200164152/GM43194674_img.jpg/dims/resize/x250/cropcenter/250x250/autorotate/on/optimize",
-                brandName = "Fogia",
-                hashtags = "특징2, 특징3, 특징5",
-                allHashtags = "특징1, 특징2, 특징3, 특징4, 특징5"
-            ),
-            Product(
-                productId = 1,
-                productName = "마메 라운지체어 (2색)",
-                productPrice = 8339000,
-                productDescription = null,
-                productImage = "https://static.hyundailivart.co.kr/upload_mall/goods/P200164153/GM43194682_img.jpg/dims/resize/x250/cropcenter/250x250/autorotate/on/optimize",
-                brandName = "Fogia",
-                hashtags = "특징2, 특징3, 특징5",
-                allHashtags = "특징1, 특징2, 특징3, 특징4, 특징5"
-            ),
-            Product(
-                productId = 2,
-                productName = "리라 오토만 (3종)",
-                productPrice = 3592000,
-                productDescription = null,
-                productImage= "https://static.hyundailivart.co.kr/upload_mall/goods/P200164152/GM43194674_img.jpg/dims/resize/x250/cropcenter/250x250/autorotate/on/optimize",
-                brandName = "Fogia",
-                hashtags = "특징2, 특징3, 특징5",
-                allHashtags = "특징1, 특징2, 특징3, 특징4, 특징5"
-            )
-        )
-        displaySearchResults(testProducts)
+
+        loadInitialProducts()
+
+        val brandNames = resources.getStringArray(R.array.brand_names).toList()
+        val brandAdapter = BrandAdapter(brandNames) { brand ->
+            selectedBrand = brand
+            // selectedBrand의 null 여부를 확인하고, null이 아닌 경우에만 함수 호출
+            searchBarBinding.searchViews.query?.toString()?.let { query ->
+                searchProducts(query, selectedBrand)
+            }
+        }
+        binding.searchBrandhashtag.brandsRecyclerView.adapter = brandAdapter
+        binding.searchBrandhashtag.brandsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        val hashTags = listOf("해시태그1", "해시태그2", "해시태그3") // 임시 데이터
+        val hashTagAdapter = HashTagAdapter(hashTags)
+        binding.searchBrandhashtag.hashTagRecyclerView.adapter = hashTagAdapter
+        binding.searchBrandhashtag.hashTagRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+
+    }
+
+    private fun loadInitialProducts() {
+        searchProducts("",selectedBrand)
+    }
+
+    private fun showProductDetail(product: Product) {
+        Log.d("SearchFragment to DetailFragment","$product")
+        val bundle = Bundle().apply {
+            putSerializable("product",product)
+        }
+        val detailFragment = DetailFragment().apply {
+            arguments = bundle
+        }
+
+        fragmentManager?.beginTransaction()?.replace(R.id.product_container, detailFragment)?.addToBackStack(null)?.commit()
+
     }
 }
 
