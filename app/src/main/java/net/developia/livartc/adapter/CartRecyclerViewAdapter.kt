@@ -13,21 +13,42 @@ import net.developia.livartc.db.CartEntity
  * Time: 22:54
  */
 
-class CartRecyclerViewAdapter(private val cartList : ArrayList<CartEntity>,
-                              private val onDelete: (CartEntity) -> Unit)
-    : RecyclerView.Adapter<CartRecyclerViewAdapter.MyViewHolder>() {
-    inner class MyViewHolder(binding : ItemCartBinding) :
+class CartRecyclerViewAdapter(
+    private val cartList: ArrayList<CartEntity>,
+    private val onDelete: (CartEntity) -> Unit,
+    private val onUpdate: (CartEntity) -> Unit
+) : RecyclerView.Adapter<CartRecyclerViewAdapter.MyViewHolder>() {
+    inner class MyViewHolder(binding: ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root) {
             val cart_product_name = binding.cartProductName
             val cart_product_price = binding.cartProductPrice
             val cart_product_cnt = binding.cartProductCnt
             val cart_product_image = binding.cartProductImage
             val cartProductDelete = binding.cartProductDelete
-            init {
-                cartProductDelete.setOnClickListener {
-                    onDelete(cartList[adapterPosition]) // 삭제 콜백 호출
+        init {
+            binding.cartProductDelete.setOnClickListener {
+                onDelete(cartList[adapterPosition]) // 삭제 콜백 호출
+            }
+
+            // 수량 감소 버튼 클릭 이벤트
+            binding.cartProductMinus.setOnClickListener {
+                val cartEntity = cartList[adapterPosition]
+                if (cartEntity.product_cnt!! > 1) {
+                    cartEntity.product_cnt = cartEntity.product_cnt!! - 1
+                    cart_product_cnt.text = cartEntity.product_cnt.toString()
+                    onUpdate(cartEntity) // 업데이트 콜백 호출
                 }
             }
+
+            // 수량 증가 버튼 클릭 이벤트
+            binding.cartProductPlus.setOnClickListener {
+                val cartEntity = cartList[adapterPosition]
+                cartEntity.product_cnt = cartEntity.product_cnt!! + 1
+                cart_product_cnt.text = cartEntity.product_cnt.toString()
+                onUpdate(cartEntity) // 업데이트 콜백 호출
+            }
+        }
+
             val root = binding.root
     }
 

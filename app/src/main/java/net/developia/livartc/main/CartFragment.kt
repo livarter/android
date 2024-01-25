@@ -53,19 +53,11 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.purchaseBtn.setOnClickListener {
-            if(cartList.size == 0) {
-                Toast.makeText(requireContext(), "장바구니가 비어있습니다.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            } else {
-                val intent = Intent(activity, PurchaseActivity::class.java)
-                intent.putExtra("totalPrice", totalPrice)
-                startActivity(intent)
-            }
+            val intent = Intent(activity, PurchaseActivity::class.java)
+            intent.putExtra("totalPrice", totalPrice)
+            startActivity(intent)
         }
-
-
     }
-
 
     private fun getAllCartList() {
         Thread {
@@ -76,6 +68,21 @@ class CartFragment : Fragment() {
                 val productCnt = cart.product_cnt ?: 0
                 totalPrice += price * productCnt
             }
+            requireActivity().runOnUiThread {
+                if (cartList.isEmpty()) {
+                    // 장바구니가 비어 있는 경우
+                    binding.emptyCartView.visibility = View.VISIBLE
+                    binding.cartView.visibility = View.GONE
+                } else {
+                    // 장바구니에 상품이 있는 경우
+                    binding.emptyCartView.visibility = View.GONE
+                    binding.cartView.visibility = View.VISIBLE
+
+                    setTotalPrice(totalPrice)
+                    setRecyclerView()
+                }
+            }
+
 
             setRecyclerView()
             setTotalPrice(totalPrice)
@@ -91,9 +98,11 @@ class CartFragment : Fragment() {
 
     private fun setRecyclerView() {
         requireActivity().runOnUiThread {
-            cartAdapter = CartRecyclerViewAdapter(cartList) { cartEntity ->
+            cartAdapter = CartRecyclerViewAdapter(cartList, { cartEntity ->
                 deleteCart(cartEntity) // 아이템 삭제
-            }
+            }, { cartEntity ->
+                updateCart(cartEntity) // 아이템 업데이트
+            })
             binding.cartRecyclerView.adapter = cartAdapter
             binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
@@ -104,7 +113,12 @@ class CartFragment : Fragment() {
             getAllCartList() // 장바구니 목록 갱신
         }.start()
     }
-
+    private fun updateCart(cartEntity: CartEntity) {
+        Thread {
+            cartDao.update(cartEntity) // DB에서 아이템 업데이트
+            getAllCartList() // 장바구니 목록 갱신
+        }.start()
+    }
     override fun onResume() {
         super.onResume()
         getAllCartList()

@@ -9,6 +9,7 @@ import net.developia.livartc.purchase.BillsFragment
 /**
  * LIVARTC
  * Created by 최현서
+ * Enhanced by 변형준
  * Date: 2024-01-19
  * Time: 오후 2:32
  */
@@ -36,9 +37,6 @@ class PurchaseActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-//        val fragmentTransaction = supportFragmentManager.beginTransaction()
-//        fragmentTransaction.replace(R.id.purchase_container, CartFragment()) // CartFragment로 전환
-//        fragmentTransaction.commit()
         finish()
     }
 
