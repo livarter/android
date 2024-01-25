@@ -31,6 +31,11 @@ import java.security.NoSuchAlgorithmException
  */
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
+
+    /**
+     * 작성자 : 황수영
+     * 내용 : 카카오 서버측에 로그인
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -75,6 +80,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 작성자 : 황수영
+     * 내용 : 카카오 access token으로 서버 측 로그인
+     */
     private fun loginWithKakao(context : Context, accessToken : String) : String{
         val loginReqDto = LoginReqDto(loginToken = accessToken)
         var jwtToken = "" // 서버의 JWT 토큰
@@ -104,6 +113,10 @@ class LoginActivity : AppCompatActivity() {
         return jwtToken
     }
 
+    /**
+     * 작성자 : 황수영
+     * 내용 : 카카오 로그인 등록용 키 해시 발급
+     */
     fun getKeyHash(context: Context): String? {
         val pm = context.packageManager
         try {
