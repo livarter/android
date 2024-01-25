@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import net.developia.livartc.MainActivity
+import net.developia.livartc.ProductActivity
 import net.developia.livartc.PurchaseActivity
 import net.developia.livartc.adapter.CartRecyclerViewAdapter
 import net.developia.livartc.databinding.FragmentCartBinding
@@ -55,6 +56,11 @@ class CartFragment : Fragment() {
         binding.purchaseBtn.setOnClickListener {
             val intent = Intent(activity, PurchaseActivity::class.java)
             intent.putExtra("totalPrice", totalPrice)
+            startActivity(intent)
+        }
+        binding.searchProductBtn.setOnClickListener {
+            val intent = Intent(activity, ProductActivity::class.java)
+            intent.putExtra("title", "Search") // SearchFragment를 열지 결정하는 플래그
             startActivity(intent)
         }
     }
