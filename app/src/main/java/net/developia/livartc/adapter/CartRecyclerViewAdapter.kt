@@ -3,8 +3,11 @@ package net.developia.livartc.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import net.developia.livartc.databinding.ItemCartBinding
 import net.developia.livartc.db.CartEntity
+import java.text.NumberFormat
+import java.util.Locale
 
 /**
  * LIVARTC
@@ -20,11 +23,11 @@ class CartRecyclerViewAdapter(
 ) : RecyclerView.Adapter<CartRecyclerViewAdapter.MyViewHolder>() {
     inner class MyViewHolder(binding: ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            val cart_product_name = binding.cartProductName
-            val cart_product_price = binding.cartProductPrice
-            val cart_product_cnt = binding.cartProductCnt
-            val cart_product_image = binding.cartProductImage
-            val cartProductDelete = binding.cartProductDelete
+            val cartProductName = binding.cartProductName
+            val cartProductPrice = binding.cartProductPrice
+            val cartProductCnt = binding.cartProductCnt
+            val cartProductImage = binding.cartProductImage
+
         init {
             binding.cartProductDelete.setOnClickListener {
                 onDelete(cartList[adapterPosition]) // 삭제 콜백 호출
@@ -35,7 +38,7 @@ class CartRecyclerViewAdapter(
                 val cartEntity = cartList[adapterPosition]
                 if (cartEntity.product_cnt!! > 1) {
                     cartEntity.product_cnt = cartEntity.product_cnt!! - 1
-                    cart_product_cnt.text = cartEntity.product_cnt.toString()
+                    cartProductCnt.text = cartEntity.product_cnt.toString()
                     onUpdate(cartEntity) // 업데이트 콜백 호출
                 }
             }
@@ -44,7 +47,7 @@ class CartRecyclerViewAdapter(
             binding.cartProductPlus.setOnClickListener {
                 val cartEntity = cartList[adapterPosition]
                 cartEntity.product_cnt = cartEntity.product_cnt!! + 1
-                cart_product_cnt.text = cartEntity.product_cnt.toString()
+                cartProductCnt.text = cartEntity.product_cnt.toString()
                 onUpdate(cartEntity) // 업데이트 콜백 호출
             }
         }
@@ -63,11 +66,15 @@ class CartRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val cartData = cartList[position]
-        holder.cart_product_name.text = cartData.name
-        holder.cart_product_price.text = cartData.price.toString()
-        holder.cart_product_cnt.text = cartData.product_cnt.toString()
+        holder.cartProductName.text = cartData.name
+        val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+        val formattedPrice = numberFormat.format(cartData.price)
+        holder.cartProductPrice.text = formattedPrice + "원"
+        holder.cartProductCnt.text = cartData.product_cnt.toString()
         cartData.image?.let {
-            holder.cart_product_image.setImageResource(it.toInt())
+            Glide.with(holder.itemView.context)
+                .load(it)
+                .into(holder.cartProductImage)
         }
     }
 

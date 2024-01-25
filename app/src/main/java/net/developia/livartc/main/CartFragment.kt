@@ -14,6 +14,8 @@ import net.developia.livartc.databinding.FragmentCartBinding
 import net.developia.livartc.db.AppDatabase
 import net.developia.livartc.db.CartEntity
 import net.developia.livartc.db.CartDao
+import java.text.NumberFormat
+import java.util.Locale
 
 
 /**
@@ -30,7 +32,7 @@ class CartFragment : Fragment() {
     private lateinit var cartList : ArrayList<CartEntity>
     private lateinit var cartAdapter : CartRecyclerViewAdapter
 
-    private var totalPrice = 0
+    private var totalPrice = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,18 +40,14 @@ class CartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false)
-
         db = AppDatabase.getInstance(requireContext())!!
         cartDao = db.getCartDao()
-
         getAllCartList()
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.purchaseBtn.setOnClickListener {
             val intent = Intent(activity, PurchaseActivity::class.java)
             intent.putExtra("totalPrice", totalPrice)
@@ -69,8 +67,10 @@ class CartFragment : Fragment() {
             for (cart in cartList) {
                 val price = cart.price ?: 0
                 val productCnt = cart.product_cnt ?: 0
-                totalPrice += price * productCnt
+                totalPrice += (price * productCnt.toLong()).toInt()
             }
+            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+            val formattedPrice = numberFormat.format(totalPrice)
             requireActivity().runOnUiThread {
                 if (cartList.isEmpty()) {
                     // 장바구니가 비어 있는 경우
@@ -80,22 +80,17 @@ class CartFragment : Fragment() {
                     // 장바구니에 상품이 있는 경우
                     binding.emptyCartView.visibility = View.GONE
                     binding.cartView.visibility = View.VISIBLE
-
-                    setTotalPrice(totalPrice)
+                    setTotalPrice(formattedPrice)
                     setRecyclerView()
                 }
             }
-
-
-            setRecyclerView()
-            setTotalPrice(totalPrice)
         }.start()
     }
 
-    private fun setTotalPrice(totalPrice: Int) {
+    private fun setTotalPrice(totalPrice: String) {
         requireActivity().runOnUiThread {
-            binding.originPrice.text = "₩$totalPrice"
-            binding.totalPrice.text = "₩$totalPrice" // 총 결제 금액을 화면에 표시
+            binding.originPrice.text = "$totalPrice 원"
+            binding.totalPrice.text = "$totalPrice 원" // 총 결제 금액을 화면에 표시
         }
     }
 
@@ -110,22 +105,23 @@ class CartFragment : Fragment() {
             binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
     }
+
     private fun deleteCart(cartEntity: CartEntity) {
         Thread {
             cartDao.delete(cartEntity) // DB에서 아이템 삭제
             getAllCartList() // 장바구니 목록 갱신
         }.start()
     }
+
     private fun updateCart(cartEntity: CartEntity) {
         Thread {
             cartDao.update(cartEntity) // DB에서 아이템 업데이트
             getAllCartList() // 장바구니 목록 갱신
         }.start()
     }
+
     override fun onResume() {
         super.onResume()
         getAllCartList()
     }
-
-
 }
