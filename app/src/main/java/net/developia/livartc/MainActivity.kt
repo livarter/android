@@ -3,6 +3,7 @@ package net.developia.livartc
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import net.developia.livartc.databinding.ActivityMainBinding
 import net.developia.livartc.main.CartFragment
 import net.developia.livartc.main.CollectionsFragment

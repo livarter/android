@@ -33,7 +33,7 @@ import retrofit2.Response
  * Date: 2024-01-22
  * Time: 오후 3:00
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentHomeBinding
     private var currentPage = 0
     lateinit var bestList: List<Product>
@@ -74,6 +74,22 @@ class HomeFragment : Fragment() {
 //                commit()
 //            }
 //        }
+        binding.categoryBed.setOnClickListener(this)
+        binding.categoryDesk.setOnClickListener(this)
+        binding.categoryChair.setOnClickListener(this)
+        binding.categoryCabinet.setOnClickListener(this)
+        binding.categoryDeco.setOnClickListener(this)
+    }
+
+    //카테고리별 이동
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.category_bed -> (activity as MainActivity).startProductActivity("침대")
+            R.id.category_desk -> (activity as MainActivity).startProductActivity("데스크")
+            R.id.category_chair -> (activity as MainActivity).startProductActivity("의자")
+            R.id.category_cabinet -> (activity as MainActivity).startProductActivity("수납장")
+            R.id.category_deco -> (activity as MainActivity).startProductActivity("홈데코")
+        }
     }
 
     // 메인 배너 관련
