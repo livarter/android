@@ -20,7 +20,9 @@ import net.developia.livartc.databinding.FragmentBillsBinding
 import net.developia.livartc.db.AppDatabase
 import net.developia.livartc.db.CartDao
 import net.developia.livartc.db.CartEntity
+import net.developia.livartc.login.TokenManager
 import net.developia.livartc.model.PurchaseReqDto
+import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -68,7 +70,6 @@ class BillsFragment : Fragment() {
 
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -221,9 +222,10 @@ class BillsFragment : Fragment() {
                             )
                         }
                     )
+                    val jwtToken = TokenManager.getToken(MyApplication.instance)!!
 
                     // 결제가 완료되면 카트를 비웁니다.
-                    RetrofitInstance.api.insertPurchaseHistory(purchaseReqDto).enqueue(object : retrofit2.Callback<ResponseBody> {
+                    RetrofitInstance.api.insertPurchaseHistory(purchaseReqDto, jwtToken).enqueue(object : retrofit2.Callback<ResponseBody> {
                         override fun onResponse(
                             call: Call<ResponseBody>,
                             response: Response<ResponseBody>
