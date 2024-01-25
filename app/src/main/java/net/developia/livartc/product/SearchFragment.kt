@@ -144,7 +144,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-
     private fun loadInitialProducts() {
         searchProducts("",selectedBrand,"",selectedSortOption)
         displaySelectedBrandHashTags(selectedBrand)
