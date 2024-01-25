@@ -13,7 +13,10 @@ import net.developia.livartc.model.Product
  * Date: 1/24/24
  * Time: 2:44 AM
  */
-class ProductAdapter(private val products: List<Product>) :
+class ProductAdapter(
+    private val products: List<Product>,
+    private val onItemClicked: (Product) -> Unit
+    ) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(val binding: FragmentSearchItemsBinding) : RecyclerView.ViewHolder(binding.root)
@@ -32,6 +35,10 @@ class ProductAdapter(private val products: List<Product>) :
         Glide.with(holder.binding.productImage.context)
             .load(product.productImage)
             .into(holder.binding.productImage)
+
+        holder.itemView.setOnClickListener {
+            onItemClicked(product)
+        }
     }
 
     override fun getItemCount() = products.size
