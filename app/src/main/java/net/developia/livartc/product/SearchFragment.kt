@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import net.developia.livartc.R
 import net.developia.livartc.adapter.BrandAdapter
 import net.developia.livartc.adapter.HashTagAdapter
@@ -41,14 +42,13 @@ class SearchFragment : Fragment() {
         searchBarBinding.searchViews.isSubmitButtonEnabled = true
         searchBarBinding.searchViews.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    searchProducts(it,selectedBrand)
-                }
+                searchProducts(query ?:"",selectedBrand)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 // 필요한 경우 이곳에서 검색어 변경에 대한 처리를 구현
+                // 추후에 새로운 검색어 검색시 선택된 브랜드와 해시태그 초기화 필요
                 return true
             }
         })
@@ -81,16 +81,15 @@ class SearchFragment : Fragment() {
     private fun displaySearchResults(products: List<Product>) {
         val recyclerView = binding.productRecyclerView
         recyclerView.layoutManager = GridLayoutManager(context, 2) // 2열 그리드 레이아웃 설정
-        recyclerView.adapter = ProductAdapter(products)
+        recyclerView.adapter = ProductAdapter(products) { product ->
+            showProductDetail(product)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         loadInitialProducts()
-        // 테스트 데이터 사용
-
-        //브랜드 부분 목록 초기화 부분
 
         val brandNames = resources.getStringArray(R.array.brand_names).toList()
         val brandAdapter = BrandAdapter(brandNames) { brand ->
@@ -113,6 +112,19 @@ class SearchFragment : Fragment() {
 
     private fun loadInitialProducts() {
         searchProducts("",selectedBrand)
+    }
+
+    private fun showProductDetail(product: Product) {
+        Log.d("SearchFragment to DetailFragment","$product")
+        val bundle = Bundle().apply {
+            putSerializable("product",product)
+        }
+        val detailFragment = DetailFragment().apply {
+            arguments = bundle
+        }
+
+        fragmentManager?.beginTransaction()?.replace(R.id.product_container, detailFragment)?.addToBackStack(null)?.commit()
+
     }
 }
 

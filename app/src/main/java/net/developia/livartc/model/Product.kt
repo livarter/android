@@ -1,5 +1,7 @@
 package net.developia.livartc.model
 
+import java.io.Serializable
+
 /**
  * LIVARTC
  * Created by 오수영
@@ -15,4 +17,4 @@ data class Product (
     val brandName: String,
     val hashtags: String,
     val allHashtags: String
-)
+):Serializable

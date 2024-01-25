@@ -1,5 +1,6 @@
 package net.developia.livartc.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class BrandAdapter(
         return BrandViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: BrandViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BrandViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val brand = brands[position]
         holder.brandText.text = brand
         holder.itemView.isSelected = position == selectedPosition
