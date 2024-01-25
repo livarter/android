@@ -5,6 +5,7 @@ import com.hyundai.loginapptest.domain.LoginResDto
 import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseReqDto
+import net.developia.livartc.model.Reply
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -56,4 +57,15 @@ interface INetworkService {
     fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto): Call<ResponseBody>
 
 
+
+    /**
+     * LIVARTC
+     * Created by 최현서
+     * Date: 1/25/24
+     * Time: 11:14
+     */
+    @GET("api/v1/reply")
+    fun getReview (
+        @Query("productId") productId: Long
+    ): Call<List<Reply>>
 }
