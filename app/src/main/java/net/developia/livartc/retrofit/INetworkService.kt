@@ -4,6 +4,7 @@ import com.hyundai.loginapptest.domain.LoginReqDto
 import com.hyundai.loginapptest.domain.LoginResDto
 import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.model.Product
+import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
 import net.developia.livartc.model.Reply
 import okhttp3.ResponseBody
@@ -56,6 +57,14 @@ interface INetworkService {
     @POST("api/v1/purchase/insert")
     fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto): Call<ResponseBody>
 
+    /**
+     * LIVARTC
+     * Created by 변형준
+     * Date: 1/25/24
+     * Time: 17:21
+     */
+    @GET("api/v1/purchase/")
+    fun getPurchaseHistory(@Query("memberId") memberId: String): Call<List<PurchaseHistory>>
 
 
     /**
