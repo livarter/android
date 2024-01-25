@@ -67,13 +67,13 @@ class HomeFragment : Fragment() {
         getAllBestProduct()
 
         // 카테고리 버튼 눌렀을 때 카테고리 Fragment 이동
-        binding.categoryBtn.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.main_container, CategoryFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
+//        binding.categoryBtn.setOnClickListener {
+//            parentFragmentManager.beginTransaction().apply {
+//                replace(R.id.main_container, CategoryFragment())
+//                addToBackStack(null)
+//                commit()
+//            }
+//        }
     }
 
     // 메인 배너 관련

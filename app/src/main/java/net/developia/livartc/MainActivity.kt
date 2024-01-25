@@ -26,6 +26,21 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null)  binding.bottomNavigationView.selectedItemId = R.id.fragment_home
     }
 
+    override fun onBackPressed() {
+
+        when (supportFragmentManager.findFragmentById(R.id.main_container)) {
+            is CollectionsFragment, is CartFragment, is MyPageFragment -> {
+                // Replace with HomeFragment when pressing back from other fragments
+                binding.bottomNavigationView.selectedItemId = R.id.fragment_home
+            }
+            is HomeFragment -> {
+                // If the current fragment is HomeFragment, perform default back behavior
+                super.onBackPressed()
+            }
+            else -> super.onBackPressed()
+        }
+    }
+
     private fun setBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
             when(item.itemId) {
