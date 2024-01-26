@@ -7,12 +7,15 @@ import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
 import net.developia.livartc.mypage.dto.BadgeResDto
+import net.developia.livartc.mypage.dto.CouponResDto
 import net.developia.livartc.mypage.dto.MemberGradeDto
+import net.developia.livartc.mypage.dto.MemperUpdateReqDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -42,6 +45,12 @@ interface INetworkService {
     fun getMemberGrade(
         @Header("Authorization") Authorization: String
     ): Call<MemberGradeDto>
+
+    @GET("/api/v1/member/coupon")
+    fun getCouponsByMember(
+        @Header("Authorization") Authorization: String
+    ): Call<CouponResDto>
+
 
     /**
      * LIVARTC
