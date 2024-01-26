@@ -11,6 +11,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -77,4 +78,11 @@ interface INetworkService {
     fun getReview (
         @Query("productId") productId: Long
     ): Call<List<Reply>>
+
+    @GET("api/v1/reply/save")
+    fun saveReview (
+        @Header("Authorization") Authorization: String,
+        @Query("productId") productId: Long,
+        @Query("replyComment") replyComment: String
+    ): Call<ResponseBody>
 }

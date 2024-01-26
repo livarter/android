@@ -35,6 +35,7 @@ class DetailFragment : Fragment() {
     private lateinit var replyList: List<Reply>
     private lateinit var productActivity: ProductActivity
     private lateinit var replyAdapter: ReplyAdapter
+    var productId = 0.toLong()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,10 +55,6 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getAllReply()
-        binding.replyWriteBtn.setOnClickListener {
-            val intent = Intent(activity, ReplyWriteActivity::class.java)
-            startActivity(intent)
-        }
         val product = arguments?.getSerializable("product") as? Product
         if (product != null) {
             Glide.with(binding.productImg.context)
@@ -66,6 +63,13 @@ class DetailFragment : Fragment() {
             binding.productName.text = product.productName
             binding.productDesc.text = product.productDescription
             binding.productPrice.text = "${product.productPrice}"
+            productId = product.productId.toLong()
+
+            binding.replyWriteBtn.setOnClickListener {
+                val writeIntent = Intent(activity, ReplyWriteActivity::class.java)
+                writeIntent.putExtra("productId", product.productId.toLong())
+                startActivity(writeIntent)
+            }
         }
     }
 
@@ -76,7 +80,7 @@ class DetailFragment : Fragment() {
 
     //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
     private fun getAllReply() {
-        RetrofitInstance.api.getReview(1)
+        RetrofitInstance.api.getReview(productId)
             .enqueue(object : Callback<List<Reply>> {
                 override fun onResponse(
                     call: Call<List<Reply>>,
