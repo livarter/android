@@ -1,6 +1,8 @@
 package net.developia.livartc.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +36,15 @@ class BrandAdapter(
     override fun onBindViewHolder(holder: BrandViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val brand = brands[position]
         holder.brandText.text = brand
-        holder.itemView.isSelected = position == selectedPosition
+
+        // 선택된 아이템 강조
+        if (position == selectedPosition) {
+            holder.brandText.setTextColor(Color.parseColor("#FF0000")) // 예시 색상
+            holder.brandText.setTypeface(null, Typeface.BOLD) // Bold 스타일 적용
+        } else {
+            holder.brandText.setTextColor(Color.parseColor("#000000")) // 기본 색상
+            holder.brandText.setTypeface(null, Typeface.NORMAL) // 기본 스타일 적용
+        }
 
         holder.itemView.setOnClickListener {
             if(selectedPosition == position) {
