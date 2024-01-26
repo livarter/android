@@ -6,6 +6,7 @@ import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
+import net.developia.livartc.model.Reply
 import net.developia.livartc.mypage.dto.BadgeResDto
 import net.developia.livartc.mypage.dto.CouponResDto
 import net.developia.livartc.mypage.dto.MemberGradeDto
@@ -21,7 +22,7 @@ import retrofit2.http.Query
 
 interface INetworkService {
 
-     /**
+    /**
      * LIVARTC
      * Created by 황수영
      * Date: 1/24/24
@@ -92,4 +93,22 @@ interface INetworkService {
     @GET("api/v1/purchase")
     fun getPurchaseHistory(@Header("Authorization") Authorization: String): Call<List<PurchaseHistory>>
 
+
+    /**
+     * LIVARTC
+     * Created by 최현서
+     * Date: 1/25/24
+     * Time: 11:14
+     */
+    @GET("api/v1/reply")
+    fun getReview (
+        @Query("productId") productId: Long
+    ): Call<List<Reply>>
+
+    @GET("api/v1/reply/save")
+    fun saveReview (
+        @Header("Authorization") Authorization: String,
+        @Query("productId") productId: Long,
+        @Query("replyComment") replyComment: String
+    ): Call<ResponseBody>
 }

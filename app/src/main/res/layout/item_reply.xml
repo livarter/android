@@ -28,7 +28,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/profile_id"
+        android:id="@+id/profile_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -46,14 +46,14 @@
         android:text="2024.01.20"
         android:textSize="14sp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_id"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_nickname"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profile_id"
+        app:layout_constraintTop_toTopOf="@+id/profile_nickname"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/review_image"
+        android:id="@+id/reply_image"
         android:layout_width="match_parent"
         android:adjustViewBounds="true"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         android:visibility="gone"
         />
     <TextView
-        android:id="@+id/review_content"
+        android:id="@+id/reply_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

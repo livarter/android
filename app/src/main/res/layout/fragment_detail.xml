@@ -135,7 +135,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/review_title"
+                    android:id="@+id/reply_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
@@ -146,26 +146,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/desc_btm" />
                 <Button
-                    android:id="@+id/write_btn"
+                    android:id="@+id/reply_write_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="리뷰작성"
+                    android:text="리뷰 작성"
                     app:layout_constraintTop_toBottomOf="@+id/desc_btm"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
                 <View
-                    android:id="@+id/review_title_btm"
+                    android:id="@+id/reply_title_btm"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
                     android:background="@color/dark_grey"
                     android:layout_marginTop="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/review_title"
+                    app:layout_constraintTop_toBottomOf="@id/reply_title"
                     app:layout_constraintWidth_percent="0.95" />
 
                 <TextView
-                    android:id="@+id/no_review"
+                    android:id="@+id/no_reply"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_marginTop="10dp"
@@ -174,17 +174,16 @@
                     android:textSize="19sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/review_title_btm"
+                    app:layout_constraintTop_toBottomOf="@+id/reply_title_btm"
                     app:layout_constraintWidth_percent="0.95" />
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/review_recyclerView"
+                    android:id="@+id/reply_recyclerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    tools:listitem=""
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/review_title_btm"
+                    app:layout_constraintTop_toBottomOf="@+id/reply_title_btm"
                     app:layout_constraintWidth_percent="0.95"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
