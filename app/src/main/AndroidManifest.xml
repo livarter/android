@@ -20,6 +20,21 @@
             android:name=".mypage.membership.MemberShipFragment"
             android:exported="false" />
         <activity
+            android:name=".mypage.membership.LogoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mypage.membership.MyOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mypage.membership.MyReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mypage.membership.MyInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mypage.membership.MemberShipFragment"
+            android:exported="false" />
+        <activity
             android:name=".PurchaseActivity"
             android:exported="false" />
         <activity
