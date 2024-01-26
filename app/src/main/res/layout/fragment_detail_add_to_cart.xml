@@ -34,6 +34,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Lorem Ipsum"
+                android:textSize="@dimen/font_medium"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cart_product_image"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="₩9,900"
+                android:text="9,900원"
+                android:textSize="@dimen/font_small"
                 app:layout_constraintStart_toEndOf="@+id/cart_product_image"
                 app:layout_constraintTop_toBottomOf="@+id/cart_product_name" />
 
@@ -53,18 +55,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="200dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/ic_minus"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cart_product_cnt"
-                app:layout_constraintStart_toEndOf="@+id/cart_product_image" />
+                app:layout_constraintEnd_toStartOf="@id/cart_product_cnt"
+                app:layout_constraintStart_toEndOf="@id/cart_product_image"
+                app:layout_constraintTop_toBottomOf="@id/cart_product_cnt"
+                app:layout_constraintBottom_toTopOf="@id/cart_product_cnt"/>
 
             <TextView
                 android:id="@+id/cart_product_cnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
-                android:textSize="20sp"
+                android:textSize="@dimen/font_large"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cart_product_plus"
@@ -74,9 +76,9 @@
                 android:id="@+id/cart_product_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:background="@drawable/ic_plus"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cart_product_cnt"
+                app:layout_constraintBottom_toTopOf="@id/cart_product_cnt"
                 app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="장바구니에 담기"
-
+        android:textSize="@dimen/font_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
