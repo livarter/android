@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import net.developia.livartc.databinding.ActivityPurchaseBinding
-import net.developia.livartc.main.CartFragment
 import net.developia.livartc.purchase.BillsFragment
 /**
  * LIVARTC
@@ -23,8 +22,8 @@ class PurchaseActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val totalPrice = intent.getIntExtra("totalPrice", 0)
-        val bundle = Bundle().apply { putInt("totalPrice", totalPrice) }
+        val totalPrice = intent.getLongExtra("totalPrice", 0)
+        val bundle = Bundle().apply { putLong("totalPrice", totalPrice) }
         val billsFragment = BillsFragment().apply { arguments = bundle }
         val backButton: ImageView = findViewById(R.id.back_btn)
 
