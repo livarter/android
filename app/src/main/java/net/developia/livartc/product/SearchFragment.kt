@@ -67,7 +67,7 @@ class SearchFragment : Fragment() {
 
         val query = searchQuery.ifBlank { "" }
 
-        RetrofitInstance.api.searchProducts("", selectedBrand ?: "", hashTag ?: "", query ?: "", sortOption, 10, 1)
+        RetrofitInstance.api.searchProducts("", selectedBrand ?: "", hashTag ?: "", query ?: "", sortOption, 8, 1)
             .enqueue(object : Callback<List<Product>> {
                 override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
                     if (response.isSuccessful) {
