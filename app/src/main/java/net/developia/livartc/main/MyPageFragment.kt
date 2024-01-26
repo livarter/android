@@ -32,7 +32,7 @@ class MyPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyPageBinding.inflate(inflater, container, false)
-
+        memberShipFragment = FragmentMembershipBinding.inflate(inflater, container, false)
         // 서버 API 호출 및 데이터 설정 예시
         fetchProfileData()
 
