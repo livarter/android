@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@+id/button_purchase"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -25,9 +26,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:text="배송 정보"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_medium"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +51,7 @@
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="10dp"
                 android:text="배송지"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -62,7 +63,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:hint="서울특별시 성동구 자동차시장1길 64 청년취업사관학교 성동캠퍼스 "
                 android:inputType="text"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/deliver_title1" />
@@ -73,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
                 android:text="우편번호"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextDeliveryAddress" />
@@ -85,7 +86,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:hint="04808"
                 android:inputType="number"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/deliver_title2" />
@@ -97,9 +98,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="40dp"
                 android:text="주문자 정보"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_medium"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextZipCode" />
@@ -120,7 +121,7 @@
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="10dp"
                 android:text="이름"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -132,7 +133,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:hint="홍길동"
                 android:inputType="text"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/orderer_title1" />
@@ -143,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
                 android:text="휴대폰 번호"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextName" />
@@ -153,9 +154,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:hint="010-1234-1234"
+                android:hint="01012341234"
                 android:inputType="phone"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/orderer_title2" />
@@ -166,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
                 android:text="이메일"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPhoneNumber" />
@@ -178,7 +179,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:hint="collections@hyundai.com"
                 android:inputType="textEmailAddress"
-                android:textSize="12sp"
+                android:textSize="@dimen/font_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/orderer_title3" />
@@ -186,13 +187,13 @@
 
             <!--  결제 정보  -->
             <TextView
-                android:id="@+id/order_info_text"
+                android:id="@+id/discount_info_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:text="결제 정보"
-                android:textSize="16sp"
+                android:layout_marginTop="40dp"
+                android:text="할인 혜택"
+                android:textSize="@dimen/font_medium"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
@@ -204,7 +205,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/medium_grey"
-                app:layout_constraintTop_toBottomOf="@+id/order_info_text" />
+                app:layout_constraintTop_toBottomOf="@+id/discount_info_text" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -223,13 +224,119 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/point_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:text="포인트"
+                        android:textSize="@dimen/font_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:text="10,000 원"
+                        android:textSize="@dimen/font_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/point_btn"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:text="포인트 적용하기"
+                        android:textSize="@dimen/font_small"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/point_text"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/coupon_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:text="쿠폰"
+                        android:textSize="@dimen/font_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/coupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:text="10,000 원"
+                        android:textSize="@dimen/font_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <Button
+                        android:id="@+id/coupon_btn"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:text="쿠폰 적용하기"
+                        android:textSize="@dimen/font_small"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/coupon_text"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/order_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:text="최종 결제 정보"
+                        android:textSize="@dimen/font_medium"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view5"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/medium_grey"
+                        app:layout_constraintTop_toBottomOf="@+id/order_info_text" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
                         android:id="@+id/origin_price_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:layout_marginBottom="20dp"
                         android:text="전체 상품 금액"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_small"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -239,8 +346,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="20dp"
-                        android:text="₩130,000"
-                        android:textSize="16sp"
+                        android:text="130,000 원"
+                        android:textSize="@dimen/font_small"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -253,24 +360,50 @@
                     >
 
                     <TextView
-                        android:id="@+id/discount_text"
+                        android:id="@+id/my_point_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginBottom="20dp"
-                        android:text="할인 금액"
-                        android:textSize="16sp"
+                        android:text="포인트 적용 금액"
+                        android:textSize="@dimen/font_small"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/discount_price"
+                        android:id="@+id/my_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:text="- 10,000 원"
+                        android:textSize="@dimen/font_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    >
+                    <TextView
+                        android:id="@+id/my_coupon_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="쿠폰 적용 금액"
+                        android:textSize="@dimen/font_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/my_coupon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="20dp"
-                        android:text="- ₩10,000"
-                        android:textSize="16sp"
+                        android:text="- 13,000 원"
+                        android:textSize="@dimen/font_small"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -289,7 +422,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginBottom="20dp"
                         android:text="배송비"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_small"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -299,8 +432,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="20dp"
-                        android:text="+ ₩3,000"
-                        android:textSize="16sp"
+                        android:text="+ 3,000 원"
+                        android:textSize="@dimen/font_small"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -327,9 +460,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="100dp"
                         android:text="총 결제 금액"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_medium"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -339,11 +472,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="40dp"
-                        android:text="₩120,000"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:text="110,000 원"
+                        android:textSize="@dimen/font_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/total_text"
+                        app:layout_constraintBottom_toBottomOf="@id/total_text"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -354,6 +487,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="10dp"
+        android:textSize="@dimen/font_medium"
         android:text="결제하기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
