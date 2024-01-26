@@ -40,7 +40,12 @@ import kotlin.random.Random
  * LIVARTC
  * Created by 변형준
  * Date: 1/19/24
- * Time: 17:21
+ * 작업내용: 주문서 작성
+ *           포인트 조회, 적립 및 사용
+ *           주문서 내용 자동 입력
+ *           결제 금액 정산
+ *           부트페이 api 사용 통합 결제 구현
+ *           주문내역 및 상세 내역 DB 저장
  */
 class BillsFragment : Fragment() {
     lateinit var binding: FragmentBillsBinding
@@ -48,19 +53,23 @@ class BillsFragment : Fragment() {
     private lateinit var cartList : ArrayList<CartEntity>
     private lateinit var db :AppDatabase
     private lateinit var cartDao: CartDao
+    private var originPrice = 0L
     private var totalPrice = 0L
     private var address = ""
     private var zipCode = ""
     private var name = ""
     private var phoneNumber = ""
     private var email = ""
+    private var appliedPoint = 0L
+    private var deliveryCharge = 3000L
     private lateinit var memberResDto : MemberResDto
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBillsBinding.inflate(inflater, container, false)
-        totalPrice = arguments?.getLong("totalPrice")!!
+        originPrice = arguments?.getLong("totalPrice")!!
+        totalPrice = originPrice + deliveryCharge
         Log.d("BillsFragment", "totalPrice: $totalPrice")
 
         db = AppDatabase.getInstance(requireContext())!!
@@ -71,14 +80,32 @@ class BillsFragment : Fragment() {
         purchaseButton.setOnClickListener { view -> // 버튼 클릭 시의 동작을 설정합니다.
             PaymentTest(view, totalPrice)
         }
-
+        val pointBtn: Button = binding.pointBtn
+        pointBtn.setOnClickListener {
+            //totalPrice 데이터 넘겨주기
+            val bundle = Bundle()
+            bundle.putLong("totalPrice", totalPrice)
+            val pointApplyFragment = PointApplyFragment().apply {
+                arguments = bundle
+            }
+            pointApplyFragment.show(parentFragmentManager, "pointApplyFragment")
+        }
+        parentFragmentManager.setFragmentResultListener("point", viewLifecycleOwner) { key, bundle ->
+            appliedPoint = bundle.getLong("point")
+            val formattingAppliedPoint = formattingPrice(appliedPoint)
+            binding.point.text = "$formattingAppliedPoint 점"
+            binding.myPoint.text = "- $formattingAppliedPoint 원"
+            totalPrice -= appliedPoint
+            val formattedPrice = formattingPrice(totalPrice)
+            binding.totalPrice.text = "$formattedPrice 원"
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setTotalPrice(totalPrice)
-
+        binding.deliverPrice.text = "+ ${formattingPrice(deliveryCharge)} 원"
         val jwtToken = TokenManager.getToken(MyApplication.instance)!!
         RetrofitInstance.api.getMemberInfo(jwtToken)
             .enqueue(object : Callback<MemberResDto> {
@@ -92,7 +119,6 @@ class BillsFragment : Fragment() {
                     zipCode = memberResDto.zipCode
                     name = memberResDto.name
 
-                    // API 응답이 올 때 EditText에 정보 입력
                     binding.editTextName.setText(name)
                     binding.editTextEmail.setText(email)
                     binding.editTextDeliveryAddress.setText(address)
@@ -105,12 +131,16 @@ class BillsFragment : Fragment() {
             })
     }
 
+    private fun formattingPrice(price: Long): String {
+        val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+        return numberFormat.format(price)
+    }
     private fun setTotalPrice(totalPrice: Long) {
         requireActivity().runOnUiThread {
-            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
-            val formattedPrice = numberFormat.format(totalPrice)
-            binding.originPrice.text = "$formattedPrice 원"
-            binding.totalPrice.text = "$formattedPrice 원" // 총 결제 금액을 화면에 표시
+            val formattedOriginPrice = formattingPrice(originPrice)
+            val formattedTotalPrice = formattingPrice(totalPrice)
+            binding.originPrice.text = "$formattedOriginPrice 원"
+            binding.totalPrice.text = "$formattedTotalPrice 원" // 총 결제 금액을 화면에 표시
         }
     }
 
@@ -193,7 +223,6 @@ class BillsFragment : Fragment() {
             .setPrice(totalPrice?.toDouble() ?: 0.0)
             .setUser(getBootUser())
             .setExtra(extra)
-            .items = items
 
         //백에서 필요한 개인 정보 모두 넣기
         val map: MutableMap<String, Any> = HashMap()
@@ -204,9 +233,7 @@ class BillsFragment : Fragment() {
         map["receiver_phone"] = phoneNumber
         val itemsStringList = items.map { bootItemToString(it) }
         map["items"] = itemsStringList
-        for (item in items) {
-            Log.d("done", item.toString())
-        }
+
         payload.metadata = map
 
         Bootpay.init(childFragmentManager, requireContext())
@@ -226,6 +253,7 @@ class BillsFragment : Fragment() {
                 }
                 override fun onConfirm(data: String): Boolean {
                     Log.d("bootpay", "confirm: $data")
+
                     return true
                 }
                 override fun onDone(data: String) {
@@ -270,6 +298,30 @@ class BillsFragment : Fragment() {
                             Log.d("done", "insertPurchaseHistory: $t")
                         }
                     })
+                    RetrofitInstance.api.decreasePoint(jwtToken, appliedPoint).enqueue(object : retrofit2.Callback<ResponseBody> {
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            Log.d("done", "decreasePoint: ${response.body()}")
+                        }
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Log.d("done", "decreasePoint: $t")
+                        }
+                    })
+                    val purchasedPrice = dataObject.getString("price").toLong()
+                    Log.d("done", "purchasedPrice: $purchasedPrice")
+                    RetrofitInstance.api.increasePoint(jwtToken, purchasedPrice).enqueue(object : retrofit2.Callback<ResponseBody> {
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            Log.d("done", "increasePoint: ${response.body()}")
+                        }
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Log.d("done", "increasePoint: $t")
+                        }
+                    })
 
                     // 결제가 완료되면 BillsResultFragment로 전환합니다.
                     val billsResultFragment = BillsResultFragment()
@@ -296,10 +348,8 @@ class BillsFragment : Fragment() {
         val user = BootUser()   // MemberDto
         user.id = memberResDto.email // 구매자 아이디
         user.area = address // 주소
-//        user.gender = 1 //1: 남자, 0: 여자
         user.email = email // 주문서 받을 주소
         user.phone = phoneNumber // 전화번호
-//        user.birth =  "" // 생년월일
         user.username = name  // 주문자 이름
         return user
     }
