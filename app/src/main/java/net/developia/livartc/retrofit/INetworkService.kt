@@ -10,6 +10,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -54,7 +55,7 @@ interface INetworkService {
      * Time: 17:21
      */
     @POST("api/v1/purchase/insert")
-    fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto): Call<ResponseBody>
+    fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto, @Header("Authorization") Authorization: String): Call<ResponseBody>
 
     /**
      * LIVARTC
@@ -62,7 +63,7 @@ interface INetworkService {
      * Date: 1/25/24
      * Time: 17:21
      */
-    @GET("api/v1/purchase/")
-    fun getPurchaseHistory(@Query("memberId") memberId: String): Call<List<PurchaseHistory>>
+    @GET("api/v1/purchase")
+    fun getPurchaseHistory(@Header("Authorization") Authorization: String): Call<List<PurchaseHistory>>
 
 }

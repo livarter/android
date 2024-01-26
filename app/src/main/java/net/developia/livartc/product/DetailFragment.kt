@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import net.developia.livartc.databinding.FragmentDetailBinding
+import net.developia.livartc.model.Product
 
 /**
  * LIVARTC
@@ -23,10 +24,6 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
-        binding.addToCartBtn.setOnClickListener {
-            val detailAddToCartFragment = DetailAddToCartFragment()
-            detailAddToCartFragment.show(requireFragmentManager(), detailAddToCartFragment.tag)
-        }
         return binding.root
     }
 
@@ -37,6 +34,16 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val product = arguments?.getSerializable("product") as? Product
+
+        product?.let {
+            binding.addToCartBtn.setOnClickListener {
+                product?.let { product ->
+                    showAddToCartFragment(product)
+                }
+            }
+        }
+
 //        getAllReview()
     }
 
@@ -63,6 +70,16 @@ class DetailFragment : Fragment() {
 //            binding.reviewRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 //        }
 //    }
+
+    private fun showAddToCartFragment(product: Product) {
+        val bundle = Bundle().apply {
+            putSerializable("product", product)
+        }
+        val addToCartFragment = DetailAddToCartFragment().apply {
+            arguments = bundle
+        }
+        addToCartFragment.show(requireFragmentManager(), addToCartFragment.tag)
+    }
 
 
 }
