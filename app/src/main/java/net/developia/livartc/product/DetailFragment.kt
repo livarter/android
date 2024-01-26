@@ -69,6 +69,11 @@ class DetailFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        getAllReply()
+    }
+
     //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
     private fun getAllReply() {
         RetrofitInstance.api.getReview(1)
