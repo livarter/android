@@ -90,6 +90,9 @@ dependencies {
 
     //OKHttp query 확인용
     implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
+
+    // 이미지
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
 
 static def loadProperties(String file) {
