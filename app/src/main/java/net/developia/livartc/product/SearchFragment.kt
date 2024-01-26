@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.AdapterView
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,8 @@ import net.developia.livartc.R
 import net.developia.livartc.adapter.BrandAdapter
 import net.developia.livartc.adapter.HashTagAdapter
 import net.developia.livartc.adapter.ProductAdapter
+import net.developia.livartc.databinding.FragmentHeaderBinding
+import net.developia.livartc.databinding.FragmentHomeBinding
 import net.developia.livartc.databinding.FragmentSearchPageBinding
 import net.developia.livartc.databinding.FragmentSearchSearchbarBinding
 import net.developia.livartc.databinding.FragmentSearchSortingdropdownBinding
@@ -32,7 +35,8 @@ class SearchFragment : Fragment() {
     private lateinit var products: List<Product>
     private var selectedSortOption: Int = 4
     private lateinit var sortingSpinner: Spinner
-
+    private lateinit var headerBinding: FragmentHeaderBinding
+    private lateinit var backArrow: ImageView
 
 
     override fun onCreateView(
@@ -41,6 +45,11 @@ class SearchFragment : Fragment() {
     ): View? {
         binding = FragmentSearchPageBinding.inflate(inflater, container, false)
         searchBarBinding = FragmentSearchSearchbarBinding.bind(binding.root.findViewById(R.id.search_searchbar))
+        val backArrow = binding.root.findViewById<ImageView>(R.id.back_arrow)
+
+        backArrow.setOnClickListener {
+            activity?.finish()
+        }
 
         initSearchView()
 
