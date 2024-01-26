@@ -69,6 +69,11 @@ class BadgeFragment : Fragment() {
         val adapter = GridAdapter(requireContext(), dataList)
         gridView.adapter = adapter
 
+        popup(dataList)
+
+        return view
+    }
+    fun popup(dataList : ArrayList<GridItem>) {
         // 뱃지 정보 팝업 띄우기
         gridView.setOnItemClickListener { _, _, position, _ ->
             val selectedItem = dataList[position]
@@ -89,19 +94,18 @@ class BadgeFragment : Fragment() {
             val window = dialog.window
             val params = window?.attributes
 
-            val desiredSizeInDp = 300
+            val desiredSizeInDp = 360
 
             val density = resources.displayMetrics.density
-            val desiredSizeInPixels = (desiredSizeInDp * density).toInt()
+            val desiredWidthSizeInPixels = (desiredSizeInDp * density).toInt()
+            val desiredHeightSizeInPixels = ((desiredSizeInDp + 40) * density).toInt()
 
-            params?.width = desiredSizeInPixels
-            params?.height = desiredSizeInPixels
+            params?.width = desiredWidthSizeInPixels
+            params?.height = desiredHeightSizeInPixels
 
             params?.gravity = Gravity.CENTER
 
             window?.attributes = params as WindowManager.LayoutParams
         }
-
-        return view
     }
 }
