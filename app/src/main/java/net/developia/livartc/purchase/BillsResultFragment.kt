@@ -6,10 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.FragmentResultListener
 import net.developia.livartc.MainActivity
-import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentBillsResultBinding
 import org.json.JSONException
 import org.json.JSONObject
@@ -44,7 +41,7 @@ class BillsResultFragment : Fragment() {
         val orderIdView = binding.orderId
         val purchasedDateView = binding.purchasedDate
         val data = arguments?.getString("data")
-        var totalPrice = 0
+        var totalPrice = 0L
         var orderId = ""
         var purchasedDate = ""
         try {
@@ -52,14 +49,16 @@ class BillsResultFragment : Fragment() {
             val dataObject = jsonObject.getJSONObject("data") // "data"를 가져옵니다.
             if(dataObject.getString("status") == "1") {
                 resultText.text = "결제가 완료되었습니다."
-                totalPrice = dataObject.getString("price").toInt() // "price"를 가져옵니다.
+                totalPrice = dataObject.getString("price").toLong() // "price"를 가져옵니다.
                 orderId = dataObject.getString("order_id")
                 purchasedDate = dataObject.getString("purchased_at").replace("T", " ").replace("+09:00", "")
             } else {
                 resultText.text = "결제를 실패하였습니다."
-                totalPrice = 0
+                totalPrice = 0L
             }
-            totalPriceView.text = "₩${totalPrice?.let { NumberFormat.getNumberInstance(Locale.KOREA).format(it) } ?: "0"}" // totalPrice 값을 텍스트뷰에 설정합니다.
+            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+            val formattedPrice = numberFormat.format(totalPrice)
+            totalPriceView.text = "$formattedPrice 원"
             orderIdView.text = orderId
             purchasedDateView.text = purchasedDate
         } catch (e: JSONException) {
@@ -72,10 +71,11 @@ class BillsResultFragment : Fragment() {
             intent.putExtra("startFragment", "HomeFragment")
             startActivity(intent)
         }
+        //홈으로 이동하는 버그 존재
         binding.mypageBtn.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            intent.putExtra("startFragment", "MyPageFragment")
+            intent.putExtra("startFragment", "MyPurchaseFragment")
             startActivity(intent)
         }
     }

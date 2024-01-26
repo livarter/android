@@ -7,17 +7,22 @@ import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
 import net.developia.livartc.model.Reply
+import net.developia.livartc.mypage.dto.BadgeResDto
+import net.developia.livartc.mypage.dto.CouponResDto
+import net.developia.livartc.mypage.dto.MemberGradeDto
+
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface INetworkService {
 
-     /**
+    /**
      * LIVARTC
      * Created by 황수영
      * Date: 1/24/24
@@ -28,7 +33,24 @@ interface INetworkService {
     fun kakaoLogin(@Body loginResDto: LoginReqDto): Call<LoginResDto>
 
     @GET("/api/v1/member")
-    fun getMemberInfo(): Call<MemberResDto>
+    fun getMemberInfo(
+        @Header("Authorization") Authorization: String
+    ): Call<MemberResDto>
+
+    @GET("/api/v1/member/badge")
+    fun getBadgesByMember(
+        @Header("Authorization") Authorization: String
+    ): Call<BadgeResDto>
+
+    @GET("/api/v1/member/grade")
+    fun getMemberGrade(
+        @Header("Authorization") Authorization: String
+    ): Call<MemberGradeDto>
+
+    @GET("/api/v1/member/coupon")
+    fun getCouponsByMember(
+        @Header("Authorization") Authorization: String
+    ): Call<CouponResDto>
 
 
     /**
@@ -56,7 +78,7 @@ interface INetworkService {
      * Time: 17:21
      */
     @POST("api/v1/purchase/insert")
-    fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto): Call<ResponseBody>
+    fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto, @Header("Authorization") Authorization: String): Call<ResponseBody>
 
     /**
      * LIVARTC
@@ -64,8 +86,8 @@ interface INetworkService {
      * Date: 1/25/24
      * Time: 17:21
      */
-    @GET("api/v1/purchase/")
-    fun getPurchaseHistory(@Query("memberId") memberId: String): Call<List<PurchaseHistory>>
+    @GET("api/v1/purchase")
+    fun getPurchaseHistory(@Header("Authorization") Authorization: String): Call<List<PurchaseHistory>>
 
 
     /**

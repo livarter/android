@@ -37,9 +37,14 @@ class BrandAdapter(
         holder.itemView.isSelected = position == selectedPosition
 
         holder.itemView.setOnClickListener {
-            selectedPosition = position
+            if(selectedPosition == position) {
+                selectedPosition = RecyclerView.NO_POSITION
+                onClick("")
+            } else {
+                selectedPosition = position
+                onClick(brand)
+            }
             notifyDataSetChanged()
-            onClick(brand)
         }
     }
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import com.hyundai.loginapptest.domain.MemberResDto
 import kr.co.bootpay.android.Bootpay
 import kr.co.bootpay.android.events.BootpayEventListener
 import kr.co.bootpay.android.models.BootExtra
@@ -20,14 +21,19 @@ import net.developia.livartc.databinding.FragmentBillsBinding
 import net.developia.livartc.db.AppDatabase
 import net.developia.livartc.db.CartDao
 import net.developia.livartc.db.CartEntity
+import net.developia.livartc.login.TokenManager
 import net.developia.livartc.model.PurchaseReqDto
+import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.random.Random
 
 /**
@@ -38,23 +44,23 @@ import kotlin.random.Random
  */
 class BillsFragment : Fragment() {
     lateinit var binding: FragmentBillsBinding
-    private val application_id = BuildConfig.bootpay_api_key
+    private val applicationId = BuildConfig.bootpay_api_key
     private lateinit var cartList : ArrayList<CartEntity>
     private lateinit var db :AppDatabase
     private lateinit var cartDao: CartDao
-    private var totalPrice = 0
+    private var totalPrice = 0L
     private var address = ""
     private var zipCode = ""
     private var name = ""
     private var phoneNumber = ""
     private var email = ""
-
+    private lateinit var memberResDto : MemberResDto
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBillsBinding.inflate(inflater, container, false)
-        totalPrice = arguments?.getInt("totalPrice")!!
+        totalPrice = arguments?.getLong("totalPrice")!!
         Log.d("BillsFragment", "totalPrice: $totalPrice")
 
         db = AppDatabase.getInstance(requireContext())!!
@@ -69,16 +75,42 @@ class BillsFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setTotalPrice(totalPrice)
+
+        val jwtToken = TokenManager.getToken(MyApplication.instance)!!
+        RetrofitInstance.api.getMemberInfo(jwtToken)
+            .enqueue(object : Callback<MemberResDto> {
+                override fun onResponse(
+                    call: Call<MemberResDto>,
+                    response: Response<MemberResDto>
+                ) {
+                    memberResDto = response.body()!!
+                    email = memberResDto.email
+                    address = memberResDto.address
+                    zipCode = memberResDto.zipCode
+                    name = memberResDto.name
+
+                    // API 응답이 올 때 EditText에 정보 입력
+                    binding.editTextName.setText(name)
+                    binding.editTextEmail.setText(email)
+                    binding.editTextDeliveryAddress.setText(address)
+                    binding.editTextZipCode.setText(zipCode)
+                }
+
+                override fun onFailure(call: Call<MemberResDto>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
     }
 
-    private fun setTotalPrice(totalPrice: Int) {
+    private fun setTotalPrice(totalPrice: Long) {
         requireActivity().runOnUiThread {
-            binding.originPrice.text = "₩$totalPrice"
-            binding.totalPrice.text = "₩$totalPrice" // 총 결제 금액을 화면에 표시
+            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+            val formattedPrice = numberFormat.format(totalPrice)
+            binding.originPrice.text = "$formattedPrice 원"
+            binding.totalPrice.text = "$formattedPrice 원" // 총 결제 금액을 화면에 표시
         }
     }
 
@@ -88,10 +120,10 @@ class BillsFragment : Fragment() {
         }.start()
     }
 
-    fun PaymentTest(v: View?, totalPrice: Int?) {
+    fun PaymentTest(v: View?, totalPrice: Long?) {
         val extra = BootExtra()
             .setCardQuota("0,2,3")
-        val items: MutableList<BootItem> = ArrayList()
+        val items: MutableList <BootItem> = ArrayList()
 
         val editTextDeliveryAddress = view?.findViewById<EditText>(R.id.editTextDeliveryAddress)
         address = editTextDeliveryAddress?.text.toString()
@@ -155,7 +187,7 @@ class BillsFragment : Fragment() {
         val randomNum = Random.nextInt(100000, 999999)
         val orderId = "$date$randomNum"
 
-        payload.setApplicationId(application_id)
+        payload.setApplicationId(applicationId)
             .setOrderName(orderName)
             .setOrderId(orderId)
             .setPrice(totalPrice?.toDouble() ?: 0.0)
@@ -221,9 +253,10 @@ class BillsFragment : Fragment() {
                             )
                         }
                     )
+                    val jwtToken = TokenManager.getToken(MyApplication.instance)!!
 
                     // 결제가 완료되면 카트를 비웁니다.
-                    RetrofitInstance.api.insertPurchaseHistory(purchaseReqDto).enqueue(object : retrofit2.Callback<ResponseBody> {
+                    RetrofitInstance.api.insertPurchaseHistory(purchaseReqDto, jwtToken).enqueue(object : retrofit2.Callback<ResponseBody> {
                         override fun onResponse(
                             call: Call<ResponseBody>,
                             response: Response<ResponseBody>
@@ -260,14 +293,13 @@ class BillsFragment : Fragment() {
 
     // 구매자 정보
     fun getBootUser(): BootUser? {
-        val userId = "123411aaaaaaaaaaaabd4ss121"  // 구매자 아이디
         val user = BootUser()   // MemberDto
-        user.id = userId // 구매자 아이디
+        user.id = memberResDto.email // 구매자 아이디
         user.area = address // 주소
 //        user.gender = 1 //1: 남자, 0: 여자
         user.email = email // 주문서 받을 주소
         user.phone = phoneNumber // 전화번호
-//        user.birth = "1988-06-10" // 생년월일
+//        user.birth =  "" // 생년월일
         user.username = name  // 주문자 이름
         return user
     }

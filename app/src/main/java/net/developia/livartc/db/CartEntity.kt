@@ -17,7 +17,7 @@ data class CartEntity (
     @PrimaryKey(autoGenerate = true) var id : Int? = null,
     @ColumnInfo(name= "product_id") var product_id : Int? = null,
     @ColumnInfo(name= "name") var name : String? = null,
-    @ColumnInfo(name= "price") var price : Int? = null,
+    @ColumnInfo(name= "price") var price : Long? = null,
     @ColumnInfo(name= "product_cnt") var product_cnt : Int? = null,
     @ColumnInfo(name= "image") var image : String? = null
-    )
+)

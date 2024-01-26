@@ -47,6 +47,7 @@ class DetailFragment : Fragment() {
         }
         return binding.root
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         productActivity = context as ProductActivity
@@ -71,11 +72,29 @@ class DetailFragment : Fragment() {
                 startActivity(writeIntent)
             }
         }
+        product?.let {
+            binding.addToCartBtn.setOnClickListener {
+                product?.let { product ->
+                    showAddToCartFragment(product)
+                }
+            }
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
         getAllReply()
+    }
+
+    private fun showAddToCartFragment(product: Product) {
+        val bundle = Bundle().apply {
+            putSerializable("product", product)
+        }
+        val addToCartFragment = DetailAddToCartFragment().apply {
+            arguments = bundle
+        }
+        addToCartFragment.show(requireFragmentManager(), addToCartFragment.tag)
     }
 
     //베스트 상품 조회 관련(Retrofit 연동 후 recycler view 뿌림)
@@ -111,5 +130,3 @@ class DetailFragment : Fragment() {
         binding.replyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 }
-
-

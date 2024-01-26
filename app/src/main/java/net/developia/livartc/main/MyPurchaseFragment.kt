@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import net.developia.livartc.MainActivity
 import net.developia.livartc.adapter.PurchaseAdapter
 import net.developia.livartc.databinding.FragmentMyPurchaseBinding
+import net.developia.livartc.login.TokenManager
 import net.developia.livartc.model.PurchaseHistory
+import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +25,6 @@ import retrofit2.Call
  */
 class MyPurchaseFragment : Fragment() {
     lateinit var binding: FragmentMyPurchaseBinding
-
     private lateinit var purchaseList : List<PurchaseHistory>
     private lateinit var purchaseAdapter : PurchaseAdapter
 
@@ -33,22 +34,17 @@ class MyPurchaseFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMyPurchaseBinding.inflate(inflater, container, false)
-
         getAllPurchaseList()
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     private fun getAllPurchaseList() {
-        //member id를 넣어야함
-
-
-        RetrofitInstance.api.getPurchaseHistory("1")
+        val jwtToken = TokenManager.getToken(MyApplication.instance)!!
+        RetrofitInstance.api.getPurchaseHistory(jwtToken)
             .enqueue(object : Callback<List<PurchaseHistory>> {
                 override fun onResponse(
                     call: Call<List<PurchaseHistory>>,
@@ -59,7 +55,6 @@ class MyPurchaseFragment : Fragment() {
                         setRecyclerView()
                     }
                 }
-
                 override fun onFailure(call: retrofit2.Call<List<PurchaseHistory>>, t: Throwable) {
                     t.printStackTrace()
                 }
@@ -78,6 +73,4 @@ class MyPurchaseFragment : Fragment() {
         super.onResume()
         getAllPurchaseList()
     }
-
-
 }
