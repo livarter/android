@@ -10,7 +10,7 @@ import net.developia.livartc.model.Reply
 import net.developia.livartc.mypage.dto.BadgeResDto
 import net.developia.livartc.mypage.dto.CouponResDto
 import net.developia.livartc.mypage.dto.MemberGradeDto
-
+import net.developia.livartc.mypage.dto.MemperUpdateReqDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
