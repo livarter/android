@@ -23,23 +23,23 @@ class ReplyWriteActivity : AppCompatActivity() {
                 }
                 override fun onTextChanged(pos: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-                    if(reviewWrite.lineCount > 4){
+                    if(reviewWrite.lineCount > 10){
                         Toast.makeText(this@ReplyWriteActivity,
-                            "최대 4줄까지 입력 가능합니다.",
+                            "최대 10줄까지 입력 가능합니다.",
                             Toast.LENGTH_SHORT).show()
 
                         reviewWrite.setText(maxText)
                         reviewWrite.setSelection(reviewWrite.length())
-                        reviewTextCnt.text = ("${reviewWrite.length()} / 40")
-                    } else if(reviewWrite.length() > 40){
-                        Toast.makeText(this@ReplyWriteActivity, "최대 40자까지 입력 가능합니다.",
+                        reviewTextCnt.text = ("${reviewWrite.length()} / 300")
+                    } else if(reviewWrite.length() > 300){
+                        Toast.makeText(this@ReplyWriteActivity, "최대 300자까지 입력 가능합니다.",
                             Toast.LENGTH_SHORT).show()
 
                         reviewWrite.setText(maxText)
                         reviewWrite.setSelection(reviewWrite.length())
-                        reviewTextCnt.text = ("${reviewWrite.length()} / 40")
+                        reviewTextCnt.text = ("${reviewWrite.length()} / 300")
                     } else {
-                        reviewTextCnt.text = ("${reviewWrite.length()} / 40")
+                        reviewTextCnt.text = ("${reviewWrite.length()} / 300")
                     }
                 }
                 override fun afterTextChanged(p0: Editable?) {
@@ -50,6 +50,7 @@ class ReplyWriteActivity : AppCompatActivity() {
 
         binding.saveBtn.setOnClickListener {
             Log.d("hschoi", binding.reviewWrite.text.toString())
+
         }
     }
 }
