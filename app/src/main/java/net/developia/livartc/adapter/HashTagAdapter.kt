@@ -13,7 +13,8 @@ import net.developia.livartc.R
  * Date: 1/24/24
  * Time: 5:22 PM
  */
-class HashTagAdapter(private val hashTags: List<String>) :
+class HashTagAdapter(private val hashTags: List<String>,
+                     private val onItemClicked: (String) -> Unit) :
     RecyclerView.Adapter<HashTagAdapter.HashTagViewHolder>() {
 
     class HashTagViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,7 +27,9 @@ class HashTagAdapter(private val hashTags: List<String>) :
     }
 
     override fun onBindViewHolder(holder: HashTagViewHolder, position: Int) {
-        holder.hashTagText.text = hashTags[position]
+        val hashTag = hashTags[position]
+        holder.hashTagText.text = hashTag
+        holder.itemView.setOnClickListener { onItemClicked(hashTag) }
     }
 
     override fun getItemCount() = hashTags.size
