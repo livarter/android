@@ -27,7 +27,10 @@ interface INetworkService {
     fun kakaoLogin(@Body loginResDto: LoginReqDto): Call<LoginResDto>
 
     @GET("/api/v1/member")
-    fun getMemberInfo(): Call<MemberResDto>
+    fun getMemberInfo(
+        @Header("Authorization") Authorization: String
+    ): Call<MemberResDto>
+
 
 
     /**
