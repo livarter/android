@@ -7,6 +7,7 @@ import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
 import net.developia.livartc.mypage.dto.BadgeResDto
+import net.developia.livartc.mypage.dto.MemberGradeDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -36,6 +37,11 @@ interface INetworkService {
     fun getBadgesByMember(
         @Header("Authorization") Authorization: String
     ): Call<BadgeResDto>
+
+    @GET("/api/v1/member/grade")
+    fun getMemberGrade(
+        @Header("Authorization") Authorization: String
+    ): Call<MemberGradeDto>
 
     /**
      * LIVARTC
