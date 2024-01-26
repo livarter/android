@@ -17,9 +17,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".mypage.membership.MemberShipFragment"
-            android:exported="false" />
-        <activity
             android:name=".mypage.membership.LogoutActivity"
             android:exported="false" />
         <activity
@@ -30,9 +27,6 @@
             android:exported="false" />
         <activity
             android:name=".mypage.membership.MyInfoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".mypage.membership.MemberShipFragment"
             android:exported="false" />
         <activity
             android:name=".PurchaseActivity"

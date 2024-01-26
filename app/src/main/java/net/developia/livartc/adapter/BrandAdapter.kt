@@ -39,10 +39,10 @@ class BrandAdapter(
 
         // 선택된 아이템 강조
         if (position == selectedPosition) {
-            holder.brandText.setTextColor(Color.parseColor("#FF0000")) // 예시 색상
+            holder.brandText.setTextColor(Color.parseColor("#000000")) // 예시 색상
             holder.brandText.setTypeface(null, Typeface.BOLD) // Bold 스타일 적용
         } else {
-            holder.brandText.setTextColor(Color.parseColor("#000000")) // 기본 색상
+            holder.brandText.setTextColor(Color.parseColor("#495057")) // 기본 색상
             holder.brandText.setTypeface(null, Typeface.NORMAL) // 기본 스타일 적용
         }
 
