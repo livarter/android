@@ -48,7 +48,7 @@ class GridAdapter(private val context: Context, private val dataList: List<GridI
 
         val isEarned = item.isEarned
 
-        if (!isEarned) {
+        if (isEarned != null && !isEarned) {
             // 뱃지 부여 받지 않은 경우 처리 - 이후 디자인 예정
             // Picasso.get().load(item.image).into(holder.imageView)
         } else {
