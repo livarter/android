@@ -11,7 +11,7 @@
         android:id="@+id/profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/_02_home_best_btn"
+        android:src="@drawable/badge1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
