@@ -52,6 +52,11 @@ interface INetworkService {
         @Header("Authorization") Authorization: String
     ): Call<CouponResDto>
 
+    @PATCH("/api/v1/member/")
+    fun updateMember(
+        @Header("Authorization") Authorization: String,
+        @Body memberUpdateReqDto : MemperUpdateReqDto
+    ): Call<MemberResDto>
 
     /**
      * LIVARTC
@@ -69,7 +74,6 @@ interface INetworkService {
         @Query("pageSize") pageSize: Int,
         @Query("pageNumber") pageNumber: Int
     ): Call<List<Product>>
-
 
     /**
      * LIVARTC
