@@ -6,6 +6,7 @@ import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
+import net.developia.livartc.mypage.dto.BadgeResDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -31,7 +32,10 @@ interface INetworkService {
         @Header("Authorization") Authorization: String
     ): Call<MemberResDto>
 
-
+    @GET("/api/v1/member/badge")
+    fun getBadgesByMember(
+        @Header("Authorization") Authorization: String
+    ): Call<BadgeResDto>
 
     /**
      * LIVARTC
