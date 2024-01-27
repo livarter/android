@@ -49,16 +49,17 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:textSize="@dimen/font_medium"
                 android:layout_marginBottom="2dp"
                 />
-
             <EditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="나의 이름"
-                android:textColorHint="@color/dark_grey"
+                android:textColorHint="@color/medium_grey"
                 android:textSize="@dimen/font_small"
+                android:backgroundTint="@color/medium_grey"
                 />
-            <!-- 이메일 -->
+
+            <!-- 이메일 - 수정 불가 -->
             <TextView
                 android:id="@+id/textEmailLabel"
                 android:layout_width="match_parent"
@@ -69,12 +70,12 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="2dp"
                 />
-
             <TextView
-                android:id="@+id/etEmail"
+                android:text="apple1023@gmail.com"
+                android:id="@+id/textEmailValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/dark_grey"
+                android:textColorHint="@color/medium_grey"
                 android:textSize="@dimen/font_small" />
 
             <!-- 닉네임 -->

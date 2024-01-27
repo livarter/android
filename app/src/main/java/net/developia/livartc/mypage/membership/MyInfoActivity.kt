@@ -44,6 +44,7 @@ class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
                     Log.d("조회 화면) 회원 정보 조회 API 성공", "서버 응답 성공")
                     memberResDto = response.body()!!
                     setupMemberInfo(memberResDto)
+                    Log.d("조회 화면) 회원 정보 조회 API res", memberResDto.toString())
                 } else {
                     Log.d("조회 화면) 회원 정보 조회 API 실패", "서버 응답 실패")
                 }
@@ -55,13 +56,21 @@ class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
 
         setContentView(R.layout.activity_my_info)
 
-        // 수정하는 버튼
         val btnEdit = findViewById<Button>(R.id.btnEdit)
         btnEdit.setOnClickListener {
             Log.d("수정하기 버튼 클릭", "이동 전")
 
+            val fragment = MyInfoUpdateFragment()
+
+            // Create a Bundle to pass data
+            val bundle = Bundle()
+            bundle.putSerializable("member", memberResDto)  // Pass your MemberResDto object
+
+            // Set the arguments of the fragment
+            fragment.arguments = bundle
+
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, MyInfoUpdateFragment())
+                .replace(R.id.fragmentContainer, fragment)
                 .addToBackStack(null)
                 .commit()
 

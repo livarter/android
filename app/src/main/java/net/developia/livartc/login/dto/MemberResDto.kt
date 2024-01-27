@@ -1,6 +1,7 @@
 package com.hyundai.loginapptest.domain
 
 import net.developia.livartc.mypage.dto.BirthDate
+import java.io.Serializable
 
 data class MemberResDto(
     val address: String = "",
@@ -17,4 +18,4 @@ data class MemberResDto(
     val totalPoint: Int = 0,
     val updatedAt: UpdatedAt = UpdatedAt(),
     val zipCode: String = ""
-)
+) : Serializable

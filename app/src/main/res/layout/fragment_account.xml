@@ -61,6 +61,7 @@
                     android:src="@drawable/myroom_back"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.503"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"></ImageView>
 
@@ -94,8 +95,8 @@
                 android:id="@+id/myroom_hashtag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
                 android:text="#차분한 #따뜻한 #포근한 #조용한 #감각적"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_small" />
