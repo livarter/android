@@ -6,11 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".PurchaseActivity"
     android:background="@color/background_color">
+
+    <!--
+ LIVARTC
+ Created by 변형준
+ Date: 1/19/24
+ 작업내용: 주문서 작성 화면 구현
+  -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,9 +29,9 @@
             android:layout_marginStart="24dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_move"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/main_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/main_title" />
 
         <TextView
             android:id="@+id/main_title"
@@ -32,7 +39,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:text="나의 주문서"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_large"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +50,7 @@
         android:id="@+id/purchase_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_bar"
         app:layout_constraintStart_toStartOf="parent"
