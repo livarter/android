@@ -44,7 +44,7 @@ class MyPageFragment : Fragment() {
             when (position) {
                 0 -> tab.text = "멤버십"
                 1 -> tab.text = "나의 뱃지"
-                2 -> tab.text = "나의 쿠폰"
+                2 -> tab.text = "나의 방"
             }
         }.attach()
 
