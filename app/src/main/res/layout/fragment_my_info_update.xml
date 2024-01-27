@@ -47,7 +47,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:text="이름"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_medium"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 />
             <EditText
                 android:id="@+id/etName"
@@ -68,14 +68,14 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_medium"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 />
             <TextView
-                android:text="apple1023@gmail.com"
+                android:hint="apple1023@gmail.com"
                 android:id="@+id/textEmailValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/medium_grey"
+                android:textColorHint="@color/dark_grey"
                 android:textSize="@dimen/font_small" />
 
             <!-- 닉네임 -->
@@ -87,7 +87,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:textColorHint="@color/black"
                 android:textSize="@dimen/font_medium"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 />
 
             <EditText
@@ -107,7 +107,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:text="전화 번호"
                 android:textColorHint="@color/black"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 android:textSize="@dimen/font_medium" />
 
             <EditText
@@ -125,7 +125,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 android:text="우편 번호"
                 android:textColorHint="@color/black"
                 android:textSize="@dimen/font_medium" />
@@ -145,7 +145,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 android:text="주소"
                 android:textColorHint="@color/black"
                 android:textSize="@dimen/font_medium" />
@@ -160,12 +160,13 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:textSize="@dimen/font_small" />
 
             <!-- 생년 월일  -->
+
             <TextView
                 android:id="@+id/textBirthLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 android:text="생년 월일"
                 android:textColorHint="@color/black"
                 android:textSize="@dimen/font_medium" />
@@ -177,7 +178,15 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:hint=""
                 android:textColorHint="@color/medium_grey"
                 android:backgroundTint="@color/medium_grey"
+                android:layout_marginBottom="50dp"
                 android:textSize="@dimen/font_small" />
+s
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:src="@drawable/_02_home_brand_kind" />
+
         </LinearLayout>
     </ScrollView>
 
