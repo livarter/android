@@ -9,14 +9,14 @@ import java.time.format.DateTimeFormatter
  */
 data class BirthDate(
     val chronology: Chronology = Chronology(),
-    val dayOfMonth: Int = 0,
+    val dayOfMonth: Int = 1,
     val dayOfWeek: String = "",
-    val dayOfYear: Int = 0,
+    val dayOfYear: Int = 1,
     val era: String = "",
     val leapYear: Boolean = true,
     val month: String = "",
-    val monthValue: Int= 0,
-    val year: Int = 0
+    val monthValue: Int= 1,
+    val year: Int = 2000
 )
 
 // 날짜 형식 파싱 함수
