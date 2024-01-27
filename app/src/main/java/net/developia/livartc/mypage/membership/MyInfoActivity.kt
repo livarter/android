@@ -15,7 +15,7 @@ import retrofit2.Response
 
 /**
  * 작성자 : 황수영
- * 내용 : 나의 정보 페이지 구현
+ * 내용 : 멤버십 탭 중 나의 정보 페이지 구현
  */
 
 class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
@@ -40,6 +40,7 @@ class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
         getMemberInfo.enqueue(object : Callback<MemberResDto> {
             override fun onResponse(call: Call<MemberResDto>, response: Response<MemberResDto>) {
                 if (response.isSuccessful) {
+                    Log.d("회원 정보 조회 API 성공", "서버 응답 실패")
                     memberResDto = response.body()!!
                     setupMemberInfo(memberResDto)
                 } else {
@@ -58,44 +59,26 @@ class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
         btnEdit.setOnClickListener {
             Log.d("수정하기 버튼 클릭", "이동 전")
 
-            // Begin the transaction
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, MyInfoUpdateFragment()) // R.id.fragmentContainer is the container in your activity layout
-                .addToBackStack(null)  // Optional: Add the transaction to the back stack
+                .replace(R.id.fragmentContainer, MyInfoUpdateFragment())
+                .addToBackStack(null)
                 .commit()
 
             Log.d("수정하기 버튼 클릭", "이동 후")
         }
     }
 
-
     private fun setupMemberInfo(memberResDto: MemberResDto) {
-        // 이름 설정
-        val textNameValue = findViewById<TextView>(R.id.textNameValue)
-        textNameValue.text = memberResDto.name ?: "아직 등록되지 않았습니다."
+        findViewById<TextView>(R.id.textNameValue).setTextOrPlaceholder(memberResDto.name)
+        findViewById<TextView>(R.id.textEmailValue).setTextOrPlaceholder(memberResDto.email)
+        findViewById<TextView>(R.id.textNicknameValue).setTextOrPlaceholder(memberResDto.nickname)
+        findViewById<TextView>(R.id.textPhoneValue).setTextOrPlaceholder(memberResDto.phone)
+        findViewById<TextView>(R.id.textZipCodeValue).setTextOrPlaceholder(memberResDto.zipCode)
+        findViewById<TextView>(R.id.textAddressValue).setTextOrPlaceholder(memberResDto.address)
+        findViewById<TextView>(R.id.textBirthValue).setTextOrPlaceholder(memberResDto.birthDate)
+    }
 
-        // 이메일 설정
-        val textEmailValue = findViewById<TextView>(R.id.textEmailValue)
-        textEmailValue.text = memberResDto.email ?: "아직 등록되지 않았습니다."
-
-        // 닉네임 설정
-        val textNicknameValue = findViewById<TextView>(R.id.textNicknameValue)
-        textNicknameValue.text = memberResDto.nickname ?: "아직 등록되지 않았습니다."
-
-        // 전화 번호 설정
-        val textPhoneValue = findViewById<TextView>(R.id.textPhoneValue)
-        textPhoneValue.text = memberResDto.name ?: "010-1234-5678"
-
-        // 우편 번호 설정
-        val textZipCodeValue = findViewById<TextView>(R.id.textZipCodeValue)
-        textZipCodeValue.text = memberResDto.zipCode ?: "아직 등록되지 않았습니다."
-
-        // 주소 설정
-        val textAddressValue = findViewById<TextView>(R.id.textAddressValue)
-        textAddressValue.text = memberResDto.address ?: "아직 등록되지 않았습니다."
-
-        // 생년 월일 설정
-        val textBirthValue = findViewById<TextView>(R.id.textBirthValue)
-        textBirthValue.text = memberResDto.birthDate ?: "아직 등록되지 않았습니다."
+    private fun TextView.setTextOrPlaceholder(value: String?, placeholder: String = "아직 등록되지 않았습니다.") {
+        text = value ?: placeholder
     }
 }

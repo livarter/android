@@ -43,14 +43,13 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:text="이름" />
-
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="홍길동" />
+            android:textColorHint="@android:color/black"
+            android:hint="나의 이름" />
 
         <!-- 이메일 -->
         <TextView
@@ -60,14 +59,12 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:text="이메일" />
-
-        <EditText
+        <TextView
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:hint="test@gmail.com" />
+            android:textColorHint="@android:color/black" />
 
         <!-- 닉네임 -->
         <TextView
@@ -83,8 +80,8 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="자유로운 가구 수집가" />
+            android:textColorHint="@android:color/black"
+            android:hint="닉네임" />
 
         <!-- 전화 번호  -->
         <TextView
@@ -95,14 +92,13 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
             android:textColor="@android:color/black"
             android:layout_marginTop="16dp"
             android:text="전화 번호" />
-
         <EditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="010-0000-0000" />
+            android:textColorHint="@android:color/black"
+            android:hint="전화 번호" />
 
         <!-- 우편 번호  -->
         <TextView
@@ -114,12 +110,12 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
             android:layout_marginTop="16dp"
             android:text="우편 번호" />
         <EditText
-            android:id="@+id/textZipCode"
+            android:id="@+id/etZipCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="03737" />
+            android:textColorHint="@android:color/black"
+            android:hint="" />
 
         <!-- 주소  -->
         <TextView
@@ -130,14 +126,13 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
             android:textColor="@android:color/black"
             android:layout_marginTop="16dp"
             android:text="주소" />
-
         <EditText
             android:id="@+id/etAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="서울특별시 동대문구 **동" />
+            android:textColorHint="@android:color/black"
+            android:hint="" />
 
         <!-- 생년 월일  -->
         <TextView
@@ -148,14 +143,13 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
             android:textColor="@android:color/black"
             android:layout_marginTop="16dp"
             android:text="생년 월일" />
-
         <EditText
             android:id="@+id/etBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="23.01.20" />
+            android:textColorHint="@android:color/black"
+            android:hint=""/>
     </LinearLayout>
 </ScrollView>
 <Button
