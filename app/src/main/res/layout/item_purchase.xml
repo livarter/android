@@ -16,15 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/click_effect"
-        android:clickable="true"
-        android:focusable="true"
         app:cardCornerRadius="10dp"
         app:contentPadding="10dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/product_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/click_effect"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="10dp">
 
             <ImageView
