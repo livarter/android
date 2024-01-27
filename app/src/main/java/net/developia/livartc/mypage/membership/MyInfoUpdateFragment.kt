@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.hyundai.loginapptest.domain.MemberResDto
+import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentMyInfoUpdateBinding
 import net.developia.livartc.login.TokenManager
 import net.developia.livartc.mypage.dto.BirthDate
@@ -23,20 +26,27 @@ import retrofit2.Response
  */
 class MyInfoUpdateFragment : Fragment() {
     private var binding: FragmentMyInfoUpdateBinding? = null
+    private lateinit var view: View
+    private var onUpdateListener: OnUpdateListener? = null
+
+    fun setOnUpdateListener(listener: OnUpdateListener) {
+        onUpdateListener = listener
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyInfoUpdateBinding.inflate(inflater, container, false)
         Log.d("MyInfoUpdateFragment", "수정 페이지로 이동")
+        view = inflater.inflate(R.layout.fragment_my_info_update, container, false)
 
         val memberResDto = arguments?.getSerializable("member") as? MemberResDto
         Log.d("MemberResDto from Activity", memberResDto?.toString() ?: "No data")
 
         updateTextViewValues(memberResDto)
 
-
-        // Update EditText values with memberResDto data
         binding?.etName?.setText(memberResDto?.name)
         binding?.etNickname?.setText(memberResDto?.nickname)
         binding?.etPhone?.setText(memberResDto?.phone)
@@ -44,9 +54,7 @@ class MyInfoUpdateFragment : Fragment() {
         binding?.etAddress?.setText(memberResDto?.address)
         binding?.etBirth?.setText(memberResDto?.birthDate?.toFormattedString())
 
-        // Button click listener for updating member information
         binding?.btnEdit?.setOnClickListener {
-            // Get updated values from EditText
             val updatedName = binding?.etName?.text.toString()
             val updatedNickname = binding?.etNickname?.text.toString()
             val updatedPhone = binding?.etPhone?.text.toString()
@@ -62,10 +70,11 @@ class MyInfoUpdateFragment : Fragment() {
                 zipCode = updatedZipCode,
                 birthDate = updatedBirth
             )
+
+            // 서버로 정보 업데이트 요청
             updateMemberInfo(updatedMemberResDto)
             requireActivity().supportFragmentManager.popBackStack()
         }
-
         return binding?.root
     }
 
@@ -74,17 +83,21 @@ class MyInfoUpdateFragment : Fragment() {
         binding = null
     }
 
-    private fun updateMemberInfo(memperUpdateReqDto : MemperUpdateReqDto) {
+    private fun updateMemberInfo(memperUpdateReqDto : MemperUpdateReqDto) : MemberResDto{
+
         val networkService = (MyApplication.instance).networkService
         val jwtToken = TokenManager.getToken(MyApplication.instance)!!
 
         val updateInfoCall = networkService.updateMember(jwtToken, memperUpdateReqDto)
         Log.d("회원 수정할 DTO", updateInfoCall.toString())
 
+        val memberResDto = MemberResDto()
+
         updateInfoCall.enqueue(object : Callback<MemberResDto> {
             override fun onResponse(call: Call<MemberResDto>, response: Response<MemberResDto>) {
                 if (response.isSuccessful) {
                     Log.d("회원 수정 API 성공", response.body().toString())
+                    onUpdateListener?.onUpdate(response.body()!!)
                 } else {
                     Log.d("회원 수정 API 실패", "서버 응답 실패")
                 }
@@ -93,12 +106,16 @@ class MyInfoUpdateFragment : Fragment() {
                 Log.d("회원 수정 API 실패", "네트워크 오류: $t")
             }
         })
+        return memberResDto
     }
 
     private fun updateTextViewValues(memberResDto: MemberResDto?) {
         with(binding) {
+            val profileImage = view.findViewById<ImageView>(R.id.profile_image)
+            Glide.with(view)
+                .load(memberResDto?.image)
+                .into(profileImage)
             this?.textEmailValue?.hint = memberResDto?.email ?: ""
-
             this?.etName?.hint = memberResDto?.name ?: "이름을 입력해주세요."
             this?.etNickname?.hint = memberResDto?.nickname ?: "닉네임을 입력해주세요."
             this?.etPhone?.hint = memberResDto?.phone ?: "번호를 입력해주세요."

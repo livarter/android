@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.R
 import net.developia.livartc.login.TokenManager
@@ -18,16 +20,14 @@ import retrofit2.Response
  * 작성자 : 황수영
  * 내용 : 멤버십 탭 중 나의 정보 페이지 구현
  */
-
 class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
     lateinit var memberResDto : MemberResDto
+    override fun onUpdate(memberResDto: MemberResDto) {
+        setupMemberInfo(memberResDto)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getMemberInfo()
-    }
-
-    override fun onUpdate() {
         getMemberInfo()
     }
 
@@ -62,13 +62,10 @@ class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
 
             val fragment = MyInfoUpdateFragment()
 
-            // Create a Bundle to pass data
             val bundle = Bundle()
-            bundle.putSerializable("member", memberResDto)  // Pass your MemberResDto object
+            bundle.putSerializable("member", memberResDto)
 
-            // Set the arguments of the fragment
             fragment.arguments = bundle
-
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
                 .addToBackStack(null)
@@ -76,9 +73,15 @@ class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
 
             Log.d("수정하기 버튼 클릭", "이동 후")
         }
+
     }
 
     private fun setupMemberInfo(memberResDto: MemberResDto) {
+        val profileImage = findViewById<ImageView>(R.id.profile_image)
+        Glide.with(this)
+            .load(memberResDto.image)
+            .into(profileImage)
+
         findViewById<TextView>(R.id.textNameValue).setTextOrPlaceholder(memberResDto.name)
         findViewById<TextView>(R.id.textEmailValue).setTextOrPlaceholder(memberResDto.email)
         findViewById<TextView>(R.id.textNicknameValue).setTextOrPlaceholder(memberResDto.nickname)
