@@ -1,5 +1,6 @@
 package net.developia.livartc.mypage.membership
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -27,12 +28,6 @@ import retrofit2.Response
 class MyInfoUpdateFragment : Fragment() {
     private var binding: FragmentMyInfoUpdateBinding? = null
     private lateinit var view: View
-    private var onUpdateListener: OnUpdateListener? = null
-
-    fun setOnUpdateListener(listener: OnUpdateListener) {
-        onUpdateListener = listener
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +41,6 @@ class MyInfoUpdateFragment : Fragment() {
         Log.d("MemberResDto from Activity", memberResDto?.toString() ?: "No data")
 
         updateTextViewValues(memberResDto)
-
         binding?.etName?.setText(memberResDto?.name)
         binding?.etNickname?.setText(memberResDto?.nickname)
         binding?.etPhone?.setText(memberResDto?.phone)
@@ -74,6 +68,10 @@ class MyInfoUpdateFragment : Fragment() {
             // 서버로 정보 업데이트 요청
             updateMemberInfo(updatedMemberResDto)
             requireActivity().supportFragmentManager.popBackStack()
+
+            val intent = Intent(requireContext(), MyInfoActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
         return binding?.root
     }
@@ -97,7 +95,6 @@ class MyInfoUpdateFragment : Fragment() {
             override fun onResponse(call: Call<MemberResDto>, response: Response<MemberResDto>) {
                 if (response.isSuccessful) {
                     Log.d("회원 수정 API 성공", response.body().toString())
-                    onUpdateListener?.onUpdate(response.body()!!)
                 } else {
                     Log.d("회원 수정 API 실패", "서버 응답 실패")
                 }
@@ -115,6 +112,7 @@ class MyInfoUpdateFragment : Fragment() {
             Glide.with(view)
                 .load(memberResDto?.image)
                 .into(profileImage)
+
             this?.textEmailValue?.hint = memberResDto?.email ?: ""
             this?.etName?.hint = memberResDto?.name ?: "이름을 입력해주세요."
             this?.etNickname?.hint = memberResDto?.nickname ?: "닉네임을 입력해주세요."
