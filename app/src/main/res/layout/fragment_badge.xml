@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:layout_margin="18dp"> <!-- 여기에 마진 추가 -->
 
     <GridView
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numColumns="3"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"/>
+        android:layout_margin="18dp" />
 
 </LinearLayout>
