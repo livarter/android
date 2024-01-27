@@ -18,6 +18,9 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_backarrow"
+            android:background="@drawable/click_effect"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -38,6 +41,9 @@
             android:text="저장"
             android:textStyle="bold"
             android:textSize="@dimen/font_small"
+            android:background="@drawable/click_effect"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
