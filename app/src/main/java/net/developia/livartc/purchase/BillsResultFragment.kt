@@ -18,7 +18,8 @@ import java.util.Locale
  * LIVARTC
  * Created by 변형준
  * Date: 1/19/24
- * Time: 17:21
+ * 작업내용: 주문 결과 내용 반영
+ *
  */
 class BillsResultFragment : Fragment() {
     lateinit var binding: FragmentBillsResultBinding
@@ -71,11 +72,11 @@ class BillsResultFragment : Fragment() {
             intent.putExtra("startFragment", "HomeFragment")
             startActivity(intent)
         }
-        //홈으로 이동하는 버그 존재
+
         binding.mypageBtn.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            intent.putExtra("startFragment", "MyPurchaseFragment")
+            intent.putExtra("startFragment", "MyPageFragment")
             startActivity(intent)
         }
     }

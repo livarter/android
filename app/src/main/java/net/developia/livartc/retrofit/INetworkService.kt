@@ -14,6 +14,7 @@ import net.developia.livartc.mypage.dto.MemperUpdateReqDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
@@ -84,14 +85,14 @@ interface INetworkService {
     @POST("api/v1/purchase/insert")
     fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto, @Header("Authorization") Authorization: String): Call<ResponseBody>
 
-    /**
-     * LIVARTC
-     * Created by 변형준
-     * Date: 1/25/24
-     * Time: 17:21
-     */
     @GET("api/v1/purchase")
     fun getPurchaseHistory(@Header("Authorization") Authorization: String): Call<List<PurchaseHistory>>
+
+    @PATCH("api/v1/member/point")
+    fun increasePoint(@Header("Authorization") Authorization: String, @Query("money") money: Long): Call<ResponseBody>
+
+    @DELETE("api/v1/member/point")
+    fun decreasePoint(@Header("Authorization") Authorization: String, @Query("point") point: Long): Call<ResponseBody>
 
 
     /**

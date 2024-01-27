@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import net.developia.livartc.R
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hyundai.loginapptest.domain.MemberResDto
@@ -56,13 +55,6 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        memberShipFragment.myOrder.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply{
-                replace(R.id.main_container, MyPurchaseFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
     }
 
     /**
