@@ -1,8 +1,10 @@
 package com.hyundai.loginapptest.domain
 
+import net.developia.livartc.mypage.dto.BirthDate
+
 data class MemberResDto(
     val address: String = "",
-    val birthDate: Chronology = Chronology(),
+    val birthDate: BirthDate = BirthDate(),
     val createdAt: CreatedAt = CreatedAt(),
     val curPoint: Int = 0,
     val email: String = "",

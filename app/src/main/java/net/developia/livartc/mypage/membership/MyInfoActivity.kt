@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.R
 import net.developia.livartc.login.TokenManager
+import net.developia.livartc.mypage.dto.toFormattedString
 import net.developia.livartc.retrofit.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -75,7 +76,7 @@ class MyInfoActivity : AppCompatActivity(), OnUpdateListener {
         findViewById<TextView>(R.id.textPhoneValue).setTextOrPlaceholder(memberResDto.phone)
         findViewById<TextView>(R.id.textZipCodeValue).setTextOrPlaceholder(memberResDto.zipCode)
         findViewById<TextView>(R.id.textAddressValue).setTextOrPlaceholder(memberResDto.address)
-        findViewById<TextView>(R.id.textBirthValue).setTextOrPlaceholder(memberResDto.birthDate.toString())
+        findViewById<TextView>(R.id.textBirthValue).setTextOrPlaceholder(memberResDto.birthDate.toFormattedString())
     }
 
     private fun TextView.setTextOrPlaceholder(value: String?, placeholder: String = "아직 등록되지 않았습니다.") {

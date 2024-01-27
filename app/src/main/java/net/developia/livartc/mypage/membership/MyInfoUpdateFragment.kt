@@ -10,6 +10,7 @@ import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.databinding.FragmentMyInfoUpdateBinding
 import net.developia.livartc.login.TokenManager
 import net.developia.livartc.mypage.dto.MemperUpdateReqDto
+import net.developia.livartc.mypage.dto.toFormattedString
 import net.developia.livartc.retrofit.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +42,7 @@ class MyInfoUpdateFragment : Fragment() {
         binding.etPhone.hint = memberResDto.phone
         binding.etZipCode.hint = memberResDto.zipCode
         binding.etAddress.hint = memberResDto.address
-        binding.etBirth.hint = memberResDto.birthDate.toString()
+        binding.etBirth.hint = memberResDto.birthDate.toFormattedString()
 
         // 데이터가 정상적으로 가져오면 해당 데이터를 View에 설정
         if (memberResDto != null) {
@@ -49,7 +50,7 @@ class MyInfoUpdateFragment : Fragment() {
             binding.etNickname.setText(memberResDto.nickname)
             binding.etPhone.setText(memberResDto.phone)
             binding.etAddress.setText(memberResDto.address)
-            binding.etBirth.setText(memberResDto.birthDate.toString())
+            binding.etBirth.setText(memberResDto.birthDate.toFormattedString())
             binding.etZipCode.setText(memberResDto.zipCode)
         } else {
             // 데이터가 없는 경우 처리
