@@ -172,13 +172,13 @@ class ReplyWriteActivity : AppCompatActivity() {
             ) {
                 Log.d("insertReply", " ${response.body()}")
                 binding.progressbar.visibility = View.VISIBLE
-                //사진이 파이어 베이스에 업로드 될 때까지 2초 Progress바 보여줌
+                //사진이 파이어 베이스에 업로드 될 때까지 3초 Progress바 보여줌
                 //(리뷰 작성한후 페이지에 보이게 하기위해)
                 if(imgStatus==1){
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.progressbar.visibility = View.INVISIBLE
                     finish()
-                }, 2500)}
+                }, 3000)}
                 else finish()
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
