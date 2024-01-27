@@ -58,10 +58,15 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.backBtn.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply{
-                remove(this@DetailFragment).commit()
+            if (arguments?.getString("best") == "best"){
+                activity?.finish()
             }
-            parentFragmentManager.popBackStack()
+            else {
+                parentFragmentManager.beginTransaction().apply {
+                    remove(this@DetailFragment).commit()
+                }
+                parentFragmentManager.popBackStack()
+            }
         }
 
         getAllReply()
