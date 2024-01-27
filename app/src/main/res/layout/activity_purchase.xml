@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_move"
+            android:src="@drawable/ic_backarrow"
             android:background="@drawable/click_effect"
             android:clickable="true"
             android:focusable="true"
