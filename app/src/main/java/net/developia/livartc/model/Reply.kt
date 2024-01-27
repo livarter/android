@@ -11,7 +11,8 @@ data class Reply(
     val productId: Int,
     val replyComment: String,
     val replyId: Int,
-    val updatedAt: UpdatedAt
+    val updatedAt: UpdatedAt,
+    val replyImg: String
 ) {
     data class CreatedAt(
         val chronology: Chronology,

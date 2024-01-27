@@ -109,6 +109,7 @@ interface INetworkService {
     fun saveReview (
         @Header("Authorization") Authorization: String,
         @Query("productId") productId: Long,
-        @Query("replyComment") replyComment: String
+        @Query("replyComment") replyComment: String,
+        @Query("replyImg") replyImg: String?
     ): Call<ResponseBody>
 }

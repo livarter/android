@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ReplyWriteActivity"
-    android:background="@color/background_color">
+    android:background="@color/white">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/review_title"
         android:layout_width="match_parent"
@@ -25,54 +25,160 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="리뷰 작성 페이지"
-            android:textSize="22sp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toEndOf="@id/back_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:text="리뷰 쓰기"
+            android:textSize="@dimen/font_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/save_btn"
+            app:layout_constraintStart_toStartOf="@+id/back_btn"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="저장"
-            android:fontFamily="sans-serif-black"
-            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <View
-        android:id="@+id/title_btm"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/light_grey"
-        app:layout_constraintTop_toBottomOf="@id/review_title" />
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/review_title"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
 
-    <EditText
-        android:id="@+id/review_write"
-        android:layout_width="0dp"
-        android:layout_height="330dp"
-        android:gravity="top|left"
-        android:hint="리뷰를 작성해주세요."
-        android:background="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_btm" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/review_text_cnt"
+            <ImageView
+                android:id="@+id/product_img"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/product_sample"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/product_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Fogia"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/product_img"
+                app:layout_constraintTop_toTopOf="@+id/product_img" />
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:text="토카타 패브릭의자 코랄 오렌지"
+                app:layout_constraintStart_toEndOf="@+id/product_img"
+                app:layout_constraintTop_toBottomOf="@+id/product_brand" />
+
+
+            <View
+                android:id="@+id/product_btm"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/light_grey"
+                app:layout_constraintTop_toBottomOf="@+id/product_img" />
+
+            <TextView
+                android:id="@+id/upload_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="사진업로드"
+                android:textSize="@dimen/font_medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/upload_img"
+                app:layout_constraintTop_toBottomOf="@+id/product_btm" />
+            <TextView
+                android:id="@+id/choice_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(선택)"
+                android:textColor="@color/medium_grey"
+                app:layout_constraintBottom_toBottomOf="@+id/upload_msg"
+                app:layout_constraintStart_toEndOf="@+id/upload_msg" />
+
+            <ImageView
+                android:id="@+id/upload_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/review_border"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/photoupload"
+                app:layout_constraintStart_toStartOf="@+id/review_write"
+                app:layout_constraintTop_toBottomOf="@+id/upload_msg" />
+
+            <TextView
+                android:id="@+id/write_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="리뷰를 작성해주세요."
+                android:textSize="@dimen/font_medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/upload_msg"
+                app:layout_constraintTop_toBottomOf="@+id/upload_img" />
+
+
+            <EditText
+                android:id="@+id/review_write"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/review_border"
+                android:gravity="top|left"
+                android:hint="상품의 후기를 남겨주세요."
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/write_msg" />
+
+            <TextView
+                android:id="@+id/review_text_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="0 / 300"
+                android:textColor="@color/dark_grey"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/review_write"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:text="0 / 300"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/review_write"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <View
-        android:id="@+id/content_btm"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/light_grey"
-        app:layout_constraintTop_toBottomOf="@id/review_write" />
+        android:id="@+id/progressbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
