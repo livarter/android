@@ -48,13 +48,47 @@
                 tools:layout_editor_absoluteX="170dp"
                 tools:layout_editor_absoluteY="138dp" />
 
-            <ImageView
-                android:id="@+id/myroom_background"
-                android:layout_width="280dp"
-                android:layout_height="280dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/myroom_back">
-            </ImageView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/myroom_background"
+                    android:layout_width="280dp"
+                    android:layout_height="280dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/myroom_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+                <ImageView
+                    android:id="@+id/leftSide"
+                    android:layout_width="110dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/badge1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/myroom_background"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/myroom_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.864" />
+
+                <ImageView
+                    android:id="@+id/rightSide"
+                    android:layout_width="101dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/badge2"
+                    app:layout_constraintBottom_toBottomOf="@+id/myroom_background"
+                    app:layout_constraintEnd_toEndOf="@+id/myroom_background"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/myroom_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.967" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/myroom_hashtag"
