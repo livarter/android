@@ -25,6 +25,10 @@ import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * 작성자 : 황수영
+ * 내용 : 멤버십 탭
+ */
 class MemberShipFragment : Fragment() {
     private lateinit var linearLayout: LinearLayout
     private lateinit var membershipCardImageView: ImageView
