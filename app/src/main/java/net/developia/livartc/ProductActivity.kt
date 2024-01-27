@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import net.developia.livartc.databinding.ActivityProductBinding
 import net.developia.livartc.product.FilteredProductFragment
 import net.developia.livartc.product.SearchFragment
@@ -40,10 +41,6 @@ class ProductActivity : AppCompatActivity() {
                 true
             }
         }
-        fun startReviewWriteActivity() {
-            val intent = Intent(this, ReplyWriteActivity::class.java)
-//            intent.putExtra("userid", userid)
-            startActivity(intent)
-        }
+
     }
 }

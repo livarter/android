@@ -15,7 +15,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.developia.livartc.R
 import net.developia.livartc.login.TokenManager
+import net.developia.livartc.mypage.PopUp
 import net.developia.livartc.mypage.dto.MemberGradeDto
+import net.developia.livartc.mypage.dto.PopUpDto
 import net.developia.livartc.retrofit.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,9 +60,17 @@ class MemberShipFragment : Fragment() {
         }
 
         // 4. logout 버튼 클릭시 => 로그아웃하고 처음 화면으로 이동하기
+        // 일단 팝업 뜨는 버튼으로!!
         val logoutLayout = view.findViewById<LinearLayout>(R.id.logout)
         logoutLayout.setOnClickListener {
-            startActivity(Intent(requireContext(), LogoutActivity::class.java))
+            // startActivity(Intent(requireContext(), LogoutActivity::class.java))
+            // 팝업 뜨는 예시
+            val tmp = PopUpDto (
+                "Commenter",
+                "https://github.com/livarter/android/assets/77563814/a346484d-31df-477e-a43c-690aec02c63f",
+                "축하합니다! 뱃지를 발급하였습니다!"
+            )
+            PopUp().show(tmp, requireContext())
         }
         return view
     }

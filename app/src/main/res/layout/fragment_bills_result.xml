@@ -8,6 +8,13 @@
     tools:context=".purchase.BillsResultFragment"
     android:background="@color/background_color">
 
+    <!--
+ LIVARTC
+ Created by 변형준
+ Date: 1/19/24
+ 작업내용: 주문 완료 화면 구현
+  -->
+
     <View
         android:id="@+id/top_line"
         android:layout_width="match_parent"
@@ -24,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="결제가 완료되었습니다!"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_large"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_line"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,9 +50,9 @@
         android:id="@+id/total_price_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
-        android:textSize="12dp"
+        android:textSize="@dimen/font_small"
         android:text="총 결제 금액"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +62,9 @@
         android:id="@+id/total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
-        android:text="₩120,000"
-        android:textSize="12dp"
+        android:layout_marginEnd="60dp"
+        android:text="120,000 원"
+        android:textSize="@dimen/font_small"
         app:layout_constraintBottom_toBottomOf="@+id/total_price_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/total_price_text" />
@@ -66,9 +73,9 @@
         android:id="@+id/order_id_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
-        android:textSize="12dp"
+        android:textSize="@dimen/font_small"
         android:text="주문번호"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,9 +85,9 @@
         android:id="@+id/order_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="60dp"
         android:text="1234123123"
-        android:textSize="12dp"
+        android:textSize="@dimen/font_small"
         app:layout_constraintBottom_toBottomOf="@+id/order_id_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/order_id_text" />
@@ -89,10 +96,10 @@
         android:id="@+id/purchased_date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
         android:text="결제일시"
-        android:textSize="12dp"
+        android:textSize="@dimen/font_small"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_id_text" />
@@ -101,9 +108,9 @@
         android:id="@+id/purchased_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="60dp"
         android:text="2024.01.29. 12:00:00"
-        android:textSize="12dp"
+        android:textSize="@dimen/font_small"
         app:layout_constraintBottom_toBottomOf="@+id/purchased_date_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/purchased_date_text" />
@@ -113,7 +120,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="주문내역 확인하러가기"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="130dp"
+        android:textSize="@dimen/font_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottom_line" />
@@ -123,6 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="계속 쇼핑하기"
+        android:textSize="@dimen/font_small"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
