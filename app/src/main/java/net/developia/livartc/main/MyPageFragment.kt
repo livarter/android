@@ -26,13 +26,11 @@ import retrofit2.Response
 
 class MyPageFragment : Fragment() {
     lateinit var binding: FragmentMyPageBinding
-    lateinit var memberShipFragment: FragmentMembershipBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyPageBinding.inflate(inflater, container, false)
-        memberShipFragment = FragmentMembershipBinding.inflate(inflater, container, false)
         // 서버 API 호출 및 데이터 설정 예시
         fetchProfileData()
 
@@ -51,18 +49,6 @@ class MyPageFragment : Fragment() {
         }.attach()
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        memberShipFragment.myOrder.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply{
-                replace(R.id.main_container, MyPurchaseFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
     }
 
     /**

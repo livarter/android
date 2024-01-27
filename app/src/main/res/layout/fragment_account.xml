@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/fragmentContainer"
+    tools:context=".mypage.account.AccountFragment">
+
+
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 나의 정보 -->
+            <LinearLayout
+                android:id="@+id/myinfo_tab"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/myinfo_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    tools:src="@drawable/ic_mypage" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/myinfo_title"
+                        android:layout_width="105dp"
+                        android:layout_height="match_parent"
+                        android:text="나의 정보" />
+
+                    <TextView
+                        android:id="@+id/myinfo_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="나의 정보를 조회하고 수정합니다" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 나의 정보 -->
+            <LinearLayout
+                android:id="@+id/myreview_tab"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/myreview_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    tools:src="@drawable/ic_mypage" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/myreview_title"
+                        android:layout_width="105dp"
+                        android:layout_height="match_parent"
+                        android:text="나의 정보" />
+
+                    <TextView
+                        android:id="@+id/myreview_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="나의 정보를 조회하고 수정합니다" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 나의 정보 -->
+            <LinearLayout
+                android:id="@+id/myorder_tab"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/myorder_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    tools:src="@drawable/ic_mypage" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/myorder_title"
+                        android:layout_width="105dp"
+                        android:layout_height="match_parent"
+                        android:text="나의 주문" />
+
+                    <TextView
+                        android:id="@+id/myorder_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="나의 정보를 조회하고 수정합니다" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/logout_tab"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/logout_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    tools:src="@drawable/ic_mypage" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/logout_title"
+                        android:layout_width="105dp"
+                        android:layout_height="match_parent"
+                        android:text="로그아웃" />
+
+                    <TextView
+                        android:id="@+id/logout_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="로그아웃합니다" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
