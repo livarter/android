@@ -17,7 +17,6 @@ import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentAccountBinding
 import net.developia.livartc.databinding.FragmentMembershipBinding
 import net.developia.livartc.login.TokenManager
-import net.developia.livartc.main.MyPurchaseFragment
 import net.developia.livartc.mypage.PopUp
 import net.developia.livartc.mypage.dto.MemberGradeDto
 import net.developia.livartc.mypage.dto.PopUpDto
@@ -126,12 +125,13 @@ class MemberShipFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.myorderTab.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply{
-                replace(R.id.main_container, MyPurchaseFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
+        // 클릭시, 나의 주문 내역 관련 연결
+//        binding.myorderTab.setOnClickListener {
+//            parentFragmentManager.beginTransaction().apply{
+//                replace(R.id.main_container, MyPurchaseFragment())
+//                addToBackStack(null)
+//                commit()
+//            }
+//        }
     }
 }
