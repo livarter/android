@@ -8,6 +8,13 @@
     tools:context=".purchase.BillsResultFragment"
     android:background="@color/background_color">
 
+    <!--
+ LIVARTC
+ Created by 변형준
+ Date: 1/19/24
+ 작업내용: 주문 완료 화면 구현
+  -->
+
     <View
         android:id="@+id/top_line"
         android:layout_width="match_parent"
@@ -43,7 +50,7 @@
         android:id="@+id/total_price_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
         android:textSize="@dimen/font_small"
         android:text="총 결제 금액"
@@ -55,7 +62,7 @@
         android:id="@+id/total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="60dp"
         android:text="120,000 원"
         android:textSize="@dimen/font_small"
         app:layout_constraintBottom_toBottomOf="@+id/total_price_text"
@@ -66,7 +73,7 @@
         android:id="@+id/order_id_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
         android:textSize="@dimen/font_small"
         android:text="주문번호"
@@ -78,7 +85,7 @@
         android:id="@+id/order_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="60dp"
         android:text="1234123123"
         android:textSize="@dimen/font_small"
         app:layout_constraintBottom_toBottomOf="@+id/order_id_text"
@@ -89,7 +96,7 @@
         android:id="@+id/purchased_date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
         android:text="결제일시"
         android:textSize="@dimen/font_small"
@@ -101,7 +108,7 @@
         android:id="@+id/purchased_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="60dp"
         android:text="2024.01.29. 12:00:00"
         android:textSize="@dimen/font_small"
         app:layout_constraintBottom_toBottomOf="@+id/purchased_date_text"

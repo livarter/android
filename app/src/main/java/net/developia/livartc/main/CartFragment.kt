@@ -22,7 +22,8 @@ import java.util.Locale
  * LIVARTC
  * Created by 변형준
  * Date: 1/19/24
- * Time: 17:21
+ * 작업내용: 리사이클러뷰 장바구니 목록 조회 및 수정
+ *           장바구니 결제 예상 금액 전달
  */
 class CartFragment : Fragment() {
     lateinit var binding: FragmentCartBinding
@@ -87,12 +88,11 @@ class CartFragment : Fragment() {
     private fun setTotalPrice(totalPrice: Long) {
         requireActivity().runOnUiThread {
             val numberFormat = NumberFormat.getNumberInstance(Locale.US)
-            val formattedPrice = numberFormat.format(totalPrice)
-            binding.originPrice.text = "$formattedPrice 원"
-            // 배송비는 0원으로 설정
-
-            // 할인 금액
-            binding.totalPrice.text = "$formattedPrice 원" // 총 결제 금액을 화면에 표시
+            val formattedOriginPrice = numberFormat.format(totalPrice)
+            val formattedTotalPrice = numberFormat.format(totalPrice + 3000)
+            binding.originPrice.text = "$formattedOriginPrice 원"
+            // 할인 전 금액
+            binding.totalPrice.text = "$formattedTotalPrice 원" // 총 결제 금액을 화면에 표시
         }
     }
 
