@@ -41,7 +41,7 @@ class MyInfoUpdateFragment : Fragment() {
         binding.etPhone.hint = memberResDto.phone
         binding.etZipCode.hint = memberResDto.zipCode
         binding.etAddress.hint = memberResDto.address
-        binding.etBirth.hint = memberResDto.birthDate
+        binding.etBirth.hint = memberResDto.birthDate.toString()
 
         // 데이터가 정상적으로 가져오면 해당 데이터를 View에 설정
         if (memberResDto != null) {
@@ -49,7 +49,7 @@ class MyInfoUpdateFragment : Fragment() {
             binding.etNickname.setText(memberResDto.nickname)
             binding.etPhone.setText(memberResDto.phone)
             binding.etAddress.setText(memberResDto.address)
-            binding.etBirth.setText(memberResDto.birthDate)
+            binding.etBirth.setText(memberResDto.birthDate.toString())
             binding.etZipCode.setText(memberResDto.zipCode)
         } else {
             // 데이터가 없는 경우 처리
@@ -65,7 +65,7 @@ class MyInfoUpdateFragment : Fragment() {
             val nicknameValue = if (binding.etNickname.text.isNotBlank()) binding.etNickname.text.toString() else null
             val phoneValue = if (binding.etPhone.text.isNotBlank()) binding.etPhone.text.toString() else null
             val addressValue = if (binding.etAddress.text.isNotBlank()) binding.etAddress.text.toString() else null
-            val zipCodeValue = if (binding.etAddress.text.isNotBlank()) binding.etZipCode.text.toString() else null
+            val zipCodeValue = if (binding.etZipCode.text.isNotBlank()) binding.etZipCode.text.toString() else null
             val birthValue = if (binding.etBirth.text.isNotBlank()) binding.etBirth.text.toString() else null
 
             // 로그에 찍기
@@ -79,7 +79,6 @@ class MyInfoUpdateFragment : Fragment() {
             memperUpdateReqDto.address = addressValue
             memperUpdateReqDto.birthDate = birthValue
             memperUpdateReqDto.zipCode = zipCodeValue
-            // memperUpdateReqDto.image = imageValue
 
             updateMemberInfo(memperUpdateReqDto)
             activity?.supportFragmentManager?.popBackStack()
@@ -119,20 +118,20 @@ class MyInfoUpdateFragment : Fragment() {
         val jwtToken = TokenManager.getToken(MyApplication.instance)!!
 
         val getMemberInfo = networkService.getMemberInfo(jwtToken)
-        Log.d("회원 정보 조회 API 시작", getMemberInfo.toString())
+        Log.d("수정 화면) 회원 정보 조회 API 시작", getMemberInfo.toString())
 
         getMemberInfo.enqueue(object : Callback<MemberResDto> {
             override fun onResponse(call: Call<MemberResDto>, response: Response<MemberResDto>) {
                 if (response.isSuccessful) {
-                    Log.d("회원 정보 조회 API 성공", response.body().toString())
+                    Log.d("수정 화면) 회원 정보 조회 API 성공", response.body().toString())
                     memberResDto = response.body()!!
 
                 } else {
-                    Log.d("회원 정보 조회 API 실패", "서버 응답 실패")
+                    Log.d("수정 화면) 회원 정보 조회 API 실패", "서버 응답 실패")
                 }
             }
             override fun onFailure(call: Call<MemberResDto>, t: Throwable) {
-                Log.d("회원 정보 조회 API 실패", "네트워크 오류" + t.toString())
+                Log.d("수정 화면) 회원 정보 조회 API 실패", "네트워크 오류" + t.toString())
             }
         })
 

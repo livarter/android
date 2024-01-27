@@ -2,7 +2,7 @@ package com.hyundai.loginapptest.domain
 
 data class MemberResDto(
     val address: String = "",
-    val birthDate: String = "",
+    val birthDate: Chronology = Chronology(),
     val createdAt: CreatedAt = CreatedAt(),
     val curPoint: Int = 0,
     val email: String = "",
