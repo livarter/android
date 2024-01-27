@@ -33,6 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".ProductActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

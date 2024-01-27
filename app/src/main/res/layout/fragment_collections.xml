@@ -71,6 +71,34 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/_03_collections_brand_5"
                 />
+            <ImageView
+                android:id="@+id/brand_8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/_03_collections_brand_5"
+                />
+            <ImageView
+                android:id="@+id/brand_9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/_03_collections_brand_5"
+                />
+            <ImageView
+                android:id="@+id/brand_10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/_03_collections_brand_5"
+                />
+            <ImageView
+                android:id="@+id/brand_11"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/_03_collections_brand_5"
+                />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
