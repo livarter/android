@@ -17,10 +17,8 @@ import net.developia.livartc.adapter.BrandAdapter
 import net.developia.livartc.adapter.HashTagAdapter
 import net.developia.livartc.adapter.ProductAdapter
 import net.developia.livartc.databinding.FragmentHeaderBinding
-import net.developia.livartc.databinding.FragmentHomeBinding
 import net.developia.livartc.databinding.FragmentSearchPageBinding
 import net.developia.livartc.databinding.FragmentSearchSearchbarBinding
-import net.developia.livartc.databinding.FragmentSearchSortingdropdownBinding
 import net.developia.livartc.model.Product
 import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
@@ -28,30 +26,28 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SearchFragment : Fragment() {
-    lateinit var binding: FragmentSearchPageBinding
-    lateinit var searchBarBinding: FragmentSearchSearchbarBinding
+
+    private lateinit var binding: FragmentSearchPageBinding
+    private lateinit var searchBarBinding: FragmentSearchSearchbarBinding
     private var selectedBrand: String? = null
     private var selectedHashTag: String? = null
+    private var isHashTagSearch: Boolean = false
     private lateinit var products: List<Product>
     private var selectedSortOption: Int = 4
     private lateinit var sortingSpinner: Spinner
-    private lateinit var headerBinding: FragmentHeaderBinding
-    private lateinit var backArrow: ImageView
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSearchPageBinding.inflate(inflater, container, false)
         searchBarBinding = FragmentSearchSearchbarBinding.bind(binding.root.findViewById(R.id.search_searchbar))
-        val backArrow = binding.root.findViewById<ImageView>(R.id.back_arrow)
 
-        backArrow.setOnClickListener {
+        binding.root.findViewById<ImageView>(R.id.back_arrow).setOnClickListener {
             activity?.finish()
         }
 
         initSearchView()
+        setupSpinner()
+        loadInitialProducts()
 
         return binding.root
     }
@@ -60,49 +56,24 @@ class SearchFragment : Fragment() {
         searchBarBinding.searchViews.isSubmitButtonEnabled = true
         searchBarBinding.searchViews.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                // 검색어 변경 시 브랜드와 해시태그 초기화
+                selectedBrand = null
+                selectedHashTag = null
+                isHashTagSearch = false
                 searchProducts(query ?: "", selectedBrand, selectedHashTag, selectedSortOption)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // 필요한 경우 이곳에서 검색어 변경에 대한 처리를 구현
-                // 추후에 새로운 검색어 검색시 선택된 브랜드와 해시태그 초기화 필요
                 return true
             }
         })
     }
 
-    private fun searchProducts(searchQuery: String, selectedBrand: String?, hashTag: String?=null, sortOption: Int) {
-
-        val query = searchQuery.ifBlank { "" }
-
-        RetrofitInstance.api.searchProducts("", selectedBrand ?: "", hashTag ?: "", query ?: "", sortOption, 8, 1)
-            .enqueue(object : Callback<List<Product>> {
-                override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                    if (response.isSuccessful) {
-                        val products = response.body() ?: emptyList()
-                        this@SearchFragment.products = products
-                        displaySearchResults(products)
-                        displaySelectedBrandHashTags(selectedBrand)
-
-                        // 로그에 결과 출력
-                        Log.d("SearchFragment", "검색 결과: $products")
-                    } else {
-                        Log.e("SearchFragment", "응답 실패: ${response.errorBody()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                    Log.e("SearchFragment", "API 호출 실패: $t")
-                }
-            })
-    }
-
     private fun displaySearchResults(products: List<Product>) {
         this.products = products
-
         val recyclerView = binding.productRecyclerView
-        recyclerView.layoutManager = GridLayoutManager(context, 2) // 2열 그리드 레이아웃 설정
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.adapter = ProductAdapter(products) { product ->
             showProductDetail(product)
         }
@@ -119,6 +90,8 @@ class SearchFragment : Fragment() {
         val brandNames = resources.getStringArray(R.array.brand_names).toList()
         val brandAdapter = BrandAdapter(brandNames) { brand ->
             selectedBrand = if (selectedBrand == brand) null else brand
+            selectedHashTag = null
+            isHashTagSearch = false
             displaySelectedBrandHashTags(selectedBrand)
             searchBarBinding.searchViews.query?.toString()?.let { query ->
                 searchProducts(query, selectedBrand,"",selectedSortOption)
@@ -130,6 +103,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupSpinner() {
+        sortingSpinner = binding.root.findViewById(R.id.spinnerSortOptions)
         sortingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 val selectedSortOptionString = parent.getItemAtPosition(position) as String
@@ -140,22 +114,17 @@ class SearchFragment : Fragment() {
                     "높은가격순" -> 2
                     "판매량순" -> 5
                     "조회수순" -> 6
-                    else -> 4 // 기본값
+                    else -> 4
                 }
-                Log.d("SearchFragment", "선택된 정렬 옵션: $selectedSortOption")
-                // 선택된 정렬 옵션에 따른 추가 작업
-                searchProducts("", selectedBrand, selectedHashTag, selectedSortOption)
+                searchProducts(searchBarBinding.searchViews.query?.toString() ?: "", selectedBrand, selectedHashTag, selectedSortOption)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // 선택되지 않았을 때의 동작
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
     private fun loadInitialProducts() {
-        searchProducts("",selectedBrand,"",selectedSortOption)
-        displaySelectedBrandHashTags(selectedBrand)
+        searchProducts("", selectedBrand, selectedHashTag, selectedSortOption)
     }
 
     private fun showProductDetail(product: Product) {
@@ -172,25 +141,59 @@ class SearchFragment : Fragment() {
     }
 
     private fun displaySelectedBrandHashTags(selectedBrand: String?) {
+        val hashTagRecyclerView = binding.searchBrandhashtag.hashTagRecyclerView
         if (selectedBrand != null) {
             val brandProducts = products.filter { it.brandName == selectedBrand }
             if (brandProducts.isNotEmpty()) {
                 val hashTags = brandProducts.first().allHashtags.split(", ").take(6)
                 val hashTagAdapter = HashTagAdapter(hashTags) { hashTag ->
-                    // 해시태그 클릭시 처리될 로직
-                    searchProducts("", selectedBrand, hashTag,selectedSortOption)
-                    Log.d("hashTags", "$hashTags")
+                    selectedHashTag = if (selectedHashTag == hashTag) null else hashTag
+                    isHashTagSearch = selectedHashTag != null
+                    searchProducts(searchBarBinding.searchViews.query?.toString() ?: "", selectedBrand, selectedHashTag, selectedSortOption)
                 }
-                binding.searchBrandhashtag.hashTagRecyclerView.adapter = hashTagAdapter
-                binding.searchBrandhashtag.hashTagRecyclerView.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                binding.searchBrandhashtag.hashTagRecyclerView.visibility = View.VISIBLE
+                hashTagRecyclerView.adapter = hashTagAdapter
+                hashTagRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                hashTagRecyclerView.visibility = View.VISIBLE
             } else {
-                binding.searchBrandhashtag.hashTagRecyclerView.visibility = View.GONE
+                hashTagRecyclerView.visibility = View.GONE
             }
         } else {
-            binding.searchBrandhashtag.hashTagRecyclerView.visibility = View.GONE
+            hashTagRecyclerView.visibility = View.GONE
         }
+    }
+
+    private fun displayDynamicHashTags(hashTags: List<String>) {
+        val hashTagAdapter = HashTagAdapter(hashTags) { hashTag ->
+            selectedHashTag = if (selectedHashTag == hashTag) null else hashTag
+            isHashTagSearch = selectedHashTag != null
+            searchProducts(searchBarBinding.searchViews.query?.toString() ?: "", selectedBrand, selectedHashTag, selectedSortOption)
+        }
+        val hashTagRecyclerView = binding.searchBrandhashtag.hashTagRecyclerView
+        hashTagRecyclerView.adapter = hashTagAdapter
+        hashTagRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        hashTagRecyclerView.visibility = if (hashTags.isNotEmpty()) View.VISIBLE else View.GONE
+    }
+
+
+    private fun searchProducts(query: String, brand: String?, hashTag: String?, sortOption: Int) {
+        RetrofitInstance.api.searchProducts("", brand ?: "", hashTag ?: "", query, sortOption, 8, 1)
+            .enqueue(object : Callback<List<Product>> {
+                override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                    if (response.isSuccessful) {
+                        products = response.body() ?: emptyList()
+                        displaySearchResults(products)
+                        if (!isHashTagSearch && products.isNotEmpty()) {
+                            displayDynamicHashTags(products.first().allHashtags.split(", ").take(6))
+                        }
+                    } else {
+                        Log.e("SearchFragment", "응답 실패: ${response.errorBody()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                    Log.e("SearchFragment", "API 호출 실패: $t")
+                }
+            })
     }
 
 }
