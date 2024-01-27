@@ -1,5 +1,6 @@
 package net.developia.livartc.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import net.developia.livartc.model.Product
  * Date: 2024-01-22
  * Time: 오후 12:54
  */
-class BestProductAdapter(private val bestList : List<Product>, val context: HomeFragment)
+class BestProductAdapter(private val bestList : List<Product>, private val clickListener: (Product) -> Unit)
     : RecyclerView.Adapter<BestProductAdapter.BestProductViewHolder>() {
     class BestProductViewHolder(val binding: ItemBestBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -31,6 +32,9 @@ class BestProductAdapter(private val bestList : List<Product>, val context: Home
         Glide.with(holder.binding.productImage.context)
             .load(bestData.productImage)
             .into(holder.binding.productImage)
+        holder.binding.root.setOnClickListener{
+            clickListener(bestData)
+        }
     }
 
     override fun getItemCount(): Int {

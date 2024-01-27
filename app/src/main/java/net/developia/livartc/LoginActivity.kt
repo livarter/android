@@ -1,5 +1,6 @@
 package net.developia.livartc
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import com.hyundai.loginapptest.domain.LoginReqDto
 import com.hyundai.loginapptest.domain.LoginResDto
 import com.kakao.sdk.auth.model.OAuthToken
@@ -41,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        binding.progressBar.visibility = View.GONE
         Log.d("KAKAO 키 해시 발급", "" + getKeyHash(this));
 
         val intent = Intent(this, MainActivity::class.java)
@@ -49,9 +51,10 @@ class LoginActivity : AppCompatActivity() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 Log.d(ContentValues.TAG, "카카오 계정으로 로그인 실패", error)
+                binding.progressBar.visibility = View.GONE
+                binding.kakaoBtn.visibility = View.VISIBLE
             } else if (token != null) {
                 Log.d(ContentValues.TAG, "카카오 계정으로 로그인 성공 access token ${token.accessToken}")
-                startActivity(intent)
                 // 백단에 API 요청
                 loginWithKakao(this, token.accessToken)
             }
@@ -59,6 +62,11 @@ class LoginActivity : AppCompatActivity() {
 
         binding.kakaoBtn.setOnClickListener{
             Log.d("카카오 로그인 버튼 클릭", "클릭")
+
+            // 로그인 버튼을 누르면 로딩 화면을 표시하고, 로그인 버튼을 숨깁니다.
+            binding.progressBar.visibility = View.VISIBLE
+            binding.kakaoBtn.visibility = View.GONE
+
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                     if (error != null) {
@@ -67,9 +75,10 @@ class LoginActivity : AppCompatActivity() {
                             return@loginWithKakaoTalk
                         }
                         UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+                        binding.progressBar.visibility = View.GONE
+                        binding.kakaoBtn.visibility = View.VISIBLE
                     } else if (token != null) {
                         Log.d(ContentValues.TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-                        startActivity(intent)
                         // 백단에 API 요청
                         loginWithKakao(this, token.accessToken)
                     }
@@ -102,6 +111,12 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("자체 JWT 토큰 발급 성공", loginResDto.accessToken)
                         jwtToken = loginResDto.accessToken
                         TokenManager.saveToken(MyApplication.instance, jwtToken)
+
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        startActivity(intent)
+                        (context as Activity).finish()
+
                     }
                 }
                 override fun onFailure(call: Call<LoginResDto>, t: Throwable) {

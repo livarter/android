@@ -1,12 +1,16 @@
 package net.developia.livartc.product
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentDetailAddToCartBinding
 import net.developia.livartc.db.AppDatabase
 import net.developia.livartc.db.CartDao
@@ -60,7 +64,7 @@ class DetailAddToCartFragment : BottomSheetDialogFragment() {
             }
 
             requireActivity().runOnUiThread {
-                Toast.makeText(requireContext(), "장바구니에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                customToast("장바구니에 추가되었습니다.")
                 dismiss()
             }
         }.start()
@@ -99,5 +103,18 @@ class DetailAddToCartFragment : BottomSheetDialogFragment() {
                 binding.cartProductCnt.text = productCnt.toString()
             }
         }
+    }
+
+    @SuppressLint("MissingInflatedId")
+    fun customToast(message: String) {
+        val inflater = LayoutInflater.from(context)
+        val layout = inflater.inflate(R.layout.toast_board, view?.findViewById(R.id.toast_layout_root) as ViewGroup?)
+        val textView = layout.findViewById<TextView>(R.id.text_board)
+        textView.text = message
+
+        val toastView = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        toastView.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 150)
+        toastView.view = layout
+        toastView.show()
     }
 }
