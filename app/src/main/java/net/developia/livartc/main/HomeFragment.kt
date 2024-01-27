@@ -1,6 +1,7 @@
 package net.developia.livartc.main
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import net.developia.livartc.MainActivity
+import net.developia.livartc.ProductActivity
 import net.developia.livartc.R
 import net.developia.livartc.adapter.BestProductAdapter
 import net.developia.livartc.adapter.HomeBannerAdapter
@@ -186,7 +188,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun setBestRecyclerView() {
         mainActivity.runOnUiThread {
-            bestAdapter = BestProductAdapter(bestList, this@HomeFragment)
+            bestAdapter = BestProductAdapter(bestList) { selectedProduct ->
+                // 클릭한 제품에 대한 처리를 수행
+                val intent = Intent(activity, ProductActivity::class.java)
+                intent.putExtra("title", "bestProductDetail")
+                intent.putExtra("product", selectedProduct)
+                startActivity(intent)
+            }
             binding.recyclerView.adapter = bestAdapter
             binding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
         }
