@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="brand_names">
+        <item>리바트 세계가구</item>
         <item>Fogia</item>
         <item>Magis</item>
         <item>Miniforms</item>
@@ -11,6 +12,5 @@
         <item>Ethnicraft</item>
         <item>Billiani</item>
         <item>Copiosa</item>
-        <item>리바트 세계가구</item>
     </string-array>
 </resources>

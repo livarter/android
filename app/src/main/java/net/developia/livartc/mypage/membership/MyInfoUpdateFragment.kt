@@ -49,7 +49,7 @@ class MyInfoUpdateFragment : Fragment() {
 
             var memperUpdateReqDto = MemperUpdateReqDto()
             memperUpdateReqDto.name = nameValue
-            memperUpdateReqDto.email = emailValue
+//            memperUpdateReqDto.email = emailValue
             memperUpdateReqDto.nickname = nicknameValue
             memperUpdateReqDto.address = addressValue
             memperUpdateReqDto.name = nameValue

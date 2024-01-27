@@ -1,6 +1,8 @@
 package net.developia.livartc.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +19,10 @@ import net.developia.livartc.R
 
 class BrandAdapter(
     private val brands: List<String>,
-    private val onClick: (String) -> Unit) :
-    RecyclerView.Adapter<BrandAdapter.BrandViewHolder>() {
+    private val onClick: (String?) -> Unit
+) : RecyclerView.Adapter<BrandAdapter.BrandViewHolder>() {
 
-    private var selectedPosition = RecyclerView.NO_POSITION
+    var selectedPosition = RecyclerView.NO_POSITION
 
     class BrandViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val brandText: TextView = view.findViewById(R.id.brandText)
@@ -31,22 +33,28 @@ class BrandAdapter(
         return BrandViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: BrandViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(holder: BrandViewHolder, position: Int) {
         val brand = brands[position]
         holder.brandText.text = brand
-        holder.itemView.isSelected = position == selectedPosition
+
+        // 선택된 아이템에 대한 스타일 변경
+        holder.brandText.setTextColor(if (position == selectedPosition) Color.parseColor("#000000") else Color.parseColor("#495057"))
+        holder.brandText.setTypeface(null, if (position == selectedPosition) Typeface.BOLD else Typeface.NORMAL)
 
         holder.itemView.setOnClickListener {
-            if(selectedPosition == position) {
+            val previousSelectedPosition = selectedPosition
+            if (selectedPosition == position) {
                 selectedPosition = RecyclerView.NO_POSITION
-                onClick("")
+                onClick(null) // 선택 해제
             } else {
                 selectedPosition = position
                 onClick(brand)
             }
-            notifyDataSetChanged()
+            notifyItemChanged(previousSelectedPosition)
+            notifyItemChanged(selectedPosition)
         }
     }
 
-    override fun getItemCount() = brands.size
+    override fun getItemCount(): Int = brands.size
 }
+

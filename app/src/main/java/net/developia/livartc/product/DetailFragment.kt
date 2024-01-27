@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import net.developia.livartc.ProductActivity
 import net.developia.livartc.PurchaseActivity
+import net.developia.livartc.R
 import net.developia.livartc.ReplyWriteActivity
 import net.developia.livartc.adapter.ReplyAdapter
 import net.developia.livartc.databinding.FragmentDetailBinding
+import net.developia.livartc.main.CategoryFragment
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.Reply
 import net.developia.livartc.retrofit.RetrofitInstance
@@ -55,6 +57,13 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.backBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply{
+                remove(this@DetailFragment).commit()
+            }
+            parentFragmentManager.popBackStack()
+        }
+
         getAllReply()
         val product = arguments?.getSerializable("product") as? Product
         if (product != null) {
@@ -68,6 +77,9 @@ class DetailFragment : Fragment() {
 
             binding.replyWriteBtn.setOnClickListener {
                 val writeIntent = Intent(activity, ReplyWriteActivity::class.java)
+                writeIntent.putExtra("productImage",product.productImage)
+                writeIntent.putExtra("productName",product.productName)
+                writeIntent.putExtra("brandName",product.brandName)
                 writeIntent.putExtra("productId", product.productId.toLong())
                 startActivity(writeIntent)
             }

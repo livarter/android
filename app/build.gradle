@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+
+    //파이어베이스 추가
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -93,6 +96,13 @@ dependencies {
 
     // 이미지
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // 파이어베이스
+    implementation platform('com.google.firebase:firebase-bom:32.7.1')
+    implementation("com.google.firebase:firebase-analytics")
+    // 파이어베이스 스토리지
+    implementation 'com.google.firebase:firebase-storage-ktx:20.3.0'
+
 }
 
 static def loadProperties(String file) {
