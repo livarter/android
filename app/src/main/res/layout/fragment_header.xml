@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/headerTitle"
         android:text="Search"
-        android:textSize="16dp"
+        android:textSize="@dimen/font_xlarge"
         android:layout_marginTop="15dp"
         android:paddingBottom="15dp"
         app:layout_constraintTop_toTopOf="parent"
