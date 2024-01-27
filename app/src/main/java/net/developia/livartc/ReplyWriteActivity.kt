@@ -37,9 +37,7 @@ class ReplyWriteActivity : AppCompatActivity() {
     private var productId = 0L
     lateinit var reviewContent: String
     private var uploadedFileName: String? = null
-    companion object {
-        var imgUri: Uri? = null
-    }
+    private var imgUri: Uri? = null
     //리뷰 이미지 넣었는지 여부 확인용
     private var imgStatus = 0
     private lateinit var filePath: String
@@ -48,7 +46,18 @@ class ReplyWriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReplyWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Glide
+            .with(binding.productImg.context)
+            .load(intent.getStringExtra("productImage"))
+            .into(binding.productImg)
+        binding.productName.text = intent.getStringExtra("productName")
+        binding.productBrand.text = intent.getStringExtra("brandName")
+
         productId = intent.getLongExtra("productId",0L)
+
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
 
         with(binding){
              reviewWrite.addTextChangedListener(object : TextWatcher {
@@ -86,7 +95,8 @@ class ReplyWriteActivity : AppCompatActivity() {
         binding.saveBtn.setOnClickListener {
             Log.d("ReplyWrite", "리뷰내용:${binding.reviewWrite.text}")
             reviewContent = "${binding.reviewWrite.text}"
-            showWriteDialog()
+            if(reviewContent.length >= 5) showWriteDialog()
+            else showLessDialog()
         }
 
         //사진 추가 버튼 눌렀을 때 갤러리로 이동 후 requestLauncher 실행
@@ -117,7 +127,19 @@ class ReplyWriteActivity : AppCompatActivity() {
         }
     }
 
+    private fun showLessDialog() {
+        val builder = AlertDialog.Builder(this)
+        // 제목 설정
+        builder.setTitle("리뷰를 5장 이상 작성해주세요.")
 
+        // 아니오 버튼 설정
+        builder.setNegativeButton("확인") { dialog, which ->
+            // 아무 동작 없이 다이얼로그 닫기
+            dialog.dismiss()
+        }
+        // 다이얼로그 생성 및 표시
+        builder.create().show()
+    }
 
     private fun showWriteDialog() {
         val builder = AlertDialog.Builder(this)
@@ -156,7 +178,7 @@ class ReplyWriteActivity : AppCompatActivity() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.progressbar.visibility = View.INVISIBLE
                     finish()
-                }, 2000)}
+                }, 2500)}
                 else finish()
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
