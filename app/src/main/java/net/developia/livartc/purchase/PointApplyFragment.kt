@@ -51,7 +51,7 @@ class PointApplyFragment : DialogFragment(){
                     Toast.makeText(context, "적용할 수 있는 포인트를 초과하였습니다.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }else{
-                    if (applyPoint in 1..point) {
+                    if (applyPoint in 0..point) {
                         // 포인트 적용
                         val bundle = Bundle()
                         bundle.putLong("point", applyPoint)
