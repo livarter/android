@@ -15,7 +15,7 @@ data class BirthDate(
     val era: String = "",
     val leapYear: Boolean = true,
     val month: String = "",
-    val monthValue: Int= 1,
+    val monthValue: Int = 1,
     val year: Int = 2000
 )
 

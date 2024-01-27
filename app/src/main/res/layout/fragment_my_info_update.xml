@@ -54,9 +54,9 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="나의 이름"
-                android:textColorHint="@color/medium_grey"
                 android:textSize="@dimen/font_small"
-                android:backgroundTint="@color/medium_grey"
+                android:textColorHint="@color/light_grey"
+                android:backgroundTint="@color/light_grey"
                 />
 
             <!-- 이메일 - 수정 불가 -->
@@ -75,7 +75,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:id="@+id/textEmailValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/dark_grey"
+                android:textColorHint="@color/medium_grey"
                 android:textSize="@dimen/font_small" />
 
             <!-- 닉네임 -->
@@ -95,8 +95,8 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="닉네임"
-                android:textColorHint="@color/medium_grey"
-                android:backgroundTint="@color/medium_grey"
+                android:textColorHint="@color/light_grey"
+                android:backgroundTint="@color/light_grey"
                 android:textSize="@dimen/font_small" />
 
             <!-- 전화 번호  -->
@@ -115,8 +115,8 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="전화 번호"
-                android:textColorHint="@color/medium_grey"
-                android:backgroundTint="@color/medium_grey"
+                android:textColorHint="@color/light_grey"
+                android:backgroundTint="@color/light_grey"
                 android:textSize="@dimen/font_small" />
 
             <!-- 우편 번호  -->
@@ -135,8 +135,8 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=""
-                android:textColorHint="@color/medium_grey"
-                android:backgroundTint="@color/medium_grey"
+                android:textColorHint="@color/light_grey"
+                android:backgroundTint="@color/light_grey"
                 android:textSize="@dimen/font_small" />
 
             <!-- 주소  -->
@@ -155,8 +155,8 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=""
-                android:textColorHint="@color/medium_grey"
-                android:backgroundTint="@color/medium_grey"
+                android:textColorHint="@color/light_grey"
+                android:backgroundTint="@color/light_grey"
                 android:textSize="@dimen/font_small" />
 
             <!-- 생년 월일  -->
@@ -176,8 +176,8 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=""
-                android:textColorHint="@color/medium_grey"
-                android:backgroundTint="@color/medium_grey"
+                android:textColorHint="@color/light_grey"
+                android:backgroundTint="@color/light_grey"
                 android:layout_marginBottom="50dp"
                 android:textSize="@dimen/font_small" />
 s

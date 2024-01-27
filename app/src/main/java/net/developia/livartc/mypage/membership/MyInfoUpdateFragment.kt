@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.databinding.FragmentMyInfoUpdateBinding
 import net.developia.livartc.login.TokenManager
+import net.developia.livartc.mypage.dto.BirthDate
 import net.developia.livartc.mypage.dto.MemperUpdateReqDto
 import net.developia.livartc.mypage.dto.toFormattedString
 import net.developia.livartc.retrofit.MyApplication
@@ -33,6 +34,37 @@ class MyInfoUpdateFragment : Fragment() {
         Log.d("MemberResDto from Activity", memberResDto?.toString() ?: "No data")
 
         updateTextViewValues(memberResDto)
+
+
+        // Update EditText values with memberResDto data
+        binding?.etName?.setText(memberResDto?.name)
+        binding?.etNickname?.setText(memberResDto?.nickname)
+        binding?.etPhone?.setText(memberResDto?.phone)
+        binding?.etZipCode?.setText(memberResDto?.zipCode)
+        binding?.etAddress?.setText(memberResDto?.address)
+        binding?.etBirth?.setText(memberResDto?.birthDate?.toFormattedString())
+
+        // Button click listener for updating member information
+        binding?.btnEdit?.setOnClickListener {
+            // Get updated values from EditText
+            val updatedName = binding?.etName?.text.toString()
+            val updatedNickname = binding?.etNickname?.text.toString()
+            val updatedPhone = binding?.etPhone?.text.toString()
+            val updatedZipCode = binding?.etZipCode?.text.toString()
+            val updatedAddress = binding?.etAddress?.text.toString()
+            val updatedBirth = binding?.etBirth?.text.toString()
+
+            val updatedMemberResDto = MemperUpdateReqDto(
+                name = updatedName,
+                nickname = updatedNickname,
+                phone = updatedPhone,
+                address = updatedAddress,
+                zipCode = updatedZipCode,
+                birthDate = updatedBirth
+            )
+            updateMemberInfo(updatedMemberResDto)
+            requireActivity().supportFragmentManager.popBackStack()
+        }
 
         return binding?.root
     }

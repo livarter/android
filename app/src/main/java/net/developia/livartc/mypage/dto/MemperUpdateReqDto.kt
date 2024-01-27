@@ -1,7 +1,7 @@
 package net.developia.livartc.mypage.dto
 
 data class MemperUpdateReqDto(
-    var image: String?,
+    //var image: String?,
     var name: String?,
     var nickname: String?,
     var phone: String?,
@@ -10,7 +10,7 @@ data class MemperUpdateReqDto(
     var birthDate: String?
 ) {
     constructor() : this(
-        null,
+        //null,
         null,
         null,
         null,
