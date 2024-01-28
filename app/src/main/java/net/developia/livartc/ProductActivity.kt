@@ -42,9 +42,9 @@ class ProductActivity : AppCompatActivity() {
                     .replace(R.id.product_container, brandCategoryFragment)
                     .commit()
             }
-            "bestProductDetail" -> {
+            "detail" -> {
                 val bundle = Bundle().apply {
-                    putString("best", "best")
+                    putString("backMode", "finish")
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         putSerializable("product", intent.getSerializableExtra("product",Product::class.java))
                     } else {

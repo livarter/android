@@ -1,5 +1,6 @@
 package net.developia.livartc
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +11,12 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -21,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.kakao.sdk.friend.m.u
 import net.developia.livartc.databinding.ActivityReplyWriteBinding
 import net.developia.livartc.login.TokenManager
+import net.developia.livartc.model.Product
 import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import okhttp3.ResponseBody
@@ -34,7 +40,14 @@ import java.util.UUID
 
 class ReplyWriteActivity : AppCompatActivity() {
     lateinit var binding: ActivityReplyWriteBinding
+
     private var productId = 0L
+    private var productName : String? = ""
+    private var productPrice = 0L
+    private var productDesc : String? = ""
+    private var productImage : String? = ""
+    private var brandName : String? = ""
+
     lateinit var reviewContent: String
     private var uploadedFileName: String? = null
     private var imgUri: Uri? = null
@@ -46,14 +59,22 @@ class ReplyWriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReplyWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Glide
-            .with(binding.productImg.context)
-            .load(intent.getStringExtra("productImage"))
-            .into(binding.productImg)
-        binding.productName.text = intent.getStringExtra("productName")
-        binding.productBrand.text = intent.getStringExtra("brandName")
 
         productId = intent.getLongExtra("productId",0L)
+        productName = intent.getStringExtra("productName")
+        productPrice = intent.getLongExtra("productPrice", 0L)
+        productDesc = intent.getStringExtra("productDesc")
+        productImage = intent.getStringExtra("productImage")
+        brandName = intent.getStringExtra("brandName")
+
+        Glide
+            .with(binding.productImg.context)
+            .load(productImage)
+            .into(binding.productImg)
+        binding.productName.text = productName
+        binding.productBrand.text = brandName
+
+
 
         binding.backBtn.setOnClickListener {
             finish()
@@ -68,16 +89,13 @@ class ReplyWriteActivity : AppCompatActivity() {
                 override fun onTextChanged(pos: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                     if(reviewWrite.lineCount > 10){
-                        Toast.makeText(this@ReplyWriteActivity,
-                            "최대 10줄까지 입력 가능합니다.",
-                            Toast.LENGTH_SHORT).show()
+                        customToast("최대 10줄까지 입력 가능합니다.")
 
                         reviewWrite.setText(maxText)
                         reviewWrite.setSelection(reviewWrite.length())
                         reviewTextCnt.text = ("${reviewWrite.length()} / 300")
                     } else if(reviewWrite.length() > 300){
-                        Toast.makeText(this@ReplyWriteActivity, "최대 300자까지 입력 가능합니다.",
-                            Toast.LENGTH_SHORT).show()
+                        customToast("최대 300자까지 입력 가능합니다.")
 
                         reviewWrite.setText(maxText)
                         reviewWrite.setSelection(reviewWrite.length())
@@ -172,14 +190,23 @@ class ReplyWriteActivity : AppCompatActivity() {
             ) {
                 Log.d("insertReply", " ${response.body()}")
                 binding.progressbar.visibility = View.VISIBLE
+
                 //사진이 파이어 베이스에 업로드 될 때까지 3초 Progress바 보여줌
                 //(리뷰 작성한후 페이지에 보이게 하기위해)
+                val product = Product(productId.toInt(), productName?:"", productPrice, productDesc, productImage?:"", brandName?:"", "", "")
+                val intent = Intent(this@ReplyWriteActivity, ProductActivity::class.java)
+                intent.putExtra("type", "detail")
+                intent.putExtra("product", product)
                 if(imgStatus==1){
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.progressbar.visibility = View.INVISIBLE
+                    startActivity(intent)
                     finish()
                 }, 3000)}
-                else finish()
+                else {
+                    startActivity(intent)
+                    finish()
+                }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("insertReply", " $t")
@@ -222,6 +249,19 @@ class ReplyWriteActivity : AppCompatActivity() {
                 }
         }
         return filename
+    }
+
+    @SuppressLint("MissingInflatedId")
+    fun customToast(message: String) {
+        val inflater = LayoutInflater.from(this@ReplyWriteActivity)
+        val layout = inflater.inflate(R.layout.toast_board, this.findViewById(R.id.toast_layout_root) as ViewGroup?)
+        val textView = layout.findViewById<TextView>(R.id.text_board)
+        textView.text = message
+
+        val toastView = Toast.makeText(this@ReplyWriteActivity, message, Toast.LENGTH_SHORT)
+        toastView.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 150)
+        toastView.view = layout
+        toastView.show()
     }
 
 }

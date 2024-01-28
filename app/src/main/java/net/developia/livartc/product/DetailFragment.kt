@@ -3,11 +3,14 @@ package net.developia.livartc.product
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -24,6 +27,8 @@ import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
+import java.util.Locale
 
 /**
  * LIVARTC
@@ -58,10 +63,9 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.backBtn.setOnClickListener {
-            if (arguments?.getString("best") == "best"){
+            if (arguments?.getString("backMode") == "finish") {
                 activity?.finish()
-            }
-            else {
+            } else {
                 parentFragmentManager.beginTransaction().apply {
                     remove(this@DetailFragment).commit()
                 }
@@ -77,17 +81,11 @@ class DetailFragment : Fragment() {
                 .into(binding.productImg)
             binding.productName.text = product.productName
             binding.productDesc.text = product.productDescription
-            binding.productPrice.text = "${product.productPrice}"
+            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+            val formattedPrice = numberFormat.format(product.productPrice)
+            binding.productPrice.text = formattedPrice
             productId = product.productId.toLong()
 
-            binding.replyWriteBtn.setOnClickListener {
-                val writeIntent = Intent(activity, ReplyWriteActivity::class.java)
-                writeIntent.putExtra("productImage",product.productImage)
-                writeIntent.putExtra("productName",product.productName)
-                writeIntent.putExtra("brandName",product.brandName)
-                writeIntent.putExtra("productId", product.productId.toLong())
-                startActivity(writeIntent)
-            }
         }
         product?.let {
             binding.addToCartBtn.setOnClickListener {
@@ -124,7 +122,11 @@ class DetailFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         replyList = response.body() ?: emptyList()
-                        setReplyRecyclerView()
+                        binding.reviewCnt.text = "리뷰 ${replyList.size}개"
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            binding.progressBar.visibility = View.GONE
+                            setReplyRecyclerView()
+                        }, 1000)
                         Log.d("Reply 조회: 상품1", "검색 결과: $replyList")
                     } else {
                         Log.e("Reply 조회: 상품1", "응답 실패: ${response.errorBody()}")
@@ -140,10 +142,14 @@ class DetailFragment : Fragment() {
     //
     private fun setReplyRecyclerView() {
         productActivity.runOnUiThread {
-            if (replyList.isNotEmpty()) binding.noReply.isVisible = false
+            if (replyList.isEmpty()) binding.noReply.visibility = View.VISIBLE
+            else {
+                replyAdapter = ReplyAdapter(replyList)
+                binding.replyRecyclerView.adapter = replyAdapter
+                binding.replyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                binding.noReply.visibility = View.GONE
+            }
         }
-        replyAdapter = ReplyAdapter(replyList)
-        binding.replyRecyclerView.adapter = replyAdapter
-        binding.replyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 }
+

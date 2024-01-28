@@ -206,6 +206,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/btn_add"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_best"
+                android:overScrollMode="never"
                 android:layout_marginLeft="21dp"
                 android:layout_marginRight="21dp"/>
 
