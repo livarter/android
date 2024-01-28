@@ -33,25 +33,28 @@ class BrandAdapter(
         return BrandViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: BrandViewHolder, position: Int) {
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onBindViewHolder(holder: BrandViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val brand = brands[position]
         holder.brandText.text = brand
 
-        // 선택된 아이템에 대한 스타일 변경
-        holder.brandText.setTextColor(if (position == selectedPosition) Color.parseColor("#000000") else Color.parseColor("#495057"))
-        holder.brandText.setTypeface(null, if (position == selectedPosition) Typeface.BOLD else Typeface.NORMAL)
+        if (position == selectedPosition) {
+            holder.brandText.setTextColor(Color.parseColor("#000000")) // 선택된 해시태그 색상
+            holder.brandText.setTypeface(null, Typeface.BOLD) // Bold 스타일 적용
+        } else {
+            holder.brandText.setTextColor(Color.parseColor("#495057")) // 기본 해시태그 색상
+            holder.brandText.setTypeface(null, Typeface.NORMAL) // 기본 스타일 적용
+        }
 
         holder.itemView.setOnClickListener {
-            val previousSelectedPosition = selectedPosition
             if (selectedPosition == position) {
                 selectedPosition = RecyclerView.NO_POSITION
-                onClick(null) // 선택 해제
+                onClick("") // 선택 해제
             } else {
                 selectedPosition = position
                 onClick(brand)
             }
-            notifyItemChanged(previousSelectedPosition)
-            notifyItemChanged(selectedPosition)
+            notifyDataSetChanged()
         }
     }
 

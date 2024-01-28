@@ -35,6 +35,8 @@ class SearchFragment : Fragment() {
     private lateinit var products: List<Product>
     private var selectedSortOption: Int = 4
     private lateinit var sortingSpinner: Spinner
+    private var currentPage = 1
+    private var isLoading = false
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,7 +59,6 @@ class SearchFragment : Fragment() {
         searchBarBinding.searchViews.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // 검색어 변경 시 브랜드와 해시태그 초기화
-                selectedBrand = null
                 selectedHashTag = null
                 isHashTagSearch = false
                 searchProducts(query ?: "", selectedBrand, selectedHashTag, selectedSortOption)
@@ -176,7 +177,7 @@ class SearchFragment : Fragment() {
 
 
     private fun searchProducts(query: String, brand: String?, hashTag: String?, sortOption: Int) {
-        RetrofitInstance.api.searchProducts("", brand ?: "", hashTag ?: "", query, sortOption, 8, 1)
+        RetrofitInstance.api.searchProducts("", brand ?: "", hashTag ?: "", query, sortOption, 200, 1)
             .enqueue(object : Callback<List<Product>> {
                 override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
                     if (response.isSuccessful) {
@@ -195,6 +196,7 @@ class SearchFragment : Fragment() {
                 }
             })
     }
+
 
 }
 
