@@ -1,13 +1,15 @@
 package net.developia.livartc.mypage.badge
 
 import android.content.Context
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
+import androidx.core.content.ContextCompat
 import net.developia.livartc.R
 
 
@@ -44,16 +46,23 @@ class GridAdapter(private val context: Context, private val dataList: List<GridI
         }
 
         val item = getItem(position) as GridItem
+
+        val textSize = holder.textView.context.resources.getDimension(R.dimen.font_xsmall)
+        holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+        holder.textView.setTextColor(holder.textView.context.resources.getColor(R.color.dark_grey))
+        Log.d("GridAdapter textSize 1", textSize.toString())
         holder.textView.text = item.text
 
         val isEarned = item.earned
         if (isEarned != null && !isEarned) {
-            // 뱃지 부여 받지 않은 경우 처리 - 이후 디자인 예정
-            // Picasso.get().load(item.image).into(holder.imageView)
+            val defaultDrawable = ContextCompat.getDrawable(context, R.drawable.badge1)
+            holder.imageView.setImageDrawable(defaultDrawable)
         } else {
-            Picasso.get().load(item.image).into(holder.imageView)
+            val drawableResName = "badge${item.id}"
+            val drawableResId = context.resources.getIdentifier(drawableResName, "drawable", context.packageName)
+            val drawable = ContextCompat.getDrawable(context, drawableResId)
+            holder.imageView.setImageDrawable(drawable)
         }
-
         return view
     }
 

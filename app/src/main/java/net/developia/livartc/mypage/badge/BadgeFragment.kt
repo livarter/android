@@ -55,7 +55,7 @@ class BadgeFragment : Fragment() {
                     Log.d("뱃지 조회 API 성공 resDto", resDto.badges.toString())
                     for (badge in resDto.badges) {
                         Log.d("뱃지 조회 API 성공", badge.toString())
-                        dataList.add(GridItem(badge.image, badge.name, badge.earned, badge.description))
+                        dataList.add(GridItem(badge.id, badge.image, badge.name, badge.earned, badge.description))
                     }
 
                     // API 요청 후 GridAdapter 초기화
