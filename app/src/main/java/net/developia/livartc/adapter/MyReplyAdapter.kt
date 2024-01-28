@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import net.developia.livartc.R
 import net.developia.livartc.databinding.ItemMyreviewBinding
 import net.developia.livartc.databinding.ItemReplyBinding
 import net.developia.livartc.model.MyReply
@@ -40,7 +41,13 @@ class MyReplyAdapter(private val myReplyList: List<MyReply>) :
         Glide.with(holder.binding.productImg.context)
             .load(myReplyItem.productImage)
             .into(holder.binding.productImg)
-
+        if (myReplyItem.profileImg != null) {
+            Glide.with(holder.binding.profileImage.context)
+                .load(myReplyItem.profileImg)
+                .into(holder.binding.profileImage)
+        } else {
+            holder.binding.profileImage.setImageResource(R.drawable.badge1)
+        }
         if (myReplyItem.replyImg != null) {
             val imgRef = MyApplication.storage.reference.child("review/${myReplyItem.replyImg}")
             imgRef.downloadUrl.addOnCompleteListener { task ->

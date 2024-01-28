@@ -9,6 +9,7 @@ data class Reply(
     val memberId: Int,
     val nickname: String,
     val productId: Int,
+    val profileImg: String,
     val replyComment: String,
     val replyId: Int,
     val updatedAt: UpdatedAt,

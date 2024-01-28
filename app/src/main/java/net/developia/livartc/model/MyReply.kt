@@ -11,6 +11,7 @@ data class MyReply(
     val isDeleted: Int,
     val memberId: Int,
     val nickname: String,
+    val profileImg: String,
     val productId: Int,
     val replyComment: String,
     val replyId: Int,
