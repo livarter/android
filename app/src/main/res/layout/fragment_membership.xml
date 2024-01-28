@@ -13,24 +13,26 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:overScrollMode="never"
             android:id="@+id/profile_membership"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/membership_card"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/_02_home_brand_kind">
-        </ImageView>
+            <ImageView
+                android:id="@+id/membership_card"
+                android:layout_gravity="center"
+                android:layout_width="320dp"
+                android:layout_height="280dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/_02_home_brand_kind"
+                android:elevation="20dp">
+            </ImageView>
 
             <TextView
                 android:gravity="center"
                 android:id="@+id/textView2"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="LIVARTIEST 등급은 3%의 할인율이 적용됩니다" />
@@ -209,93 +211,97 @@
     </ScrollView>
 
 
-            <LinearLayout
-                android:id="@+id/my_info"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="나의 정보"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/my_review"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="나의 리뷰"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/my_order"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="주문 내역"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/logout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="로그아웃"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/my_info"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/click_effect"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_mypage"
+            android:layout_weight="2"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="나의 정보"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/my_review"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/click_effect"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_mypage"
+            android:layout_weight="2"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="나의 리뷰"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/my_order"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/click_effect"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_mypage"
+            android:layout_weight="2"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="주문 내역"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/logout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/click_effect"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_mypage"
+            android:layout_weight="2"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="로그아웃"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:src="@drawable/_02_home_brand_kind" />
 </FrameLayout>
