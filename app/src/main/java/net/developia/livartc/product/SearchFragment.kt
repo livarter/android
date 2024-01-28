@@ -105,7 +105,7 @@ class SearchFragment : Fragment() {
     private fun setupSpinner() {
         sortingSpinner = binding.root.findViewById(R.id.spinnerSortOptions)
         sortingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selectedSortOptionString = parent.getItemAtPosition(position) as String
                 selectedSortOption = when (selectedSortOptionString) {
                     "최신순" -> 4

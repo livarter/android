@@ -21,6 +21,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/click_effect"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="10dp">
 
             <ImageView
@@ -55,24 +58,31 @@
                 app:layout_constraintStart_toEndOf="@+id/cart_product_image"
                 app:layout_constraintTop_toBottomOf="@+id/cart_product_name" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/cart_product_delete"
                 android:layout_width="15dp"
                 android:layout_height="20dp"
-                android:background="@drawable/ic_delete"
+                android:src="@drawable/ic_delete"
+                android:background="@drawable/click_effect"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/cart_product_minus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="200dp"
-                android:background="@drawable/ic_minus"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_minus"
+                android:background="@drawable/click_effect"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintTop_toBottomOf="@id/cart_product_cnt"
                 app:layout_constraintBottom_toTopOf="@id/cart_product_cnt"
                 app:layout_constraintEnd_toStartOf="@+id/cart_product_cnt"
-                app:layout_constraintStart_toEndOf="@+id/cart_product_image" />
+                app:layout_constraintStart_toEndOf="@+id/cart_product_image"
+                />
 
             <TextView
                 android:id="@+id/cart_product_cnt"
@@ -85,11 +95,14 @@
                 app:layout_constraintEnd_toStartOf="@+id/cart_product_plus"
                 app:layout_constraintStart_toEndOf="@+id/cart_product_minus" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/cart_product_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_plus"
+                android:src="@drawable/ic_plus"
+                android:background="@drawable/click_effect"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintTop_toBottomOf="@id/cart_product_cnt"
                 app:layout_constraintBottom_toTopOf="@id/cart_product_cnt"
                 app:layout_constraintEnd_toEndOf="parent" />
