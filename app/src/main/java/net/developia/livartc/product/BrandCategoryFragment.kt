@@ -214,7 +214,20 @@ class BrandCategoryFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 2)
             adapter = ProductAdapter(products) { product ->
                 Log.d(TAG, "Product clicked: ${product.productName}")
+                showProductDetail(product)
             }
         }
+    }
+    private fun showProductDetail(product: Product) {
+        Log.d("BrandCategoryFragment to DetailFragment","$product")
+        val bundle = Bundle().apply {
+            putSerializable("product",product)
+        }
+        val detailFragment = DetailFragment().apply {
+            arguments = bundle
+        }
+
+        fragmentManager?.beginTransaction()?.replace(R.id.product_container, detailFragment)?.addToBackStack(null)?.commit()
+
     }
 }
