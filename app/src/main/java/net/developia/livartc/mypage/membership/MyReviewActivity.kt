@@ -2,6 +2,9 @@ package net.developia.livartc.mypage.membership
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import net.developia.livartc.R
 import net.developia.livartc.adapter.MyReplyAdapter
@@ -47,8 +50,11 @@ class MyReviewActivity : AppCompatActivity() {
                     response: Response<List<MyReply>>
                 ) {
                     if (response.isSuccessful) {
-                        myReplyList = response.body()!!
-                        setRecyclerView()
+                        myReplyList = response.body()?: emptyList()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            binding.progressBar.visibility = View.GONE
+                            setRecyclerView()
+                        }, 1000)
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<List<MyReply>>, t: Throwable) {
@@ -58,11 +64,13 @@ class MyReviewActivity : AppCompatActivity() {
     }
     private fun setRecyclerView() {
         runOnUiThread {
-            myReplyAdapter = MyReplyAdapter(myReplyList)
-            binding.reviewListView.adapter = myReplyAdapter
-            binding.reviewListView.layoutManager = LinearLayoutManager(this)
+            if (myReplyList.isEmpty()) binding.emptyMsg.visibility = View.VISIBLE
+            else {
+                myReplyAdapter = MyReplyAdapter(myReplyList)
+                binding.reviewListView.adapter = myReplyAdapter
+                binding.reviewListView.layoutManager = LinearLayoutManager(this)
+            }
         }
     }
-
 }
 
