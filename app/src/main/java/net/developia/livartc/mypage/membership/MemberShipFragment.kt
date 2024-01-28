@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.developia.livartc.R
-import net.developia.livartc.databinding.FragmentAccountBinding
 import net.developia.livartc.databinding.FragmentMembershipBinding
 import net.developia.livartc.login.TokenManager
 import net.developia.livartc.mypage.PopUp

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:id="@+id/fragmentContainer"
-        tools:context=".mypage.account.AccountFragment">
+        tools:context=".mypage.myroom.MyRoomFragment">
 
         <LinearLayout
             android:id="@+id/myroom"

@@ -1,4 +1,4 @@
-package net.developia.livartc.mypage.account
+package net.developia.livartc.mypage.myroom
 
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +10,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.R
-import net.developia.livartc.databinding.FragmentAccountBinding
+import net.developia.livartc.databinding.FragmentMyroomBinding
 import net.developia.livartc.login.TokenManager
 import net.developia.livartc.mypage.dto.Catalog
 import net.developia.livartc.mypage.dto.CatalogListResDto
@@ -21,8 +20,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AccountFragment : Fragment() {
-    private lateinit var binding: FragmentAccountBinding
+class MyRoomFragment : Fragment() {
+    private lateinit var binding: FragmentMyroomBinding
     private lateinit var roomDataList: List<Catalog>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +32,7 @@ class AccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAccountBinding.inflate(inflater, container, false)
+        binding = FragmentMyroomBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -109,11 +108,11 @@ class AccountFragment : Fragment() {
             hashtagContainer.addView(hashtagTextView)
             hashtagTextView.setOnClickListener {
                 // 해시태그 클릭 시 해당 방의 이미지 업데이트
-                Glide.with(this@AccountFragment)
+                Glide.with(this@MyRoomFragment)
                     .load(roomData.leftChair)
                     .into(binding.leftChair)
 
-                Glide.with(this@AccountFragment)
+                Glide.with(this@MyRoomFragment)
                     .load(roomData.rightChair)
                     .into(binding.rightChair)
             }
