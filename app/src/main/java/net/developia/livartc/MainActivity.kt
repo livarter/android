@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.fragment_search -> {
                     binding.mainTitle.text = "Search"
                     val intent = Intent(this, ProductActivity::class.java)
-                    intent.putExtra("title", "Search")
+                    intent.putExtra("type", "Search")
                     startActivity(intent)
                     false
                 }
@@ -95,4 +95,13 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("userid", userid)
         startActivity(intent)
     }
+
+    fun startProductActivityWithType(name: String, type: String) {
+        val intent = Intent(this, ProductActivity::class.java).apply {
+            putExtra("name", name)
+            putExtra("type", type)
+        }
+        startActivity(intent)
+    }
+
 }
