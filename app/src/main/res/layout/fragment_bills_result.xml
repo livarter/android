@@ -42,21 +42,22 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginHorizontal="50dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/medium_grey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/total_price_text"
+        tools:layout_editor_absoluteX="50dp" />
 
     <TextView
         android:id="@+id/total_price_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
-        android:textSize="@dimen/font_small"
+        android:layout_marginBottom="20dp"
         android:text="총 결제 금액"
+        android:textSize="@dimen/font_small"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_line" />
+        app:layout_constraintBottom_toTopOf="@+id/order_id_text"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/total_price"
@@ -74,12 +75,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
-        android:textSize="@dimen/font_small"
+        android:layout_marginBottom="20dp"
         android:text="주문번호"
+        android:textSize="@dimen/font_small"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_price_text" />
+        app:layout_constraintBottom_toTopOf="@+id/purchased_date_text"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/order_id"
@@ -101,8 +102,9 @@
         android:text="결제일시"
         android:textSize="@dimen/font_small"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/order_id_text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/purchased_date"
@@ -115,26 +117,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/purchased_date_text" />
 
+    <TextView
+        android:id="@+id/point_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
+        android:text="적립포인트"
+        android:textSize="@dimen/font_small"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/purchased_date_text" />
+
+    <TextView
+        android:id="@+id/point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:text="200 점"
+        android:textSize="@dimen/font_small"
+        app:layout_constraintBottom_toBottomOf="@+id/point_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/point_text" />
+
     <Button
         android:id="@+id/mypage_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:text="주문내역 확인하러가기"
-        android:layout_marginTop="130dp"
         android:textSize="@dimen/font_small"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_line" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/point_text" />
 
     <Button
         android:id="@+id/home_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="계속 쇼핑하기"
         android:textSize="@dimen/font_small"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mypage_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

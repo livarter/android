@@ -300,6 +300,7 @@ class BillsFragment : Fragment() {
                             Log.d("done", "insertPurchaseHistory: $t")
                         }
                     })
+                    var point = 0
                     RetrofitInstance.api.decreasePoint(jwtToken, appliedPoint).enqueue(object : retrofit2.Callback<ResponseBody> {
                         override fun onResponse(
                             call: Call<ResponseBody>,
@@ -313,29 +314,30 @@ class BillsFragment : Fragment() {
                     })
                     val purchasedPrice = dataObject.getString("price").toLong()
                     Log.d("done", "purchasedPrice: $purchasedPrice")
-                    RetrofitInstance.api.increasePoint(jwtToken, purchasedPrice).enqueue(object : retrofit2.Callback<ResponseBody> {
+                    RetrofitInstance.api.increasePoint(jwtToken, purchasedPrice).enqueue(object : retrofit2.Callback<Int> {
                         override fun onResponse(
-                            call: Call<ResponseBody>,
-                            response: Response<ResponseBody>
+                            call: Call<Int>,
+                            response: Response<Int>
                         ) {
                             Log.d("done", "increasePoint: ${response.body()}")
+                            val point = response.body()!!
+
+                            // 결제가 완료되면 BillsResultFragment로 전환합니다.
+                            val billsResultFragment = BillsResultFragment()
+
+                            val bundle = Bundle()
+                            bundle.putString("data", data)
+                            bundle.putInt("point", point)
+                            billsResultFragment.arguments = bundle // Bundle을 BillsResultFragment의 arguments에 설정합니다.
+
+                            val fragmentTransaction = requireFragmentManager().beginTransaction()
+                            fragmentTransaction.replace(R.id.purchase_container, billsResultFragment)
+                            fragmentTransaction.commit()
                         }
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        override fun onFailure(call: Call<Int>, t: Throwable) {
                             Log.d("done", "increasePoint: $t")
                         }
                     })
-
-                    // 결제가 완료되면 BillsResultFragment로 전환합니다.
-                    val billsResultFragment = BillsResultFragment()
-
-                    val bundle = Bundle()
-                    bundle.putString("data", data)
-
-                    billsResultFragment.arguments = bundle // Bundle을 BillsResultFragment의 arguments에 설정합니다.
-
-                    val fragmentTransaction = requireFragmentManager().beginTransaction()
-                    fragmentTransaction.replace(R.id.purchase_container, billsResultFragment)
-                    fragmentTransaction.commit()
                 }
 
             }).requestPayment()
