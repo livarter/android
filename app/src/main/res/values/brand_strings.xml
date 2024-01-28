@@ -2,15 +2,15 @@
 <resources>
     <string-array name="brand_names">
         <item>리바트 세계가구</item>
+        <item>Artu</item>
+        <item>Billiani</item>
+        <item>Copiosa</item>
+        <item>Ethnicraft</item>
         <item>Fogia</item>
         <item>Magis</item>
         <item>Miniforms</item>
         <item>Mogg</item>
-        <item>Toneli</item>
-        <item>Artu</item>
         <item>Moustache</item>
-        <item>Ethnicraft</item>
-        <item>Billiani</item>
-        <item>Copiosa</item>
+        <item>Toneli</item>
     </string-array>
 </resources>

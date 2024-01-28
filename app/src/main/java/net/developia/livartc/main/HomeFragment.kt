@@ -83,14 +83,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.categoryDeco.setOnClickListener(this)
     }
 
-    //카테고리별 이동
+    // 카테고리별 이동
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.category_bed -> (activity as MainActivity).startProductActivity("침대")
-            R.id.category_desk -> (activity as MainActivity).startProductActivity("데스크")
-            R.id.category_chair -> (activity as MainActivity).startProductActivity("의자")
-            R.id.category_cabinet -> (activity as MainActivity).startProductActivity("수납장")
-            R.id.category_deco -> (activity as MainActivity).startProductActivity("홈데코")
+            R.id.category_bed -> (activity as MainActivity).startProductActivityWithType("침대", "category")
+            R.id.category_desk -> (activity as MainActivity).startProductActivityWithType("데스크", "category")
+            R.id.category_chair -> (activity as MainActivity).startProductActivityWithType("의자", "category")
+            R.id.category_cabinet -> (activity as MainActivity).startProductActivityWithType("수납장", "category")
+            R.id.category_deco -> (activity as MainActivity).startProductActivityWithType("홈데코", "category")
         }
     }
 
@@ -198,5 +198,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
             binding.recyclerView.adapter = bestAdapter
             binding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
         }
+    }
+
+    fun startProductActivityWithType(name: String, type: String) {
+        val intent = Intent(requireContext(), ProductActivity::class.java)
+        intent.putExtra("name", name)
+        intent.putExtra("type", type)
+        startActivity(intent)
     }
 }

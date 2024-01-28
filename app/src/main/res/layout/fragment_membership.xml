@@ -296,6 +296,5 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"/>
             </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+
 </FrameLayout>

@@ -29,7 +29,8 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
         holder.binding.productName.text = product.productName
-        holder.binding.productPrice.text = "${product.productPrice}"
+        holder.binding.productPrice.text = "${String.format("%,d 원", product.productPrice)}"
+
 
         // 이미지 로딩은 Glide 라이브러리를 사용
         Glide.with(holder.binding.productImage.context)
