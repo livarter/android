@@ -138,7 +138,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="9dp"
                     android:src="@drawable/best_sample"
-
+                    android:visibility="gone"
                     />
                 <TextView
                     android:id="@+id/reply_content"
