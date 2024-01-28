@@ -60,22 +60,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
         // 움직이는 메인 배너 만들기
         makeBanner()
 
-        // 베스트 상품 버튼 누르면 인기순 조회페이지 이동
-        binding.bestBtn.setOnClickListener {
-            (activity as MainActivity).startProductActivity("베스트 상품")
-        }
-
         // 베스트 상품 4개 조회
         getAllBestProduct()
 
-        // 카테고리 버튼 눌렀을 때 카테고리 Fragment 이동
-//        binding.categoryBtn.setOnClickListener {
-//            parentFragmentManager.beginTransaction().apply {
-//                replace(R.id.main_container, CategoryFragment())
-//                addToBackStack(null)
-//                commit()
-//            }
-//        }
         binding.categoryBed.setOnClickListener(this)
         binding.categoryDesk.setOnClickListener(this)
         binding.categoryChair.setOnClickListener(this)
@@ -191,7 +178,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             bestAdapter = BestProductAdapter(bestList) { selectedProduct ->
                 // 클릭한 제품에 대한 처리를 수행
                 val intent = Intent(activity, ProductActivity::class.java)
-                intent.putExtra("title", "bestProductDetail")
+                intent.putExtra("type", "bestProductDetail")
                 intent.putExtra("product", selectedProduct)
                 startActivity(intent)
             }
