@@ -8,6 +8,8 @@ import com.bumptech.glide.Glide
 import net.developia.livartc.databinding.ItemBestBinding
 import net.developia.livartc.main.HomeFragment
 import net.developia.livartc.model.Product
+import java.text.NumberFormat
+import java.util.Locale
 
 /**
  * LIVARTC
@@ -28,7 +30,9 @@ class BestProductAdapter(private val bestList : List<Product>, private val click
         val bestData = bestList[position]
 
         holder.binding.productName.text = bestData.productName
-        holder.binding.productPrice.text = "￦ ${bestData.productPrice}"
+        val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+        val formattedPrice = numberFormat.format(bestData.productPrice)
+        holder.binding.productPrice.text = "${formattedPrice} 원"
         Glide.with(holder.binding.productImage.context)
             .load(bestData.productImage)
             .into(holder.binding.productImage)
