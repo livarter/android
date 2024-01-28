@@ -130,7 +130,7 @@ class ReplyWriteActivity : AppCompatActivity() {
     private fun showLessDialog() {
         val builder = AlertDialog.Builder(this)
         // 제목 설정
-        builder.setTitle("리뷰를 5장 이상 작성해주세요.")
+        builder.setTitle("리뷰를 5자 이상 작성해주세요.")
 
         // 아니오 버튼 설정
         builder.setNegativeButton("확인") { dialog, which ->
@@ -196,7 +196,7 @@ class ReplyWriteActivity : AppCompatActivity() {
         val currentDate = dateFormat.format(Date())
 
         // 최종적으로 파일 이름 생성
-        return "image_${currentDate}_${uuid}.jpg"
+        return "image_${currentDate}_${uuid}.png"
     }
 
     private fun uploadImage(activity: AppCompatActivity, filename: String, filePath:String): String {
