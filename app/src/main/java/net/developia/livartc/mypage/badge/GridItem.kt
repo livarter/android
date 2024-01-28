@@ -5,7 +5,8 @@ package net.developia.livartc.mypage.badge
  * 내용 : 나의 뱃지 그리드화면용
  */
 data class GridItem(
-      val image: String?
+      val id: Int?
+    , val image: String?
     , val text: String?
     , val earned : Boolean?
     , val description : String?)
