@@ -41,11 +41,11 @@
                 android:layout_height="wrap_content"
                 android:text="Lorem Ipsum"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textSize="@dimen/font_medium"
+                android:layout_marginTop="3dp"
+                android:textSize="@dimen/font_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cart_product_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/cart_product_delete" />
 
             <TextView
                 android:id="@+id/cart_product_price"
@@ -62,10 +62,10 @@
                 android:id="@+id/cart_product_delete"
                 android:layout_width="15dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_delete"
                 android:background="@drawable/click_effect"
                 android:clickable="true"
                 android:focusable="true"
+                android:src="@drawable/ic_delete"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

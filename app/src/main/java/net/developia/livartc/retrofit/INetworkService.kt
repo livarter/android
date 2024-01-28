@@ -96,7 +96,7 @@ interface INetworkService {
     fun getPurchaseHistory(@Header("Authorization") Authorization: String): Call<List<PurchaseHistory>>
 
     @PATCH("api/v1/member/point")
-    fun increasePoint(@Header("Authorization") Authorization: String, @Query("money") money: Long): Call<ResponseBody>
+    fun increasePoint(@Header("Authorization") Authorization: String, @Query("money") money: Long): Call<Int>
 
     @DELETE("api/v1/member/point")
     fun decreasePoint(@Header("Authorization") Authorization: String, @Query("point") point: Long): Call<ResponseBody>

@@ -2,6 +2,7 @@ package net.developia.livartc.purchase
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.NumberFormat
 import java.util.Locale
+import kotlin.math.log
 
 
 /**
@@ -42,10 +44,12 @@ class BillsResultFragment : Fragment() {
         val totalPriceView = binding.totalPrice
         val orderIdView = binding.orderId
         val purchasedDateView = binding.purchasedDate
+        val pointView = binding.point
         val data = arguments?.getString("data")
         var totalPrice = 0L
         var orderId = ""
         var purchasedDate = ""
+        var pointValue = arguments?.getInt("point")
         try {
             val jsonObject = JSONObject(data) // data를 JSONObject로 변환합니다.
             val dataObject = jsonObject.getJSONObject("data") // "data"를 가져옵니다.
@@ -63,6 +67,9 @@ class BillsResultFragment : Fragment() {
             totalPriceView.text = "$formattedPrice 원"
             orderIdView.text = orderId
             purchasedDateView.text = purchasedDate
+
+            Log.d("done", pointValue.toString())
+            pointView.text = pointValue.toString()
         } catch (e: JSONException) {
             e.printStackTrace()
         }
