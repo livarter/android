@@ -1,17 +1,24 @@
 package net.developia.livartc.mypage.membership
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import net.developia.livartc.R
+import net.developia.livartc.ReplyWriteActivity
 import net.developia.livartc.adapter.PurchaseAdapter
 import net.developia.livartc.databinding.ActivityMyOrderBinding
 import net.developia.livartc.login.TokenManager
+import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
+import net.developia.livartc.product.DetailFragment
 import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Collections
 
 /**
  * LIVARTC
@@ -45,6 +52,7 @@ class MyOrderActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         purchaseList = response.body()!!
+                        Log.d("MyOrderActivity:purchaseList", purchaseList.toString())
                         setRecyclerView()
                     }
                 }
@@ -56,10 +64,22 @@ class MyOrderActivity : AppCompatActivity() {
 
     private fun setRecyclerView() {
         runOnUiThread {
-            purchaseAdapter = PurchaseAdapter(purchaseList)
-            binding.purchaseListView.adapter = purchaseAdapter
+            binding.purchaseListView.adapter = PurchaseAdapter(purchaseList) { purchase->
+                showReplyWrite(purchase)
+            }
             binding.purchaseListView.layoutManager = LinearLayoutManager(this)
         }
+    }
+
+    private fun showReplyWrite(purchaseProduct: PurchaseHistory) {
+        val replyIntent = Intent(this, ReplyWriteActivity::class.java)
+        replyIntent.putExtra("productImage",purchaseProduct.productImage)
+        replyIntent.putExtra("productName",purchaseProduct.productName)
+        replyIntent.putExtra("brandName",purchaseProduct.productBrand)
+        replyIntent.putExtra("productId", purchaseProduct.productId.toLong())
+        replyIntent.putExtra("productDesc",purchaseProduct.productDesc)
+        replyIntent.putExtra("productPrice",purchaseProduct.productPrice)
+        startActivity(replyIntent)
     }
 
     override fun onResume() {

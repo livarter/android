@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.kakao.sdk.friend.m.u
 import net.developia.livartc.databinding.ActivityReplyWriteBinding
 import net.developia.livartc.login.TokenManager
+import net.developia.livartc.model.Product
 import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import okhttp3.ResponseBody
@@ -34,7 +35,14 @@ import java.util.UUID
 
 class ReplyWriteActivity : AppCompatActivity() {
     lateinit var binding: ActivityReplyWriteBinding
+
     private var productId = 0L
+    private var productName : String? = ""
+    private var productPrice = 0L
+    private var productDesc : String? = ""
+    private var productImage : String? = ""
+    private var brandName : String? = ""
+
     lateinit var reviewContent: String
     private var uploadedFileName: String? = null
     private var imgUri: Uri? = null
@@ -46,14 +54,22 @@ class ReplyWriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReplyWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Glide
-            .with(binding.productImg.context)
-            .load(intent.getStringExtra("productImage"))
-            .into(binding.productImg)
-        binding.productName.text = intent.getStringExtra("productName")
-        binding.productBrand.text = intent.getStringExtra("brandName")
 
         productId = intent.getLongExtra("productId",0L)
+        productName = intent.getStringExtra("productName")
+        productPrice = intent.getLongExtra("productPrice", 0L)
+        productDesc = intent.getStringExtra("productDesc")
+        productImage = intent.getStringExtra("productImage")
+        brandName = intent.getStringExtra("brandName")
+
+        Glide
+            .with(binding.productImg.context)
+            .load(productImage)
+            .into(binding.productImg)
+        binding.productName.text = productName
+        binding.productBrand.text = brandName
+
+
 
         binding.backBtn.setOnClickListener {
             finish()
@@ -172,14 +188,23 @@ class ReplyWriteActivity : AppCompatActivity() {
             ) {
                 Log.d("insertReply", " ${response.body()}")
                 binding.progressbar.visibility = View.VISIBLE
+
                 //사진이 파이어 베이스에 업로드 될 때까지 3초 Progress바 보여줌
                 //(리뷰 작성한후 페이지에 보이게 하기위해)
+                val product = Product(productId.toInt(), productName?:"", productPrice, productDesc, productImage?:"", brandName?:"", "", "")
+                val intent = Intent(this@ReplyWriteActivity, ProductActivity::class.java)
+                intent.putExtra("type", "detail")
+                intent.putExtra("product", product)
                 if(imgStatus==1){
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.progressbar.visibility = View.INVISIBLE
+                    startActivity(intent)
                     finish()
                 }, 3000)}
-                else finish()
+                else {
+                    startActivity(intent)
+                    finish()
+                }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("insertReply", " $t")

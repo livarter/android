@@ -60,7 +60,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.backBtn.setOnClickListener {
-            if (arguments?.getString("best") == "best"){
+            if (arguments?.getString("backMode") == "finish"){
                 activity?.finish()
             }
             else {
@@ -84,14 +84,6 @@ class DetailFragment : Fragment() {
             binding.productPrice.text = formattedPrice
             productId = product.productId.toLong()
 
-            binding.replyWriteBtn.setOnClickListener {
-                val writeIntent = Intent(activity, ReplyWriteActivity::class.java)
-                writeIntent.putExtra("productImage",product.productImage)
-                writeIntent.putExtra("productName",product.productName)
-                writeIntent.putExtra("brandName",product.brandName)
-                writeIntent.putExtra("productId", product.productId.toLong())
-                startActivity(writeIntent)
-            }
         }
         product?.let {
             binding.addToCartBtn.setOnClickListener {
@@ -128,6 +120,7 @@ class DetailFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         replyList = response.body() ?: emptyList()
+                        binding.reviewCnt.text = "리뷰 ${replyList.size}개"
                         setReplyRecyclerView()
                         Log.d("Reply 조회: 상품1", "검색 결과: $replyList")
                     } else {

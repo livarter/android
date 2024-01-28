@@ -32,7 +32,7 @@ class BestProductAdapter(private val bestList : List<Product>, private val click
         holder.binding.productName.text = bestData.productName
         val numberFormat = NumberFormat.getNumberInstance(Locale.US)
         val formattedPrice = numberFormat.format(bestData.productPrice)
-        holder.binding.productPrice.text = "${formattedPrice} 원"
+        holder.binding.productPrice.text = formattedPrice + "원"
         Glide.with(holder.binding.productImage.context)
             .load(bestData.productImage)
             .into(holder.binding.productImage)

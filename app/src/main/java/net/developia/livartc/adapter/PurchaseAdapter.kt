@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import net.developia.livartc.databinding.ItemPurchaseBinding
+import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import java.text.NumberFormat
 import java.util.Locale
@@ -18,6 +19,7 @@ import java.util.Locale
 
 class PurchaseAdapter(
     private val purchaseList: List<PurchaseHistory>,
+    private val onItemClicked: (PurchaseHistory) -> Unit
 ) : RecyclerView.Adapter<PurchaseAdapter.MyViewHolder>() {
     inner class MyViewHolder(binding: ItemPurchaseBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -28,6 +30,7 @@ class PurchaseAdapter(
             val createdAt = binding.createdAt
 
             val root = binding.root
+            val replyWriteBtn = binding.replyWriteBtn
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -53,7 +56,9 @@ class PurchaseAdapter(
                 .load(it)
                 .into(holder.productImage)
         }
-
+        holder.replyWriteBtn.setOnClickListener {
+            onItemClicked(purchaseData)
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package net.developia.livartc.retrofit
 import com.hyundai.loginapptest.domain.LoginReqDto
 import com.hyundai.loginapptest.domain.LoginResDto
 import com.hyundai.loginapptest.domain.MemberResDto
+import net.developia.livartc.model.MyReply
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
@@ -119,4 +120,7 @@ interface INetworkService {
         @Query("replyComment") replyComment: String,
         @Query("replyImg") replyImg: String?
     ): Call<ResponseBody>
+
+    @GET("api/v1/reply/user")
+    fun getMyReview(@Header("Authorization") Authorization: String): Call<List<MyReply>>
 }
