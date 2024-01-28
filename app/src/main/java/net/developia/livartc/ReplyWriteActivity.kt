@@ -1,5 +1,6 @@
 package net.developia.livartc
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +11,12 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -84,16 +89,13 @@ class ReplyWriteActivity : AppCompatActivity() {
                 override fun onTextChanged(pos: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                     if(reviewWrite.lineCount > 10){
-                        Toast.makeText(this@ReplyWriteActivity,
-                            "최대 10줄까지 입력 가능합니다.",
-                            Toast.LENGTH_SHORT).show()
+                        customToast("최대 10줄까지 입력 가능합니다.")
 
                         reviewWrite.setText(maxText)
                         reviewWrite.setSelection(reviewWrite.length())
                         reviewTextCnt.text = ("${reviewWrite.length()} / 300")
                     } else if(reviewWrite.length() > 300){
-                        Toast.makeText(this@ReplyWriteActivity, "최대 300자까지 입력 가능합니다.",
-                            Toast.LENGTH_SHORT).show()
+                        customToast("최대 300자까지 입력 가능합니다.")
 
                         reviewWrite.setText(maxText)
                         reviewWrite.setSelection(reviewWrite.length())
@@ -247,6 +249,19 @@ class ReplyWriteActivity : AppCompatActivity() {
                 }
         }
         return filename
+    }
+
+    @SuppressLint("MissingInflatedId")
+    fun customToast(message: String) {
+        val inflater = LayoutInflater.from(this@ReplyWriteActivity)
+        val layout = inflater.inflate(R.layout.toast_board, this.findViewById(R.id.toast_layout_root) as ViewGroup?)
+        val textView = layout.findViewById<TextView>(R.id.text_board)
+        textView.text = message
+
+        val toastView = Toast.makeText(this@ReplyWriteActivity, message, Toast.LENGTH_SHORT)
+        toastView.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 150)
+        toastView.view = layout
+        toastView.show()
     }
 
 }
