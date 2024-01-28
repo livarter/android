@@ -21,7 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_move"
+            android:src="@drawable/ic_backarrow"
+            android:background="@drawable/click_effect"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +35,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:text="상품 정보"
-            android:textSize="24sp"
+            android:textSize="@dimen/font_large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,17 +96,18 @@
                     android:layout_marginStart="15dp"
                     android:fontFamily="sans-serif-black"
                     android:text="892,000"
-                    android:textSize="21sp"
+                    android:textSize="@dimen/font_medium"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/product_name" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_marginStart="3dp"
-                    android:text="원~"
+                    android:text="원"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="@dimen/font_medium"
+                    app:layout_constraintTop_toTopOf="@+id/product_price"
                     app:layout_constraintBottom_toBottomOf="@+id/product_price"
                     app:layout_constraintStart_toEndOf="@+id/product_price" />
 
