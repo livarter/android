@@ -1,13 +1,13 @@
 package com.hyundai.loginapptest.domain
 
 data class CreatedAt(
-    val chronology: Chronology,
-    val dayOfMonth: Int,
-    val dayOfWeek: String,
-    val dayOfYear: Int,
-    val era: String,
-    val leapYear: Boolean,
-    val month: String,
-    val monthValue: Int,
-    val year: Int
+    val chronology: Chronology = actualChronology, // 기본값 설정 예시
+    val dayOfMonth: Int = 0,
+    val dayOfWeek: String = "",
+    val dayOfYear: Int = 0,
+    val era: String = "",
+    val leapYear: Boolean = false,
+    val month: String = "",
+    val monthValue: Int = 0,
+    val year: Int = 0
 )

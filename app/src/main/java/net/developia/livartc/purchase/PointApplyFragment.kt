@@ -1,12 +1,16 @@
 package net.developia.livartc.purchase
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentPointApplyBinding
 import net.developia.livartc.login.TokenManager
 import net.developia.livartc.mypage.dto.MemberGradeDto
@@ -48,7 +52,7 @@ class PointApplyFragment : DialogFragment(){
 
             if (totalPrice != null) {
                 if(totalPrice < applyPoint) {
-                    Toast.makeText(context, "적용할 수 있는 포인트를 초과하였습니다.", Toast.LENGTH_SHORT).show()
+                    customToast("적용할 수 있는 포인트를 초과하였습니다.")
                     return@setOnClickListener
                 }else{
                     if (applyPoint in 0..point) {
@@ -58,7 +62,7 @@ class PointApplyFragment : DialogFragment(){
                         parentFragmentManager.setFragmentResult("point", bundle)
                         dismiss()  // DialogFragment 닫기
                     } else {
-                        Toast.makeText(context, "포인트가 부족합니다.", Toast.LENGTH_SHORT).show()
+                        customToast("포인트가 부족합니다.")
                     }
                 }
             }
@@ -88,4 +92,18 @@ class PointApplyFragment : DialogFragment(){
             }
         })
     }
+
+    @SuppressLint("MissingInflatedId")
+    fun customToast(message: String) {
+        val inflater = LayoutInflater.from(context)
+        val layout = inflater.inflate(R.layout.toast_board, view?.findViewById(R.id.toast_layout_root) as ViewGroup?)
+        val textView = layout.findViewById<TextView>(R.id.text_board)
+        textView.text = message
+
+        val toastView = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        toastView.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 150)
+        toastView.view = layout
+        toastView.show()
+    }
+
 }

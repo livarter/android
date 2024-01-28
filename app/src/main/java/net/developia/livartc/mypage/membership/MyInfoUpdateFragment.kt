@@ -7,71 +7,92 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.hyundai.loginapptest.domain.MemberResDto
+import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentMyInfoUpdateBinding
 import net.developia.livartc.login.TokenManager
+import net.developia.livartc.mypage.dto.BirthDate
 import net.developia.livartc.mypage.dto.MemperUpdateReqDto
+import net.developia.livartc.mypage.dto.toFormattedString
 import net.developia.livartc.retrofit.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * 작성자 : 황수영
+ * 내용 : 멤버십 탭 중 나의 정보 페이지에서 수정
+ */
 class MyInfoUpdateFragment : Fragment() {
-    private var _binding: FragmentMyInfoUpdateBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentMyInfoUpdateBinding? = null
+    private lateinit var view: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMyInfoUpdateBinding.inflate(inflater, container, false)
-        val view = binding.root
+        binding = FragmentMyInfoUpdateBinding.inflate(inflater, container, false)
         Log.d("MyInfoUpdateFragment", "수정 페이지로 이동")
+        view = inflater.inflate(R.layout.fragment_my_info_update, container, false)
 
-        // "회원 정보 수정하기" 버튼 클릭 리스너 설정
-        binding.btnEdit.setOnClickListener {
-            // EditText에서 텍스트 가져오기
-            Log.d("수정하기 버튼 클릭", "버튼 클릭")
+        val memberResDto = arguments?.getSerializable("member") as? MemberResDto
+        Log.d("MemberResDto from Activity", memberResDto?.toString() ?: "No data")
 
-            val nameValue = if (binding.etName.text.isNotBlank()) binding.etName.text.toString() else null
-            val emailValue = if (binding.etEmail.text.isNotBlank()) binding.etEmail.text.toString() else null
-            val nicknameValue = if (binding.etNickname.text.isNotBlank()) binding.etNickname.text.toString() else null
-            val phoneValue = if (binding.etPhone.text.isNotBlank()) binding.etPhone.text.toString() else null
-            val addressValue = if (binding.etAddress.text.isNotBlank()) binding.etAddress.text.toString() else null
-            val birthValue = if (binding.etBirth.text.isNotBlank()) binding.etBirth.text.toString() else null
-            if (nameValue != null) {
-                Log.d("nameValue", nameValue)
-            }
+        updateTextViewValues(memberResDto)
+        binding?.etName?.setText(memberResDto?.name)
+        binding?.etNickname?.setText(memberResDto?.nickname)
+        binding?.etPhone?.setText(memberResDto?.phone)
+        binding?.etZipCode?.setText(memberResDto?.zipCode)
+        binding?.etAddress?.setText(memberResDto?.address)
+        binding?.etBirth?.setText(memberResDto?.birthDate?.toFormattedString())
+        val profileImageView: ImageView = binding?.root?.findViewById(R.id.profile_image)!!
+        Glide.with(this)
+            .load(memberResDto?.image) // Replace 'imageUrl' with the actual field in MemberResDto containing the image URL
+            .into(profileImageView)
 
-            // 로그에 찍기
-            Log.d("EditTextValues", "Name: $nameValue, Email: $emailValue, Nickname: $nicknameValue, " +
-                    "Phone: $phoneValue, Address: $addressValue, Birth: $birthValue")
+        binding?.btnEdit?.setOnClickListener {
+            val updatedName = binding?.etName?.text.toString()
+            val updatedNickname = binding?.etNickname?.text.toString()
+            val updatedPhone = binding?.etPhone?.text.toString()
+            val updatedZipCode = binding?.etZipCode?.text.toString()
+            val updatedAddress = binding?.etAddress?.text.toString()
+            val updatedBirth = binding?.etBirth?.text.toString()
 
-            var memperUpdateReqDto = MemperUpdateReqDto()
-            memperUpdateReqDto.name = nameValue
-//            memperUpdateReqDto.email = emailValue
-            memperUpdateReqDto.nickname = nicknameValue
-            memperUpdateReqDto.address = addressValue
-            memperUpdateReqDto.name = nameValue
+            val updatedMemberResDto = MemperUpdateReqDto(
+                name = updatedName,
+                nickname = updatedNickname,
+                phone = updatedPhone,
+                address = updatedAddress,
+                zipCode = updatedZipCode,
+                birthDate = updatedBirth
+            )
 
-            updateMemberInfo(memperUpdateReqDto)
+            // 서버로 정보 업데이트 요청
+            updateMemberInfo(updatedMemberResDto)
+            requireActivity().supportFragmentManager.popBackStack()
 
-            activity?.supportFragmentManager?.popBackStack()
+            val intent = Intent(requireContext(), MyInfoActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
-        return view
+        return binding?.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 
-    private fun updateMemberInfo(memperUpdateReqDto : MemperUpdateReqDto) {
+    private fun updateMemberInfo(memperUpdateReqDto : MemperUpdateReqDto) : MemberResDto{
         val networkService = (MyApplication.instance).networkService
         val jwtToken = TokenManager.getToken(MyApplication.instance)!!
 
         val updateInfoCall = networkService.updateMember(jwtToken, memperUpdateReqDto)
         Log.d("회원 수정할 DTO", updateInfoCall.toString())
+
+        val memberResDto = MemberResDto()
 
         updateInfoCall.enqueue(object : Callback<MemberResDto> {
             override fun onResponse(call: Call<MemberResDto>, response: Response<MemberResDto>) {
@@ -85,6 +106,23 @@ class MyInfoUpdateFragment : Fragment() {
                 Log.d("회원 수정 API 실패", "네트워크 오류: $t")
             }
         })
+        return memberResDto
     }
 
+    private fun updateTextViewValues(memberResDto: MemberResDto?) {
+        with(binding) {
+            val profileImage = view.findViewById<ImageView>(R.id.profile_image)
+            Glide.with(view)
+                .load(memberResDto?.image)
+                .into(profileImage)
+
+            this?.textEmailValue?.hint = memberResDto?.email ?: ""
+            this?.etName?.hint = memberResDto?.name ?: "이름을 입력해주세요."
+            this?.etNickname?.hint = memberResDto?.nickname ?: "닉네임을 입력해주세요."
+            this?.etPhone?.hint = memberResDto?.phone ?: "번호를 입력해주세요."
+            this?.etZipCode?.hint = memberResDto?.zipCode ?: "우편 번호를 입력해주세요."
+            this?.etAddress?.hint = memberResDto?.address ?: "주소를 입력해주세요."
+            this?.etBirth?.hint = memberResDto?.birthDate?.toFormattedString() ?: "생년월일을 입력해주세요."
+        }
+    }
 }

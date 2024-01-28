@@ -22,6 +22,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * 작성자 : 황수영
+ * 내용 : 나의 뱃지 화면
+ */
 class BadgeFragment : Fragment() {
 
     private lateinit var gridView: GridView

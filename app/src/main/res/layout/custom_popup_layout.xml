@@ -21,7 +21,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:text="Popup Text"
-        android:textSize="@dimen/font_medium"
+        android:textSize="@dimen/font_large"
         android:textColor="@android:color/black"/>
 
     <TextView
@@ -32,5 +32,5 @@
         android:layout_margin="30dp"
         android:text="LIVART-COLLECTIONS의 쿠폰을 많이 사용한 회원에게 부여되는 뱃지입니다! 활발한 활동으로 쿠폰을 모아보아요!"
         android:textColor="@color/dark_grey"
-        android:textSize="@dimen/font_small" />
+        android:textSize="@dimen/font_xsmall"/>
 </LinearLayout>
