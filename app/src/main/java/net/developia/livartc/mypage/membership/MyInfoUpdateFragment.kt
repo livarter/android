@@ -86,7 +86,6 @@ class MyInfoUpdateFragment : Fragment() {
     }
 
     private fun updateMemberInfo(memperUpdateReqDto : MemperUpdateReqDto) : MemberResDto{
-
         val networkService = (MyApplication.instance).networkService
         val jwtToken = TokenManager.getToken(MyApplication.instance)!!
 

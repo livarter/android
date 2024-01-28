@@ -10,28 +10,20 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentAccountBinding
-import net.developia.livartc.mypage.dto.RoomResDtoItem
+import net.developia.livartc.login.TokenManager
+import net.developia.livartc.mypage.dto.Catalog
+import net.developia.livartc.mypage.dto.CatalogListResDto
+import net.developia.livartc.retrofit.MyApplication
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
-    private val roomDataList: List<RoomResDtoItem> = listOf(
-        RoomResDtoItem(
-            1,
-            "https://github.com/livarter/backend/assets/77563814/8b45040d-f479-480e-be3b-f7d6b407c8dd",
-            "https://github.com/livarter/backend/assets/77563814/10223998-89f3-48dc-a58f-230d4d871bf0",
-            "https://github.com/livarter/backend/assets/77563814/ed33b2de-4862-4e9c-924b-eeadb96cb35d",
-            "귀여운"
-        ),
-        RoomResDtoItem(
-            2,
-            "https://github.com/livarter/backend/assets/77563814/af02b67d-b446-4e7d-a093-f231087439f8",
-            "https://github.com/livarter/backend/assets/77563814/adf70d26-a950-4f62-a3b4-9372ee7b11a6",
-            "https://github.com/livarter/backend/assets/77563814/70fc387b-f0fd-499c-8761-f9fb8b7676d5",
-            "시크한"
-        )
-    )
+    private lateinit var roomDataList: List<Catalog>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +39,50 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Call getCatalogs to fetch the roomDataList asynchronously
+        getCatalogs()
+    }
 
+    /**
+     * 작성자 : 황수영
+     * 내용 : 나의 방 정보 조회
+     */
+    private fun getCatalogs() {
+        val networkService = (context?.applicationContext as MyApplication).networkService
+        val jwtToken = TokenManager.getToken(MyApplication.instance)!!
+        val getCatalogs = networkService.getCatalogs(jwtToken)
+        Log.d("나의 방 정보 조회 API 시작", getCatalogs.toString())
+
+        getCatalogs.enqueue(object : Callback<CatalogListResDto> {
+            override fun onResponse(call: Call<CatalogListResDto>, response: Response<CatalogListResDto>) {
+                Log.d("나의 방 정보 조회 API 성공 response", response.toString())
+
+                if (response.isSuccessful) {
+                    val resDto = response.body()
+                    Log.d("나의 방 정보 조회 API 성공", resDto.toString())
+                    if (resDto != null) {
+                        Log.d("나의 방 정보 조회 API 성공", resDto.toString())
+
+                        // Update the roomDataList
+                        if (resDto.catalogs != null) {
+                            roomDataList = resDto.catalogs
+                        } else {
+                            // roomDataList =
+                        }
+                        setupUI()
+                    }
+                } else {
+                    Log.d("나의 방 정보 조회 API 실패", "서버 응답 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<CatalogListResDto>, t: Throwable) {
+                Log.d("나의 방 정보 조회 API 실패", "네트워크 오류" + t.toString())
+            }
+        })
+    }
+
+    private fun setupUI() {
         Log.d("FragmentAccountBinding hashtag", roomDataList[0]?.hashtag.toString())
 
         Glide.with(this)
@@ -58,9 +93,7 @@ class AccountFragment : Fragment() {
             .load(roomDataList[0].rightChair)
             .into(binding.rightChair)
 
-        super.onViewCreated(view, savedInstanceState)
-
-        val hashtagContainer: LinearLayout = view.findViewById(R.id.hashtag_container)
+        val hashtagContainer: LinearLayout = view?.findViewById(R.id.hashtag_container) ?: return
 
         for (roomData in roomDataList) {
             val hashtagTextView = TextView(requireContext())
@@ -86,4 +119,6 @@ class AccountFragment : Fragment() {
             }
         }
     }
+
+
 }

@@ -8,6 +8,7 @@ import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.model.PurchaseReqDto
 import net.developia.livartc.model.Reply
 import net.developia.livartc.mypage.dto.BadgeResDto
+import net.developia.livartc.mypage.dto.CatalogListResDto
 import net.developia.livartc.mypage.dto.CouponResDto
 import net.developia.livartc.mypage.dto.MemberGradeDto
 import net.developia.livartc.mypage.dto.MemperUpdateReqDto
@@ -58,6 +59,11 @@ interface INetworkService {
         @Header("Authorization") Authorization: String,
         @Body memberUpdateReqDto : MemperUpdateReqDto
     ): Call<MemberResDto>
+
+    @GET("/api/v1/member/catalogs")
+    fun getCatalogs(
+        @Header("Authorization") Authorization: String
+    ): Call<CatalogListResDto>
 
     /**
      * LIVARTC
