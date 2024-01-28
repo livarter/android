@@ -47,6 +47,10 @@ class MyInfoUpdateFragment : Fragment() {
         binding?.etZipCode?.setText(memberResDto?.zipCode)
         binding?.etAddress?.setText(memberResDto?.address)
         binding?.etBirth?.setText(memberResDto?.birthDate?.toFormattedString())
+        val profileImageView: ImageView = binding?.root?.findViewById(R.id.profile_image)!!
+        Glide.with(this)
+            .load(memberResDto?.image) // Replace 'imageUrl' with the actual field in MemberResDto containing the image URL
+            .into(profileImageView)
 
         binding?.btnEdit?.setOnClickListener {
             val updatedName = binding?.etName?.text.toString()
