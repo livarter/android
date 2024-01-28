@@ -153,16 +153,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/desc_btm" />
 
-                <Button
-                    android:id="@+id/reply_write_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:padding="0dp"
-                    android:text="리뷰 작성"
-                    app:layout_constraintBottom_toBottomOf="@id/reply_title"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/reply_title" />
-
                 <View
                     android:id="@+id/reply_title_btm"
                     android:layout_width="0dp"

@@ -79,15 +79,7 @@ class DetailFragment : Fragment() {
             binding.productDesc.text = product.productDescription
             binding.productPrice.text = "${product.productPrice}"
             productId = product.productId.toLong()
-
-            binding.replyWriteBtn.setOnClickListener {
-                val writeIntent = Intent(activity, ReplyWriteActivity::class.java)
-                writeIntent.putExtra("productImage",product.productImage)
-                writeIntent.putExtra("productName",product.productName)
-                writeIntent.putExtra("brandName",product.brandName)
-                writeIntent.putExtra("productId", product.productId.toLong())
-                startActivity(writeIntent)
-            }
+            
         }
         product?.let {
             binding.addToCartBtn.setOnClickListener {
