@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:id="@+id/fragmentContainer"
+        tools:context=".mypage.myroom.MyRoomFragment">
+
+        <LinearLayout
+            android:id="@+id/myroom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/myroom_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나의 방에 오신 것을 환영합니다."
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_small"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                tools:layout_editor_absoluteX="170dp"
+                tools:layout_editor_absoluteY="138dp" />
+            <TextView
+                android:id="@+id/myroom_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내가 구매한 제품들의 해시태그 가구들로 꾸며져 있어요."
+                android:textSize="@dimen/font_xsmall"
+                android:textColor="@color/dark_grey"
+                tools:layout_editor_absoluteX="170dp"
+                tools:layout_editor_absoluteY="138dp" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/myroom_background"
+                    android:layout_width="280dp"
+                    android:layout_height="280dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/myroom_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.503"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+                <ImageView
+                    android:id="@+id/leftChair"
+                    android:layout_width="110dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/badge1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/myroom_background"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/myroom_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.843" />
+
+                <ImageView
+                    android:id="@+id/rightChair"
+                    android:layout_width="101dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/badge2"
+                    app:layout_constraintBottom_toBottomOf="@+id/myroom_background"
+                    app:layout_constraintEnd_toEndOf="@+id/myroom_background"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/myroom_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.967" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginLeft="60dp"-->
+<!--                android:layout_marginRight="60dp"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:id="@+id/myroom_hashtag"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:text="#감각적"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="@dimen/font_small" />-->
+<!--            </LinearLayout>-->
+
+            <LinearLayout
+                android:id="@+id/hashtag_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

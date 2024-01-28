@@ -7,30 +7,215 @@
     android:background="@color/cardview_light_background"
     tools:context=".mypage.membership.MemberShipFragment" >
 
-    <LinearLayout
-        android:id="@+id/profile_membership"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/profile_membership"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
         <ImageView
             android:id="@+id/membership_card"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/_02_home_brand_kind" />
-        <LinearLayout
-            android:id="@+id/category_kind_box"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/_02_home_brand_kind">
+        </ImageView>
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/textView2"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LIVARTIEST 등급은 3%의 할인율이 적용됩니다" />
+
+            <LinearLayout
+                android:layout_marginLeft="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 나의 정보 -->
+                <LinearLayout
+                    android:id="@+id/myinfo_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/myinfo_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="20dp"
+                        android:textColor="@color/black"
+                        android:src="@drawable/ic_mypage" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/myinfo_title"
+                            android:layout_width="105dp"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_small"
+                            android:textColor="@color/black"
+                            android:text="나의 정보" />
+                        <TextView
+                            android:id="@+id/myinfo_subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_xsmall"
+                            android:textColor="@color/dark_grey"
+                            android:text="나의 정보를 조회하고 수정합니다" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!-- 나의 리뷰 -->
+                <LinearLayout
+                    android:id="@+id/myreview_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/myreview_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="20dp"
+                        android:textColor="@color/dark_grey"
+                        android:src="@drawable/ic_write" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/myreview_title"
+                            android:layout_width="105dp"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_small"
+                            android:textColor="@color/black"
+                            android:text="나의 리뷰" />
+
+                        <TextView
+                            android:id="@+id/myreview_subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_xsmall"
+                            android:textColor="@color/dark_grey"
+                            android:text="나의 리뷰를 조회하고 수정합니다" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 나의 주문 -->
+                <LinearLayout
+                    android:id="@+id/myorder_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/myorder_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="20dp"
+                        android:textColor="@color/black"
+                        android:src="@drawable/ic_cart" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/myorder_title"
+                            android:layout_width="105dp"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_small"
+                            android:textColor="@color/black"
+                            android:text="나의 주문" />
+
+                        <TextView
+                            android:id="@+id/myorder_subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_xsmall"
+                            android:textColor="@color/dark_grey"
+                            android:text="나의 정보를 조회하고 수정합니다" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/logout_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/logout_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="20dp"
+                        android:textColor="@color/black"
+                        android:src="@drawable/ic_logout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/logout_title"
+                            android:layout_width="105dp"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_small"
+                            android:textColor="@color/black"
+                            android:text="로그아웃" />
+
+                        <TextView
+                            android:id="@+id/logout_subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/font_xsmall"
+                            android:textColor="@color/dark_grey"
+                            android:text="로그아웃합니다" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
             <LinearLayout
                 android:id="@+id/my_info"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:background="@drawable/click_effect"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_weight="1">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -50,6 +235,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:background="@drawable/click_effect"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_weight="1">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -69,6 +257,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:background="@drawable/click_effect"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_weight="1">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -88,6 +279,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:background="@drawable/click_effect"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_weight="1">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -102,6 +296,5 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"/>
             </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+
 </FrameLayout>

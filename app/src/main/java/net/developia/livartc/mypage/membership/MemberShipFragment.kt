@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.developia.livartc.R
+import net.developia.livartc.databinding.FragmentMembershipBinding
 import net.developia.livartc.login.TokenManager
 import net.developia.livartc.mypage.PopUp
 import net.developia.livartc.mypage.dto.MemberGradeDto
@@ -25,9 +26,14 @@ import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * 작성자 : 황수영
+ * 내용 : 멤버십 탭
+ */
 class MemberShipFragment : Fragment() {
     private lateinit var linearLayout: LinearLayout
     private lateinit var membershipCardImageView: ImageView
+    lateinit var binding: FragmentMembershipBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,27 +47,31 @@ class MemberShipFragment : Fragment() {
             val result = fetchDataFromServer()
             updateUI(result)
         }
+
+
+        binding = FragmentMembershipBinding.inflate(inflater, container, false)
+
         // 1. my_info 버튼 클릭시 새로운 액티비티로 이동
-        val myInfoLayout = view.findViewById<LinearLayout>(R.id.my_info)
+        val myInfoLayout = view.findViewById<LinearLayout>(R.id.myinfo_tab)
         myInfoLayout.setOnClickListener {
             startActivity(Intent(requireContext(), MyInfoActivity::class.java))
         }
 
         // 2. my_review 버튼 클릭시 새로운 액티비티로 이동
-        val myReviewLayout = view.findViewById<LinearLayout>(R.id.my_review)
+        val myReviewLayout = view.findViewById<LinearLayout>(R.id.myreview_tab)
         myReviewLayout.setOnClickListener {
             startActivity(Intent(requireContext(), MyReviewActivity::class.java))
         }
 
         // 3. my_review 버튼 클릭시 새로운 액티비티로 이동
-        val myOrderLayout = view.findViewById<LinearLayout>(R.id.my_order)
+        val myOrderLayout = view.findViewById<LinearLayout>(R.id.myorder_tab)
         myOrderLayout.setOnClickListener {
             startActivity(Intent(requireContext(), MyOrderActivity::class.java))
         }
 
         // 4. logout 버튼 클릭시 => 로그아웃하고 처음 화면으로 이동하기
         // 일단 팝업 뜨는 버튼으로!!
-        val logoutLayout = view.findViewById<LinearLayout>(R.id.logout)
+        val logoutLayout = view.findViewById<LinearLayout>(R.id.logout_tab)
         logoutLayout.setOnClickListener {
             // startActivity(Intent(requireContext(), LogoutActivity::class.java))
             // 팝업 뜨는 예시
@@ -72,6 +82,7 @@ class MemberShipFragment : Fragment() {
             )
             PopUp().show(tmp, requireContext())
         }
+
         return view
     }
 
@@ -107,5 +118,19 @@ class MemberShipFragment : Fragment() {
         Glide.with(requireContext())
             .load(result.image)
             .into(membershipCardImageView)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 클릭시, 나의 주문 내역 관련 연결
+//        binding.myorderTab.setOnClickListener {
+//            parentFragmentManager.beginTransaction().apply{
+//                replace(R.id.main_container, MyPurchaseFragment())
+//                addToBackStack(null)
+//                commit()
+//            }
+//        }
     }
 }
