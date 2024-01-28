@@ -118,13 +118,13 @@ class BillsFragment : Fragment() {
                     address = memberResDto.address
                     zipCode = memberResDto.zipCode
                     name = memberResDto.name
-//                    phone = memberResDto.phone
+                    phone = memberResDto.phone
 
                     binding.editTextName.setText(name)
                     binding.editTextEmail.setText(email)
                     binding.editTextDeliveryAddress.setText(address)
                     binding.editTextZipCode.setText(zipCode)
-//                    binding.editTextPhone.setText(phone)
+                    binding.editTextPhone.setText(phone)
                 }
 
                 override fun onFailure(call: Call<MemberResDto>, t: Throwable) {
@@ -350,6 +350,7 @@ class BillsFragment : Fragment() {
         val user = BootUser()   // MemberDto
         user.id = memberResDto.email // 구매자 아이디
         user.area = address // 주소
+        user.addr = address // 주소
         user.email = email // 주문서 받을 주소
         user.phone = phone // 전화번호
         user.username = name  // 주문자 이름
