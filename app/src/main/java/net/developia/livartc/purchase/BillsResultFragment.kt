@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import net.developia.livartc.MainActivity
 import net.developia.livartc.databinding.FragmentBillsResultBinding
+import net.developia.livartc.mypage.membership.MyOrderActivity
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.NumberFormat
@@ -74,10 +75,12 @@ class BillsResultFragment : Fragment() {
         }
 
         binding.mypageBtn.setOnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
+            var intent = Intent(requireContext(), MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra("startFragment", "MyPageFragment")
+            intent = Intent(requireContext(), MyOrderActivity::class.java)
             startActivity(intent)
+            activity?.finish()
         }
     }
 

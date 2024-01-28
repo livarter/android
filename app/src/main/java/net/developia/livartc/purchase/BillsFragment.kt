@@ -58,7 +58,7 @@ class BillsFragment : Fragment() {
     private var address = ""
     private var zipCode = ""
     private var name = ""
-    private var phoneNumber = ""
+    private var phone = ""
     private var email = ""
     private var appliedPoint = 0L
     private var deliveryCharge = 3000L
@@ -118,11 +118,13 @@ class BillsFragment : Fragment() {
                     address = memberResDto.address
                     zipCode = memberResDto.zipCode
                     name = memberResDto.name
+                    phone = memberResDto.phone
 
                     binding.editTextName.setText(name)
                     binding.editTextEmail.setText(email)
                     binding.editTextDeliveryAddress.setText(address)
                     binding.editTextZipCode.setText(zipCode)
+                    binding.editTextPhone.setText(phone)
                 }
 
                 override fun onFailure(call: Call<MemberResDto>, t: Throwable) {
@@ -161,8 +163,8 @@ class BillsFragment : Fragment() {
         zipCode = editTextZipCode?.text.toString()
         val editTextName = view?.findViewById<EditText>(R.id.editTextName)
         name = editTextName?.text.toString()
-        val editTextPhoneNumber = view?.findViewById<EditText>(R.id.editTextPhoneNumber)
-        phoneNumber = editTextPhoneNumber?.text.toString()
+        val editTextPhone = view?.findViewById<EditText>(R.id.editTextPhone)
+        phone = editTextPhone?.text.toString()
         val editTextEmail = view?.findViewById<EditText>(R.id.editTextEmail)
         email = editTextEmail?.text.toString()
 
@@ -181,9 +183,9 @@ class BillsFragment : Fragment() {
             editTextName?.requestFocus()
             return
         }
-        if (phoneNumber == "") {
-            editTextPhoneNumber?.error = "전화번호를 입력해주세요."
-            editTextPhoneNumber?.requestFocus()
+        if (phone == "") {
+            editTextPhone?.error = "전화번호를 입력해주세요."
+            editTextPhone?.requestFocus()
             return
         }
         if (email == "") {
@@ -230,7 +232,7 @@ class BillsFragment : Fragment() {
         map["address"] = address
         map["zipcode"] = zipCode
         map["receiver_name"] = name
-        map["receiver_phone"] = phoneNumber
+        map["receiver_phone"] = phone
         val itemsStringList = items.map { bootItemToString(it) }
         map["items"] = itemsStringList
 
@@ -348,8 +350,9 @@ class BillsFragment : Fragment() {
         val user = BootUser()   // MemberDto
         user.id = memberResDto.email // 구매자 아이디
         user.area = address // 주소
+        user.addr = address // 주소
         user.email = email // 주문서 받을 주소
-        user.phone = phoneNumber // 전화번호
+        user.phone = phone // 전화번호
         user.username = name  // 주문자 이름
         return user
     }
