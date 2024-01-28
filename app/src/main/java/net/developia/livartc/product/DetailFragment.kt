@@ -79,7 +79,7 @@ class DetailFragment : Fragment() {
             binding.productDesc.text = product.productDescription
             binding.productPrice.text = "${product.productPrice}"
             productId = product.productId.toLong()
-            
+
         }
         product?.let {
             binding.addToCartBtn.setOnClickListener {
@@ -116,6 +116,7 @@ class DetailFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         replyList = response.body() ?: emptyList()
+                        binding.reviewCnt.text = "리뷰 ${replyList.size}개"
                         setReplyRecyclerView()
                         Log.d("Reply 조회: 상품1", "검색 결과: $replyList")
                     } else {
