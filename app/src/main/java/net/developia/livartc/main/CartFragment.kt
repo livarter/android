@@ -55,7 +55,7 @@ class CartFragment : Fragment() {
         }
         binding.searchProductBtn.setOnClickListener {
             val intent = Intent(activity, ProductActivity::class.java)
-            intent.putExtra("title", "Search") // SearchFragment를 열지 결정하는 플래그
+            intent.putExtra("type", "Search") // SearchFragment를 열지 결정하는 플래그
             startActivity(intent)
         }
     }
