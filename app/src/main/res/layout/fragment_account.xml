@@ -66,7 +66,7 @@
                     app:layout_constraintTop_toTopOf="parent"></ImageView>
 
                 <ImageView
-                    android:id="@+id/leftSide"
+                    android:id="@+id/leftChair"
                     android:layout_width="110dp"
                     android:layout_height="108dp"
                     android:src="@drawable/badge1"
@@ -75,10 +75,10 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/myroom_background"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.864" />
+                    app:layout_constraintVertical_bias="0.843" />
 
                 <ImageView
-                    android:id="@+id/rightSide"
+                    android:id="@+id/rightChair"
                     android:layout_width="101dp"
                     android:layout_height="108dp"
                     android:src="@drawable/badge2"
@@ -89,17 +89,32 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.967" />
 
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/myroom_hashtag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="50dp"
-                android:text="#차분한 #따뜻한 #포근한 #조용한 #감각적"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_small" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/myroom_hashtag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="#감각적"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
 
