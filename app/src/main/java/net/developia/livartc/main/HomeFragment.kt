@@ -178,7 +178,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             bestAdapter = BestProductAdapter(bestList) { selectedProduct ->
                 // 클릭한 제품에 대한 처리를 수행
                 val intent = Intent(activity, ProductActivity::class.java)
-                intent.putExtra("type", "bestProductDetail")
+                intent.putExtra("type", "detail")
                 intent.putExtra("product", selectedProduct)
                 startActivity(intent)
             }

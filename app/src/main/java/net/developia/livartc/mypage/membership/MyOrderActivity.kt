@@ -18,6 +18,7 @@ import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Collections
 
 /**
  * LIVARTC
@@ -51,6 +52,7 @@ class MyOrderActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         purchaseList = response.body()!!
+                        Log.d("MyOrderActivity:purchaseList", purchaseList.toString())
                         setRecyclerView()
                     }
                 }
@@ -73,8 +75,10 @@ class MyOrderActivity : AppCompatActivity() {
         val replyIntent = Intent(this, ReplyWriteActivity::class.java)
         replyIntent.putExtra("productImage",purchaseProduct.productImage)
         replyIntent.putExtra("productName",purchaseProduct.productName)
-        replyIntent.putExtra("brandName","Fogia")
+        replyIntent.putExtra("brandName",purchaseProduct.productBrand)
         replyIntent.putExtra("productId", purchaseProduct.productId.toLong())
+        replyIntent.putExtra("productDesc",purchaseProduct.productDesc)
+        replyIntent.putExtra("productPrice",purchaseProduct.productPrice)
         startActivity(replyIntent)
     }
 

@@ -58,7 +58,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.backBtn.setOnClickListener {
-            if (arguments?.getString("best") == "best"){
+            if (arguments?.getString("backMode") == "finish"){
                 activity?.finish()
             }
             else {
