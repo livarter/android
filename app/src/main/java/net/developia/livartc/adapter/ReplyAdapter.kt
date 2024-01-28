@@ -34,8 +34,8 @@ class ReplyAdapter(private val replyList: List<Reply>) :
         holder.binding.replyContent.text = replyItem.replyComment.replace("\\n", "\n")
         holder.binding.replyDate.text = "${replyItem.createdAt.year}.${String.format("%02d", replyItem.createdAt.monthValue)}.${String.format("%02d", replyItem.createdAt.dayOfMonth)}"
 
-        replyItem.replyImg.let {
-            val imgRef = MyApplication.storage.reference.child("review/${it}")
+        if (replyItem.replyImg != null) {
+            val imgRef = MyApplication.storage.reference.child("review/${replyItem.replyImg}")
             imgRef.downloadUrl.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Glide.with(holder.binding.replyImage.context)
