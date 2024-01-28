@@ -24,6 +24,8 @@ import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
+import java.util.Locale
 
 /**
  * LIVARTC
@@ -77,7 +79,9 @@ class DetailFragment : Fragment() {
                 .into(binding.productImg)
             binding.productName.text = product.productName
             binding.productDesc.text = product.productDescription
-            binding.productPrice.text = "${product.productPrice}"
+            val numberFormat = NumberFormat.getNumberInstance(Locale.US)
+            val formattedPrice = numberFormat.format(product.productPrice)
+            binding.productPrice.text = formattedPrice
             productId = product.productId.toLong()
 
         }
