@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import net.developia.livartc.R
 import net.developia.livartc.databinding.ItemReplyBinding
 import net.developia.livartc.model.Reply
 import net.developia.livartc.retrofit.MyApplication
@@ -33,6 +34,13 @@ class ReplyAdapter(private val replyList: List<Reply>) :
         holder.binding.profileNickname.text = replyItem.nickname
         holder.binding.replyContent.text = replyItem.replyComment.replace("\\n", "\n")
         holder.binding.replyDate.text = "${replyItem.createdAt.year}.${String.format("%02d", replyItem.createdAt.monthValue)}.${String.format("%02d", replyItem.createdAt.dayOfMonth)}"
+        if (replyItem.profileImg != null) {
+            Glide.with(holder.binding.profileImage.context)
+                .load(replyItem.profileImg)
+                .into(holder.binding.profileImage)
+        } else {
+            holder.binding.profileImage.setImageResource(R.drawable.badge1)
+        }
 
         if (replyItem.replyImg != null) {
             val imgRef = MyApplication.storage.reference.child("review/${replyItem.replyImg}")

@@ -91,6 +91,7 @@ class MyOrderActivity : AppCompatActivity() {
         replyIntent.putExtra("productDesc", purchaseProduct.productDesc)
         replyIntent.putExtra("productPrice", purchaseProduct.productPrice)
         startActivity(replyIntent)
+        finish()
     }
 
     override fun onResume() {
