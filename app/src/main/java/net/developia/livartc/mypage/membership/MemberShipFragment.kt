@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -33,6 +34,7 @@ import kotlin.coroutines.suspendCoroutine
 class MemberShipFragment : Fragment() {
     private lateinit var linearLayout: LinearLayout
     private lateinit var membershipCardImageView: ImageView
+    private lateinit var membershipCardPointView: TextView
     lateinit var binding: FragmentMembershipBinding
 
     override fun onCreateView(
@@ -42,12 +44,23 @@ class MemberShipFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_membership, container, false)
         linearLayout = view.findViewById(R.id.profile_membership)
         membershipCardImageView = view.findViewById(R.id.membership_card)
+        membershipCardPointView = view.findViewById(R.id.membership_card_point)
 
         GlobalScope.launch(Dispatchers.Main) {
             val result = fetchDataFromServer()
-            updateUI(result)
+            //updateUI(result)
+            if (result != null) {
+                Log.d("MemberGradeDto point", result.curPoint.toString())
+                var point = result.curPoint.toString() + "p"
+                membershipCardPointView.setText(point)
+            } else {
+                membershipCardPointView.setText("1000p")
+            }
+            Log.d("MemberGradeDto image", result.image.toString())
+//            Glide.with(requireContext())
+//                .load(result.image)
+//                .into(membershipCardImageView)
         }
-
 
         binding = FragmentMembershipBinding.inflate(inflater, container, false)
 
@@ -115,9 +128,7 @@ class MemberShipFragment : Fragment() {
         }
     }
     private fun updateUI(result: MemberGradeDto) {
-        Glide.with(requireContext())
-            .load(result.image)
-            .into(membershipCardImageView)
+
     }
 
 

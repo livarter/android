@@ -115,6 +115,22 @@ class MyRoomFragment : Fragment() {
                 Glide.with(this@MyRoomFragment)
                     .load(roomData.rightChair)
                     .into(binding.rightChair)
+
+                // 소파
+                Glide.with(this@MyRoomFragment)
+                    .load(roomData.sofa)
+                    .into(binding.sofa)
+
+                // 배경
+                Glide.with(this@MyRoomFragment)
+                    .load(roomData.background)
+                    .into(binding.myroomBackground)
+
+                //
+                Glide.with(this@MyRoomFragment)
+                    .load(roomData.deco)
+                    .into(binding.deco)
+
             }
         }
     }
