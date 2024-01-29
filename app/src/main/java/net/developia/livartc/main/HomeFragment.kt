@@ -140,7 +140,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 return
             }
             setPage()
-            handler.postDelayed(this, 2500)
+            handler.postDelayed(this, 3000)
         }
     }
 

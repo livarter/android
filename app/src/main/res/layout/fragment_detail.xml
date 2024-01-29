@@ -130,24 +130,34 @@
                     android:layout_height="10dp"
                     android:background="@color/light_grey"
                     app:layout_constraintTop_toBottomOf="@id/product_price" />
-
                 <TextView
-                    android:id="@+id/product_desc"
+                    android:id="@+id/desc_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="15dp"
-                    android:text="에스테틱! 감성을 채우는 인테리어 침대\n최고의선택!\n최고의가격!\n최고의가격!\n최고의가격!"
-                    android:textSize="17sp"
+                    android:fontFamily="sans-serif"
+                    android:text="상품설명"
+                    android:layout_marginLeft="15dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title_btm"
+                    app:layout_constraintTop_toBottomOf="@id/title_btm" />
+                <ImageView
+                    android:id="@+id/product_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/desc_title"
+                    android:visibility="gone"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="30dp"
                     />
 
                 <View
                     android:id="@+id/desc_btm"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:layout_marginTop="20dp"
                     android:background="@color/light_grey"
                     app:layout_constraintTop_toBottomOf="@id/product_desc"
                     />
