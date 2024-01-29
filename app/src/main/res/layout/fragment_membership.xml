@@ -8,31 +8,62 @@
     tools:context=".mypage.membership.MemberShipFragment" >
 
     <ScrollView
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:overScrollMode="never"
             android:id="@+id/profile_membership"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/membership_card"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/_02_home_brand_kind">
-        </ImageView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/membership_card"
+                    android:layout_width="320dp"
+                    android:layout_height="280dp"
+                    android:layout_gravity="center"
+                    android:elevation="20dp"
+                    android:src="@drawable/card"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.494"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/membership_card_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="30dp"
+                    android:text="3000p"
+                    android:textColor="@color/light_grey"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/membership_card"
+                    app:layout_constraintEnd_toEndOf="@+id/membership_card"
+                    app:layout_constraintHorizontal_bias="0.312"
+                    app:layout_constraintStart_toStartOf="@+id/membership_card"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.793" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:gravity="center"
-                android:id="@+id/textView2"
-                android:layout_margin="20dp"
+                android:id="@+id/membership_subtitle"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LIVARTIEST 등급은 3%의 할인율이 적용됩니다" />
+                android:text="LIVARTIEST 등급은 구매액의 3%가 적립됩니다" />
 
             <LinearLayout
                 android:layout_marginLeft="25dp"
@@ -158,7 +189,7 @@
                             android:layout_height="match_parent"
                             android:textSize="@dimen/font_xsmall"
                             android:textColor="@color/dark_grey"
-                            android:text="나의 정보를 조회하고 수정합니다" />
+                            android:text="나의 주문를 조회하고 수정합니다" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -191,7 +222,7 @@
                             android:layout_height="match_parent"
                             android:textSize="@dimen/font_small"
                             android:textColor="@color/black"
-                            android:text="로그아웃" />
+                            android:text="회원 탈퇴" />
 
                         <TextView
                             android:id="@+id/logout_subtitle"
@@ -199,102 +230,18 @@
                             android:layout_height="match_parent"
                             android:textSize="@dimen/font_xsmall"
                             android:textColor="@color/dark_grey"
-                            android:text="로그아웃합니다" />
+                            android:text="LIVARTIEST에서 탈퇴합니다." />
                     </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginBottom="30dp"
+                        android:src="@drawable/_02_home_brand_kind" />
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
-
-            <LinearLayout
-                android:id="@+id/my_info"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="나의 정보"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/my_review"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="나의 리뷰"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/my_order"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="주문 내역"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/logout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/click_effect"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_mypage"
-                    android:layout_weight="2"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="로그아웃"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
 
 </FrameLayout>
