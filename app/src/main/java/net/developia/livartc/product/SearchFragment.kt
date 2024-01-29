@@ -1,5 +1,6 @@
 package net.developia.livartc.product
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -35,6 +36,8 @@ class SearchFragment : Fragment() {
     private lateinit var products: List<Product>
     private var selectedSortOption: Int = 4
     private lateinit var sortingSpinner: Spinner
+    private var currentPage = 1
+    private var isLoading = false
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,7 +60,6 @@ class SearchFragment : Fragment() {
         searchBarBinding.searchViews.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // 검색어 변경 시 브랜드와 해시태그 초기화
-                selectedBrand = null
                 selectedHashTag = null
                 isHashTagSearch = false
                 searchProducts(query ?: "", selectedBrand, selectedHashTag, selectedSortOption)
@@ -100,6 +102,8 @@ class SearchFragment : Fragment() {
         binding.searchBrandhashtag.brandsRecyclerView.adapter = brandAdapter
         binding.searchBrandhashtag.brandsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+        restoreSearchState()
+
     }
 
     private fun setupSpinner() {
@@ -124,8 +128,15 @@ class SearchFragment : Fragment() {
     }
 
     private fun loadInitialProducts() {
-        searchProducts("", selectedBrand, selectedHashTag, selectedSortOption)
+        val sharedPreferences = requireActivity().getSharedPreferences("SearchPreferences", Context.MODE_PRIVATE)
+        val savedQuery = sharedPreferences.getString("query", null)
+        val savedBrand = sharedPreferences.getString("brand", null)
+        val savedHashTag = sharedPreferences.getString("hashTag", null)
+        val savedSortOption = sharedPreferences.getInt("sortOption", selectedSortOption)
+
+        searchProducts(savedQuery ?: "", savedBrand, savedHashTag, savedSortOption)
     }
+
 
     private fun showProductDetail(product: Product) {
         Log.d("SearchFragment to DetailFragment","$product")
@@ -174,9 +185,30 @@ class SearchFragment : Fragment() {
         hashTagRecyclerView.visibility = if (hashTags.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
+    private fun saveSearchState(query: String?, brand: String?, hashTag: String?, sortOption: Int) {
+        val sharedPreferences = requireActivity().getSharedPreferences("SearchPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("query", query)
+        editor.putString("brand", brand)
+        editor.putString("hashTag", hashTag)
+        editor.putInt("sortOption", sortOption)
+        editor.apply()
+    }
 
-    private fun searchProducts(query: String, brand: String?, hashTag: String?, sortOption: Int) {
-        RetrofitInstance.api.searchProducts("", brand ?: "", hashTag ?: "", query, sortOption, 8, 1)
+    private fun restoreSearchState() {
+        val sharedPreferences = requireActivity().getSharedPreferences("SearchPreferences", Context.MODE_PRIVATE)
+        val query = sharedPreferences.getString("query", null)
+        val brand = sharedPreferences.getString("brand", null)
+        val hashTag = sharedPreferences.getString("hashTag", null)
+        val sortOption = sharedPreferences.getInt("sortOption", 4)
+
+        searchProducts(query, brand, hashTag, sortOption)
+    }
+
+
+
+    private fun searchProducts(query: String?, brand: String?, hashTag: String?, sortOption: Int) {
+        RetrofitInstance.api.searchProducts("", brand ?: "", hashTag ?: "", query ?: "", sortOption, 200, 1)
             .enqueue(object : Callback<List<Product>> {
                 override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
                     if (response.isSuccessful) {
@@ -194,7 +226,9 @@ class SearchFragment : Fragment() {
                     Log.e("SearchFragment", "API 호출 실패: $t")
                 }
             })
+        saveSearchState(query, brand, hashTag, sortOption)
     }
+
 
 }
 

@@ -69,6 +69,12 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     false
                 }
+//                R.id.fragment_search -> {
+//                    // StraggeredActivity 시작
+//                    val intent = Intent(this, StraggeredActivity::class.java)
+//                    startActivity(intent)
+//                    true // 'true'를 반환하여 아이템 선택 이벤트가 처리되었음을 나타냅니다.
+//                }
                 R.id.fragment_cart -> {
                     binding.mainTitle.text = "MyCart"
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, CartFragment()).commit()
