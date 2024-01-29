@@ -108,6 +108,13 @@ class MyRoomFragment : Fragment() {
             hashtagContainer.addView(hashtagTextView)
             hashtagTextView.setOnClickListener {
                 // 해시태그 클릭 시 해당 방의 이미지 업데이트
+                // 배경
+
+
+                Glide.with(this@MyRoomFragment)
+                    .load(roomData.background)
+                    .into(binding.myroomBackground)
+
                 Glide.with(this@MyRoomFragment)
                     .load(roomData.leftChair)
                     .into(binding.leftChair)
@@ -121,12 +128,6 @@ class MyRoomFragment : Fragment() {
                     .load(roomData.sofa)
                     .into(binding.sofa)
 
-                // 배경
-                Glide.with(this@MyRoomFragment)
-                    .load(roomData.background)
-                    .into(binding.myroomBackground)
-
-                //
                 Glide.with(this@MyRoomFragment)
                     .load(roomData.deco)
                     .into(binding.deco)
