@@ -49,13 +49,13 @@ class GridAdapter(private val context: Context, private val dataList: List<GridI
 
         val textSize = holder.textView.context.resources.getDimension(R.dimen.font_xsmall)
         holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
-        holder.textView.setTextColor(holder.textView.context.resources.getColor(R.color.dark_grey))
+        holder.textView.setTextColor(holder.textView.context.resources.getColor(R.color.black))
         Log.d("GridAdapter textSize 1", textSize.toString())
         holder.textView.text = item.text
 
         val isEarned = item.earned
         if (isEarned != null && !isEarned) {
-            val defaultDrawable = ContextCompat.getDrawable(context, R.drawable.badge1)
+            val defaultDrawable = ContextCompat.getDrawable(context, R.drawable.badge0)
             holder.imageView.setImageDrawable(defaultDrawable)
         } else {
             val drawableResName = "badge${item.id}"

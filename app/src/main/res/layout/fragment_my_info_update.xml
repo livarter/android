@@ -10,6 +10,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@+id/btnEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -180,7 +181,7 @@ tools:context=".mypage.membership.MyInfoUpdateFragment">
                 android:backgroundTint="@color/light_grey"
                 android:layout_marginBottom="50dp"
                 android:textSize="@dimen/font_small" />
-s
+
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
