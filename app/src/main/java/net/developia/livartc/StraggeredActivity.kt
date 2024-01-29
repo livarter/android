@@ -30,6 +30,10 @@ class StraggeredActivity : AppCompatActivity() {
         binding = ActivityStraggeredBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.straggeredHeader.backArrow.setOnClickListener {
+            finish()  // 현재 액티비티 종료
+        }
+
         Log.d("StraggeredActivity", "onCreate: 시작")
 
         hashTags.shuffle()
