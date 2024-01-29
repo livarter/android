@@ -80,7 +80,12 @@ class DetailFragment : Fragment() {
                 .load(product.productImage)
                 .into(binding.productImg)
             binding.productName.text = product.productName
-            binding.productDesc.text = product.productDescription
+            if (product.productDescription != null) {
+                Glide.with(binding.productDesc.context)
+                    .load(product.productDescription)
+                    .into(binding.productDesc)
+                binding.productDesc.visibility = View.VISIBLE
+            }
             val numberFormat = NumberFormat.getNumberInstance(Locale.US)
             val formattedPrice = numberFormat.format(product.productPrice)
             binding.productPrice.text = formattedPrice
