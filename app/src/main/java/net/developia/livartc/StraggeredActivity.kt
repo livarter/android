@@ -21,7 +21,7 @@ import retrofit2.Response
  */
 class StraggeredActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStraggeredBinding
-    private val hashTags = listOf("#튼튼한", "#가벼운", "#포근한", "#푹신한", "#소프트",
+    private val hashTags = mutableListOf("#튼튼한", "#가벼운", "#포근한", "#푹신한", "#소프트",
         "#시원한", "#시크한", "#차분한", "#차분한", "#따뜻한", "#빈티지", "#엔티크", "#트렌디", "#럭셔리")
     private val productsMap = mutableMapOf<String, List<Product>>()
 
@@ -32,6 +32,7 @@ class StraggeredActivity : AppCompatActivity() {
 
         Log.d("StraggeredActivity", "onCreate: 시작")
 
+        hashTags.shuffle()
         loadProductsForHashTags()
     }
 
