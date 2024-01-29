@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import net.developia.livartc.MainActivity
 import net.developia.livartc.ProductActivity
 import net.developia.livartc.R
+import net.developia.livartc.StraggeredActivity
 import net.developia.livartc.databinding.FragmentCollectionsBinding
 import net.developia.livartc.product.BrandCategoryFragment
 
@@ -23,6 +24,12 @@ class CollectionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBrandClickListeners()
+
+        binding.brand12.setOnClickListener {
+            // StraggeredActivity 시작
+            val intent = Intent(activity, StraggeredActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupBrandClickListeners() {
@@ -30,7 +37,7 @@ class CollectionsFragment : Fragment() {
         val brandImageViews = listOf(
             binding.brand1, binding.brand2, binding.brand3, binding.brand4,
             binding.brand5, binding.brand6, binding.brand7, binding.brand8,
-            binding.brand9, binding.brand10, binding.brand11
+            binding.brand9, binding.brand10, binding.brand11, binding.brand12
         )
 
         brandImageViews.forEachIndexed { index, imageView ->

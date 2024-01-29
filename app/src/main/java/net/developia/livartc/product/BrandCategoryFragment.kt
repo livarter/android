@@ -98,7 +98,6 @@ class BrandCategoryFragment : Fragment() {
             if (descriptionResId != 0) {
                 binding.brandDescription.setText(descriptionResId)
             } else {
-                // 리소스가 없는 경우 대체 텍스트 설정
                 binding.brandDescription.text = "리소스가 없습니다"
             }
 
@@ -133,7 +132,7 @@ class BrandCategoryFragment : Fragment() {
             hashtag = "",
             title = "",
             sortOption = sortOption,
-            pageSize = 8,
+            pageSize = 100,
             pageNumber = 1
         ).enqueue(object : Callback<List<Product>> {
             override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
@@ -157,9 +156,9 @@ class BrandCategoryFragment : Fragment() {
             category = categoryName,
             brand = "",
             hashtag = "",
-            title = "", // 타이틀 검색이 아니므로 비워둡니다.
-            sortOption = sortOption, // 정렬 옵션, 필요에 따라 설정
-            pageSize = 8,
+            title = "",
+            sortOption = sortOption, // 정렬 옵션
+            pageSize = 100,
             pageNumber = 1
         ).enqueue(object : Callback<List<Product>> {
             override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
@@ -212,7 +211,7 @@ class BrandCategoryFragment : Fragment() {
 
     private fun displayProducts(products: List<Product>) {
         binding.productRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2) // Using a grid layout with 2 columns
+            layoutManager = GridLayoutManager(context, 2)
             adapter = ProductAdapter(products) { product ->
                 Log.d(TAG, "Product clicked: ${product.productName}")
                 showProductDetail(product)
