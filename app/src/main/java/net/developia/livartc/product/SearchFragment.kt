@@ -208,7 +208,7 @@ class SearchFragment : Fragment() {
 
 
     private fun searchProducts(query: String?, brand: String?, hashTag: String?, sortOption: Int) {
-        RetrofitInstance.api.searchProducts("", brand ?: "", hashTag ?: "", query ?: "", sortOption, 200, 1)
+        RetrofitInstance.api.searchProducts("", brand ?: "", hashTag ?: "", query ?: "", sortOption, 30, 1)
             .enqueue(object : Callback<List<Product>> {
                 override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
                     if (response.isSuccessful) {
