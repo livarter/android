@@ -19,9 +19,6 @@ import net.developia.livartc.R
 import net.developia.livartc.adapter.BestProductAdapter
 import net.developia.livartc.adapter.HomeBannerAdapter
 import net.developia.livartc.databinding.FragmentHomeBinding
-import net.developia.livartc.main.banner.BannerFragment01
-import net.developia.livartc.main.banner.BannerFragment02
-import net.developia.livartc.main.banner.BannerFragment03
 import net.developia.livartc.model.Product
 
 import net.developia.livartc.retrofit.RetrofitInstance
@@ -114,9 +111,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun makeBanner() {
         val bannerAdapter = HomeBannerAdapter(this)
-        bannerAdapter.addFragment(BannerFragment01())
-        bannerAdapter.addFragment(BannerFragment02())
-        bannerAdapter.addFragment(BannerFragment03())
+        bannerAdapter.addFragment(R.drawable.banner_01)
+        bannerAdapter.addFragment(R.drawable.banner_02)
+        bannerAdapter.addFragment(R.drawable.banner_03)
 
         val viewPager: ViewPager2 = binding.viewPager2Container
 

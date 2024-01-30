@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="320dp"
     android:background="@color/background_color"
-    tools:context=".main.banner.BannerFragment01">
+    tools:context=".main.BannerFragment">
 
     <ImageView
+        android:id="@+id/banner_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:src="@drawable/banner_03" />
+        android:src="@drawable/banner_01" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
