@@ -7,22 +7,17 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import net.developia.livartc.R
 import net.developia.livartc.ReplyWriteActivity
 import net.developia.livartc.adapter.PurchaseAdapter
 import net.developia.livartc.databinding.ActivityMyOrderBinding
 import net.developia.livartc.login.TokenManager
-import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
-import net.developia.livartc.product.DetailFragment
 import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Collections
 
 /**
  * LIVARTC

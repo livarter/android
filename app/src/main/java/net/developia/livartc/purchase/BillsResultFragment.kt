@@ -14,7 +14,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.NumberFormat
 import java.util.Locale
-import kotlin.math.log
 
 
 /**

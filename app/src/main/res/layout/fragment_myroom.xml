@@ -70,7 +70,6 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:elevation="200dp"
-                    android:src="@drawable/badge1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/myroom_background"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -84,7 +83,6 @@
                     android:layout_height="100dp"
                     android:layout_marginTop="152dp"
                     android:elevation="200dp"
-                    android:src="@drawable/badge3"
                     app:layout_constraintBottom_toBottomOf="@+id/myroom_background"
                     app:layout_constraintEnd_toEndOf="@+id/myroom_background"
                     app:layout_constraintHorizontal_bias="0.944"
@@ -104,7 +102,7 @@
                     app:layout_constraintStart_toStartOf="@+id/myroom_background"
                     app:layout_constraintTop_toTopOf="@+id/myroom_background"
                     app:layout_constraintVertical_bias="1.0"
-                    app:srcCompat="@drawable/sofa" />
+                    />
 
                 <ImageView
                     android:id="@+id/deco"
@@ -117,7 +115,7 @@
                     app:layout_constraintStart_toStartOf="@+id/myroom_background"
                     app:layout_constraintTop_toTopOf="@+id/myroom_background"
                     app:layout_constraintVertical_bias="0.592"
-                    app:srcCompat="@drawable/deco1" />
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

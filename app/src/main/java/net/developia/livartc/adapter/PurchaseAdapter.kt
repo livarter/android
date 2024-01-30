@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import net.developia.livartc.databinding.ItemPurchaseBinding
-import net.developia.livartc.model.Product
 import net.developia.livartc.model.PurchaseHistory
 import java.text.NumberFormat
 import java.util.Locale

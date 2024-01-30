@@ -4,14 +4,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import net.developia.livartc.R
 import net.developia.livartc.databinding.ItemMyreviewBinding
-import net.developia.livartc.databinding.ItemReplyBinding
 import net.developia.livartc.model.MyReply
-import net.developia.livartc.model.Reply
 import net.developia.livartc.retrofit.MyApplication
 
 /**

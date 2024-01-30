@@ -1,7 +1,6 @@
 package net.developia.livartc.product
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,17 +9,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import net.developia.livartc.ProductActivity
-import net.developia.livartc.PurchaseActivity
-import net.developia.livartc.R
-import net.developia.livartc.ReplyWriteActivity
 import net.developia.livartc.adapter.ReplyAdapter
 import net.developia.livartc.databinding.FragmentDetailBinding
-import net.developia.livartc.main.CategoryFragment
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.Reply
 import net.developia.livartc.retrofit.RetrofitInstance

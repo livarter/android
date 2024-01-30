@@ -2,7 +2,6 @@ package net.developia.livartc
 
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowInsetsAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import net.developia.livartc.adapter.StraggeredAdapter
