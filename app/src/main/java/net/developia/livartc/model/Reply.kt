@@ -1,8 +1,5 @@
 package net.developia.livartc.model
 
-import com.hyundai.loginapptest.domain.CreatedAt
-import com.hyundai.loginapptest.domain.UpdatedAt
-
 data class Reply(
     val createdAt: CreatedAt,
     val isDeleted: Int,

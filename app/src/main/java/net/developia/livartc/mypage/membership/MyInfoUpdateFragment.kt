@@ -13,7 +13,6 @@ import com.hyundai.loginapptest.domain.MemberResDto
 import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentMyInfoUpdateBinding
 import net.developia.livartc.login.TokenManager
-import net.developia.livartc.mypage.dto.BirthDate
 import net.developia.livartc.mypage.dto.MemperUpdateReqDto
 import net.developia.livartc.mypage.dto.toFormattedString
 import net.developia.livartc.retrofit.MyApplication

@@ -1,12 +1,10 @@
 package net.developia.livartc.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import net.developia.livartc.databinding.ItemBestBinding
-import net.developia.livartc.main.HomeFragment
 import net.developia.livartc.model.Product
 import java.text.NumberFormat
 import java.util.Locale

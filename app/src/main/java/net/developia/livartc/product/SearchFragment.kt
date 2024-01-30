@@ -17,7 +17,6 @@ import net.developia.livartc.R
 import net.developia.livartc.adapter.BrandAdapter
 import net.developia.livartc.adapter.HashTagAdapter
 import net.developia.livartc.adapter.ProductAdapter
-import net.developia.livartc.databinding.FragmentHeaderBinding
 import net.developia.livartc.databinding.FragmentSearchPageBinding
 import net.developia.livartc.databinding.FragmentSearchSearchbarBinding
 import net.developia.livartc.model.Product

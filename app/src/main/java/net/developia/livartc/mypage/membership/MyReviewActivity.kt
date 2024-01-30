@@ -6,14 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import net.developia.livartc.R
 import net.developia.livartc.adapter.MyReplyAdapter
-import net.developia.livartc.adapter.PurchaseAdapter
 import net.developia.livartc.databinding.ActivityMyReviewBinding
-import net.developia.livartc.databinding.ActivityPurchaseBinding
 import net.developia.livartc.login.TokenManager
 import net.developia.livartc.model.MyReply
-import net.developia.livartc.model.PurchaseHistory
 import net.developia.livartc.retrofit.MyApplication
 import net.developia.livartc.retrofit.RetrofitInstance
 import retrofit2.Call

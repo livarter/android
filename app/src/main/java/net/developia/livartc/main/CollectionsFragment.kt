@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import net.developia.livartc.MainActivity
 import net.developia.livartc.ProductActivity
 import net.developia.livartc.R
 import net.developia.livartc.StraggeredActivity
 import net.developia.livartc.databinding.FragmentCollectionsBinding
-import net.developia.livartc.product.BrandCategoryFragment
 
 class CollectionsFragment : Fragment() {
     lateinit var binding: FragmentCollectionsBinding

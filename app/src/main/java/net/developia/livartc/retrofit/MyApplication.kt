@@ -6,7 +6,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.kakao.sdk.common.KakaoSdk
 import net.developia.livartc.BuildConfig
 import net.developia.livartc.util.PreferenceUtil
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
