@@ -30,6 +30,13 @@ import java.util.Locale
  * Date: 1/19/24
  * Time: 17:21
  */
+
+/**
+ * 변형준
+ * Date: 1/19/24
+ * 작업 내용: 장바구니 버튼 클릭 시 장바구니에 담기
+ */
+
 class DetailFragment : Fragment() {
     lateinit var binding: FragmentDetailBinding
     private lateinit var replyList: List<Reply>

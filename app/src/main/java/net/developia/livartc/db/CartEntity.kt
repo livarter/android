@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
  * LIVARTC
  * Created by 변형준
  * Date: 1/19/24
- * Time: 17:21
+ * 작업 내용: 룸데이터베이스 장바구니 Entity
  */
 
 

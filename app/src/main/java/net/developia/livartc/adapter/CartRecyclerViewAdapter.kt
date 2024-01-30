@@ -13,7 +13,7 @@ import java.util.Locale
  * LIVARTC
  * Created by 변형준
  * Date: 1/19/24
- * Time: 22:54
+ * 작업 내용: 장바구니 수량 조절 및 삭제 조회 구현
  */
 
 class CartRecyclerViewAdapter(

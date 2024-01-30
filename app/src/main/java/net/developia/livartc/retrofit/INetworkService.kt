@@ -87,7 +87,9 @@ interface INetworkService {
      * LIVARTC
      * Created by 변형준
      * Date: 1/19/24
-     * Time: 17:21
+     * 작업내용: 주문내역 조회 및 저장
+     *          포인트 적립 및 사용
+     *
      */
     @POST("api/v1/purchase/insert")
     fun insertPurchaseHistory(@Body purchaseReqDto: PurchaseReqDto, @Header("Authorization") Authorization: String): Call<ResponseBody>

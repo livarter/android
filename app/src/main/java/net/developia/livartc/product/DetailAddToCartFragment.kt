@@ -23,7 +23,8 @@ import java.util.Locale
  * LIVARTC
  * Created by 변형준
  * Date: 1/21/24
- * Time: 17:12
+ * 작업 내용: 장바구니 버튼 클릭 시 장바구니에 담기
+ *            장바구니에 담긴 상품은 수량을 증가시키고, 장바구니에 없는 상품은 새로운 CartEntity를 삽입
  */
 class DetailAddToCartFragment : BottomSheetDialogFragment() {
 
