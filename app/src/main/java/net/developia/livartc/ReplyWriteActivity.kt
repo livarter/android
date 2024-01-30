@@ -32,7 +32,13 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.UUID
-
+/**
+ * LIVARTC
+ * Created by 최현서
+ * Date: 2024-01-24
+ * Time: 13:10
+ * 작업 내용: 리뷰 작성 구현
+ */
 class ReplyWriteActivity : AppCompatActivity() {
     lateinit var binding: ActivityReplyWriteBinding
 

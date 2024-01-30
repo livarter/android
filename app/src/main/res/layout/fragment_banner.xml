@@ -6,7 +6,12 @@
     android:layout_height="320dp"
     android:background="@color/background_color"
     tools:context=".main.BannerFragment">
-
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-20
+     작업내용: 홈화면 메인 홍보 배너 프래그먼트 구현
+    -->
     <ImageView
         android:id="@+id/banner_img"
         android:layout_width="match_parent"

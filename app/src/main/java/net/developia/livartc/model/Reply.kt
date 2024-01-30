@@ -1,5 +1,13 @@
 package net.developia.livartc.model
 
+/**
+ * LIVARTC
+ * Created by 최현서
+ * Date: 2024-01-23
+ * Time: 10:08
+ * 작업 내용: 상품 리뷰 model 구현
+ */
+
 data class Reply(
     val createdAt: CreatedAt,
     val isDeleted: Int,

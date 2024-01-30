@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ReplyWriteActivity"
     android:background="@color/white">
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-24
+     작업내용: 상품 리뷰 작성 페이지 구현
+    -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/review_title"
         android:layout_width="match_parent"

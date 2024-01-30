@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".product.DetailFragment"
     android:background="@color/white">
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-20
+     작업내용: 상품 상세 및 댓글 리사이클러뷰 구현
+
+     Enhanced by 변형준
+     Date: 2024-01-20
+     작업내용: 장바구니 담는 버튼 및 페이지 구현
+    -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"

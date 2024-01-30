@@ -6,6 +6,12 @@
     android:padding="20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-24
+     작업내용: 상품 리뷰 리사이클러뷰 아이템 구현
+    -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

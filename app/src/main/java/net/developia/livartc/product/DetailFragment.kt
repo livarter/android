@@ -37,6 +37,12 @@ import java.util.Locale
  * 작업 내용: 장바구니 버튼 클릭 시 장바구니에 담기
  */
 
+/**
+ * 최현서
+ * Date: 1/22/24
+ * 작업 내용: 상품 상세 정보 및 상품 리뷰 리스트 조회 
+ */
+
 class DetailFragment : Fragment() {
     lateinit var binding: FragmentDetailBinding
     private lateinit var replyList: List<Reply>

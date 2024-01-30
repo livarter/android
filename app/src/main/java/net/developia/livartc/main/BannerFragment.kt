@@ -13,7 +13,7 @@ import net.developia.livartc.R
  * Created by 최현서
  * Date: 2024-01-19
  * Time: 17:00
- * 작업 내용: ㅈ
+ * 작업 내용: 홈화면 메인 홍보 배너 구현
  */
 class BannerFragment : Fragment() {
     private var imageResource: Int = 0
@@ -41,12 +41,5 @@ class BannerFragment : Fragment() {
         }
 
         return view
-    }
-
-    // 이미지 변경 메서드
-    fun changeImage(newImageResource: Int) {
-        val imageView: ImageView = requireView().findViewById(R.id.banner_img)
-        imageView.setImageResource(newImageResource)
-        imageResource = newImageResource
     }
 }

@@ -1,9 +1,7 @@
 package net.developia.livartc.adapter
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import net.developia.livartc.R
 import net.developia.livartc.main.BannerFragment
 
 /**
@@ -11,7 +9,7 @@ import net.developia.livartc.main.BannerFragment
  * Created by 최현서
  * Date: 2024-01-19
  * Time: 16:50
- * 작업 내용: 홈화면 메인 광고 배너 구현
+ * 작업 내용: 홈화면 메인 홍보 배너 구현
  */
 class HomeBannerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 

@@ -30,7 +30,8 @@ import retrofit2.Response
  * LIVARTC
  * Created by 최현서
  * Date: 2024-01-22
- * Time: 오후 3:00
+ * Time: 15:00
+ * 작업 내용: 홈화면(메인 홍보 배너, 카테고리 버튼, 베스트 상품) 구현
  */
 class HomeFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentHomeBinding

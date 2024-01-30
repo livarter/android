@@ -13,7 +13,8 @@ import java.util.Locale
  * LIVARTC
  * Created by 최현서
  * Date: 2024-01-22
- * Time: 오후 12:54
+ * Time: 12:54
+ * 작업 내용: 베스트 상품 조회
  */
 class BestProductAdapter(private val bestList : List<Product>, private val clickListener: (Product) -> Unit)
     : RecyclerView.Adapter<BestProductAdapter.BestProductViewHolder>() {
