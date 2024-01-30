@@ -132,7 +132,7 @@ class BrandCategoryFragment : Fragment() {
             hashtag = "",
             title = "",
             sortOption = sortOption,
-            pageSize = 100,
+            pageSize = 30,
             pageNumber = 1
         ).enqueue(object : Callback<List<Product>> {
             override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
@@ -158,7 +158,7 @@ class BrandCategoryFragment : Fragment() {
             hashtag = "",
             title = "",
             sortOption = sortOption, // 정렬 옵션
-            pageSize = 100,
+            pageSize = 30,
             pageNumber = 1
         ).enqueue(object : Callback<List<Product>> {
             override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
