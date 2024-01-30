@@ -4,7 +4,8 @@ package net.developia.livartc.model
  * LIVARTC
  * Created by 최현서
  * Date: 2024-01-28
- * Time: 오후 10:08
+ * Time: 22:08
+ * 작업 내용: 나의 리뷰 model 구현
  */
 data class MyReply(
     val createdAt: CreatedAt,

@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     tools:context=".main.HomeFragment">
-
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-20
+     작업내용: 홈화면 레이아웃 및 베스트 상품 리사이클러뷰 구현
+    -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

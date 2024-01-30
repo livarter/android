@@ -19,8 +19,9 @@ import retrofit2.Response
 /**
  * LIVARTC
  * Created by 최현서
- * Date: 1/28/24
- * 작업내용: 나의 리뷰 조회
+ * Date: 2024-01-28
+ * Time: 22:54
+ * 작업 내용: 나의 리뷰 조회
  */
 class MyReviewActivity : AppCompatActivity() {
     lateinit var binding: ActivityMyReviewBinding

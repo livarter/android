@@ -16,6 +16,7 @@ import net.developia.livartc.retrofit.MyApplication
  * Created by 최현서
  * Date: 1/25/24
  * Time: 11:48
+ * 작업 내용: 나의 리뷰 조회 구현
  */
 class MyReplyAdapter(private val myReplyList: List<MyReply>) :
     RecyclerView.Adapter<MyReplyAdapter.MyReplyViewHolder>() {

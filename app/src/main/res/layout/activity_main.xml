@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:background="@color/background_color">
-
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-18
+     작업내용: 메인 화면 네비게이션바 구현
+    -->
     <TextView
         android:id="@+id/main_title"
         android:layout_width="wrap_content"

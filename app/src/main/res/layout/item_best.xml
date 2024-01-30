@@ -7,7 +7,12 @@
     android:clickable="true"
     android:focusable="true"
     >
-
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-20
+     작업내용: 홈화면 베스트 상품 리사이클러뷰 아이템 구현
+    -->
     <ImageView
         android:id="@+id/productImage"
         android:layout_width="180dp"

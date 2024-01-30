@@ -12,7 +12,8 @@ import net.developia.livartc.main.MyPageFragment
  * LIVARTC
  * Created by 최현서
  * Date: 2024-01-19
- * Time: 오후 2:32
+ * Time: 14:32
+ * 작업 내용: 메인 화면 하단 네비게이션 바에 의한 프레그먼트/액티비티 전환 설정
  */
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -24,8 +25,7 @@ class MainActivity : AppCompatActivity() {
         setBottomNavigationView()
         // 앱 초기 실행 시 홈화면으로 설정
         if (savedInstanceState == null) {
-            val startFragment = intent.getStringExtra("startFragment")
-            when (startFragment) {
+            when (intent.getStringExtra("startFragment")) {
                 "HomeFragment" -> binding.bottomNavigationView.selectedItemId = R.id.fragment_home
                 "MyPageFragment" -> binding.bottomNavigationView.selectedItemId = R.id.fragment_mypage
                 else -> binding.bottomNavigationView.selectedItemId = R.id.fragment_home
@@ -37,11 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         when (supportFragmentManager.findFragmentById(R.id.main_container)) {
             is CollectionsFragment, is CartFragment, is MyPageFragment -> {
-                // Replace with HomeFragment when pressing back from other fragments
                 binding.bottomNavigationView.selectedItemId = R.id.fragment_home
             }
             is HomeFragment -> {
-                // If the current fragment is HomeFragment, perform default back behavior
                 super.onBackPressed()
             }
             else -> super.onBackPressed()
@@ -68,12 +66,6 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     false
                 }
-//                R.id.fragment_search -> {
-//                    // StraggeredActivity 시작
-//                    val intent = Intent(this, StraggeredActivity::class.java)
-//                    startActivity(intent)
-//                    true // 'true'를 반환하여 아이템 선택 이벤트가 처리되었음을 나타냅니다.
-//                }
                 R.id.fragment_cart -> {
                     binding.mainTitle.text = "MyCart"
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, CartFragment()).commit()

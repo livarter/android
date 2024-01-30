@@ -107,8 +107,9 @@ interface INetworkService {
     /**
      * LIVARTC
      * Created by 최현서
-     * Date: 1/25/24
-     * Time: 11:14
+     * Date: 2024-01-24
+     * 작업내용: 상품 리뷰 조회 및 작성
+     *          나의 리뷰 조회
      */
     @GET("api/v1/reply")
     fun getReview (

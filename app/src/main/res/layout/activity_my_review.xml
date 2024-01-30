@@ -8,11 +8,11 @@
     tools:context=".mypage.membership.MyReviewActivity">
 
     <!--
- LIVARTC
- Created by 최현서
- Date: 1/28/24
- 작업내용: 리뷰 내역 조회 구현
-  -->
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-28
+     작업내용: 나의 리뷰 리사이클러뷰 구현
+    -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_layout"

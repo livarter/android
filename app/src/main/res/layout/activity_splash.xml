@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
     android:background="@drawable/_00_splash">
-
+    <!--
+     LIVARTC
+     Created by 최현서
+     Date: 2024-01-18
+     작업내용: splash화면 구현
+    -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
