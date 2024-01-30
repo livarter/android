@@ -16,9 +16,7 @@ import kotlinx.coroutines.launch
 import net.developia.livartc.R
 import net.developia.livartc.databinding.FragmentMembershipBinding
 import net.developia.livartc.login.TokenManager
-import net.developia.livartc.mypage.PopUp
 import net.developia.livartc.mypage.dto.MemberGradeDto
-import net.developia.livartc.mypage.dto.PopUpDto
 import net.developia.livartc.retrofit.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,7 +45,6 @@ class MemberShipFragment : Fragment() {
 
         GlobalScope.launch(Dispatchers.Main) {
             val result = fetchDataFromServer()
-            //updateUI(result)
             if (result != null) {
                 Log.d("MemberGradeDto point", result.curPoint.toString())
                 var point = result.curPoint.toString() + "p"
@@ -56,9 +53,6 @@ class MemberShipFragment : Fragment() {
                 membershipCardPointView.setText("1000p")
             }
             Log.d("MemberGradeDto image", result.image.toString())
-//            Glide.with(requireContext())
-//                .load(result.image)
-//                .into(membershipCardImageView)
         }
 
         binding = FragmentMembershipBinding.inflate(inflater, container, false)
@@ -79,20 +73,6 @@ class MemberShipFragment : Fragment() {
         val myOrderLayout = view.findViewById<LinearLayout>(R.id.myorder_tab)
         myOrderLayout.setOnClickListener {
             startActivity(Intent(requireContext(), MyOrderActivity::class.java))
-        }
-
-        // 4. logout 버튼 클릭시 => 로그아웃하고 처음 화면으로 이동하기
-        // 일단 팝업 뜨는 버튼으로!!
-        val logoutLayout = view.findViewById<LinearLayout>(R.id.logout_tab)
-        logoutLayout.setOnClickListener {
-            // startActivity(Intent(requireContext(), LogoutActivity::class.java))
-            // 팝업 뜨는 예시
-            val tmp = PopUpDto (
-                "Commenter",
-                "https://github.com/livarter/android/assets/77563814/a346484d-31df-477e-a43c-690aec02c63f",
-                "축하합니다! 뱃지를 발급하였습니다!"
-            )
-            PopUp().show(tmp, requireContext())
         }
 
         return view
@@ -125,22 +105,5 @@ class MemberShipFragment : Fragment() {
             Log.d("멤버십 조회 API 예외", e.toString())
             MemberGradeDto(0, "", "", 0)
         }
-    }
-    private fun updateUI(result: MemberGradeDto) {
-
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // 클릭시, 나의 주문 내역 관련 연결
-//        binding.myorderTab.setOnClickListener {
-//            parentFragmentManager.beginTransaction().apply{
-//                replace(R.id.main_container, MyPurchaseFragment())
-//                addToBackStack(null)
-//                commit()
-//            }
-//        }
     }
 }

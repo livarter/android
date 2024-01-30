@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -20,6 +21,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
+/**
+ * 작성자 : 황수영
+ * 내용 : 나의 방 탭
+ */
 class MyRoomFragment : Fragment() {
     private lateinit var binding: FragmentMyroomBinding
     private lateinit var roomDataList: List<Catalog>
@@ -82,59 +88,39 @@ class MyRoomFragment : Fragment() {
     }
 
     private fun setupUI() {
-        Log.d("FragmentAccountBinding hashtag", roomDataList[0]?.hashtag.toString())
-
-        Glide.with(this)
-            .load(roomDataList[0].leftChair)
-            .into(binding.leftChair)
-
-        Glide.with(this)
-            .load(roomDataList[0].rightChair)
-            .into(binding.rightChair)
-
         val hashtagContainer: LinearLayout = view?.findViewById(R.id.hashtag_container) ?: return
 
         for (roomData in roomDataList) {
             val hashtagTextView = TextView(requireContext())
-            hashtagTextView.text = "#" + roomData.hashtag + "  "
+            hashtagTextView.text = roomData.hashtag + "  "
             hashtagTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            hashtagTextView.textSize = 16f // resources.getDimension(R.dimen.font_small)
+            hashtagTextView.textSize = 16f
             hashtagTextView.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
                 setMargins(0, 20, 0, 20)
             }
+
+            // 해시태그 클릭 시 해당 방의 이미지 업데이트
             hashtagContainer.addView(hashtagTextView)
             hashtagTextView.setOnClickListener {
-                // 해시태그 클릭 시 해당 방의 이미지 업데이트
-                // 배경
-
-
-                Glide.with(this@MyRoomFragment)
-                    .load(roomData.background)
-                    .into(binding.myroomBackground)
-
-                Glide.with(this@MyRoomFragment)
-                    .load(roomData.leftChair)
-                    .into(binding.leftChair)
-
-                Glide.with(this@MyRoomFragment)
-                    .load(roomData.rightChair)
-                    .into(binding.rightChair)
-
-                // 소파
-                Glide.with(this@MyRoomFragment)
-                    .load(roomData.sofa)
-                    .into(binding.sofa)
-
-                Glide.with(this@MyRoomFragment)
-                    .load(roomData.deco)
-                    .into(binding.deco)
+                roomData.background?.let { img -> loadGlideImage(img, binding.myroomBackground) }
+                roomData.leftChair?.let { img -> loadGlideImage(img, binding.leftChair) }
+                roomData.rightChair?.let { img -> loadGlideImage(img, binding.rightChair) }
+                roomData.sofa?.let { img -> loadGlideImage(img, binding.sofa) }
+                roomData.deco?.let { img -> loadGlideImage(img, binding.deco) }
 
             }
         }
     }
 
+    private fun loadGlideImage(imageUrl: String, imageView: ImageView) {
 
+        if (imageUrl != null) {
+            Glide.with(this@MyRoomFragment)
+                .load(imageUrl)
+                .into(imageView)
+        }
+    }
 }
