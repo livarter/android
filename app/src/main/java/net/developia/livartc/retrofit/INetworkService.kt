@@ -71,6 +71,7 @@ interface INetworkService {
      * Created by 오수영
      * Date: 1/19/24
      * Time: 17:21
+     * Function: Product 검색 api
      */
     @GET("api/v1/products")
     fun searchProducts(
