@@ -1,16 +1,12 @@
 package net.developia.livartc
-import android.content.Intent
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import net.developia.livartc.product.BrandCategoryFragment
-import androidx.core.content.ContentProviderCompat.requireContext
 import net.developia.livartc.databinding.ActivityProductBinding
 import net.developia.livartc.model.Product
 import net.developia.livartc.product.DetailFragment
-import net.developia.livartc.product.FilteredProductFragment
 import net.developia.livartc.product.SearchFragment
 
 class ProductActivity : AppCompatActivity() {
@@ -58,11 +54,10 @@ class ProductActivity : AppCompatActivity() {
                 true
             }
             else -> {
-                Log.d("ProductActivity", "Launching FilteredProductFragment")
-                val filteredProductFragment = FilteredProductFragment().apply {
-                }
+                Log.d("ProductActivity", "Launching SearchFragment")
+                val searchFragment = SearchFragment()
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.product_container, filteredProductFragment)
+                    .replace(R.id.product_container, searchFragment)
                     .commit()
             }
         }
