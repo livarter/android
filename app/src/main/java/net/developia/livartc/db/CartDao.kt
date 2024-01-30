@@ -10,7 +10,7 @@ import androidx.room.Update
  * LIVARTC
  * Created by 변형준
  * Date: 1/19/24
- * Time: 17:38
+ * 작업 내용: 룸데이터베이스 장바구니 api 구현
  */
 @Dao
 interface CartDao {

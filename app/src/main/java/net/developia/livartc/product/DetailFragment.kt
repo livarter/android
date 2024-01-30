@@ -10,17 +10,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import net.developia.livartc.ProductActivity
-import net.developia.livartc.PurchaseActivity
-import net.developia.livartc.R
-import net.developia.livartc.ReplyWriteActivity
 import net.developia.livartc.adapter.ReplyAdapter
 import net.developia.livartc.databinding.FragmentDetailBinding
-import net.developia.livartc.main.CategoryFragment
 import net.developia.livartc.model.Product
 import net.developia.livartc.model.Reply
 import net.developia.livartc.retrofit.RetrofitInstance
@@ -37,6 +31,13 @@ import java.util.Locale
  * Date: 1/19/24
  * Time: 17:21
  */
+
+/**
+ * 변형준
+ * Date: 1/19/24
+ * 작업 내용: 장바구니 버튼 클릭 시 장바구니에 담기
+ */
+
 class DetailFragment : Fragment() {
     lateinit var binding: FragmentDetailBinding
     private lateinit var replyList: List<Reply>

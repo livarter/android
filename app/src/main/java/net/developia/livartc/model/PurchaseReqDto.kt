@@ -4,7 +4,7 @@ package net.developia.livartc.model
  * LIVARTC
  * Created by 변형준
  * Date: 1/23/24
- * Time: 9:05 PM
+ * 작업내용: 구매 내역 조회
  */
 data class PurchaseReqDto (
     val memberId: Int,

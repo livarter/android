@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
  * LIVARTC
  * Created by 변형준
  * Date: 1/19/24
- * Time: 21:51
+ * 작업 내용: 룸데이터베이스 장바구니 목록 조회
  */
 
 @Database(entities = [CartEntity::class], version = 1)
